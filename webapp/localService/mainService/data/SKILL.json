@@ -1,0 +1,72 @@
+[
+  {
+    "EmployeeId": "EmployeeIDJohnsonAlice1506",
+    "SkillId": "SK001",
+    "ProficiencyID": "P1",
+    "SkillName": "Java",
+    "ProficiencyLevel": "A"
+  },
+  {
+    "EmployeeId": "EmployeeIDSmithBrian1003",
+    "SkillId": "SK002",
+    "ProficiencyID": "P2",
+    "SkillName": "C#",
+    "ProficiencyLevel": "B"
+  },
+  {
+    "EmployeeId": "EmployeeIDBrownCarla0511",
+    "SkillId": "SK003",
+    "ProficiencyID": "P3",
+    "SkillName": "HTML",
+    "ProficiencyLevel": "C"
+  },
+  {
+    "EmployeeId": "EmployeeIDTaylorDavid2201",
+    "SkillId": "SK004",
+    "ProficiencyID": "P2",
+    "SkillName": "Python",
+    "ProficiencyLevel": "B"
+  },
+  {
+    "EmployeeId": "EmployeeIDAdamsEva3008",
+    "SkillId": "SK005",
+    "ProficiencyID": "P1",
+    "SkillName": "SQL",
+    "ProficiencyLevel": "A"
+  },
+  {
+    "EmployeeId": "EmployeeIDWilsonFrank0104",
+    "SkillId": "SK006",
+    "ProficiencyID": "P3",
+    "SkillName": "CSS",
+    "ProficiencyLevel": "C"
+  },
+  {
+    "EmployeeId": "EmployeeIDLeeGrace1909",
+    "SkillId": "SK007",
+    "ProficiencyID": "P2",
+    "SkillName": "React",
+    "ProficiencyLevel": "B"
+  },
+  {
+    "EmployeeId": "EmployeeIDMartinHenry1212",
+    "SkillId": "SK008",
+    "ProficiencyID": "P1",
+    "SkillName": "Angular",
+    "ProficiencyLevel": "A"
+  },
+  {
+    "EmployeeId": "EmployeeIDClarkIsabel0307",
+    "SkillId": "SK009",
+    "ProficiencyID": "P3",
+    "SkillName": "Node.js",
+    "ProficiencyLevel": "C"
+  },
+  {
+    "EmployeeId": "EmployeeIDDavisJohn2505",
+    "SkillId": "SK010",
+    "ProficiencyID": "P2",
+    "SkillName": "Git",
+    "ProficiencyLevel": "B"
+  }
+]

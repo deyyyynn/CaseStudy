@@ -1,0 +1,7 @@
+[
+  { "CareerId": "CR001", "CareerLevel": "JR" },
+  { "CareerId": "CR002", "CareerLevel": "CL" },
+  { "CareerId": "CR003", "CareerLevel": "SE" },
+  { "CareerId": "CR004", "CareerLevel": "MG" },
+  { "CareerId": "CR005", "CareerLevel": "LD" }
+]

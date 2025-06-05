@@ -1,0 +1,12 @@
+[
+  { "SkillId": "SK001", "SkillName": "Java" },
+  { "SkillId": "SK002", "SkillName": "C#" },
+  { "SkillId": "SK003", "SkillName": "HTML" },
+  { "SkillId": "SK004", "SkillName": "Python" },
+  { "SkillId": "SK005", "SkillName": "SQL" },
+  { "SkillId": "SK006", "SkillName": "CSS" },
+  { "SkillId": "SK007", "SkillName": "React" },
+  { "SkillId": "SK008", "SkillName": "Angular" },
+  { "SkillId": "SK009", "SkillName": "Node.js" },
+  { "SkillId": "SK010", "SkillName": "Git" }
+]

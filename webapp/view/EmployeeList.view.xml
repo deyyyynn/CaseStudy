@@ -1,0 +1,54 @@
+<mvc:View controllerName="sapips.training.employeeapp.controller.EmployeeList"
+    xmlns:mvc="sap.ui.core.mvc"
+    xmlns="sap.m">
+    <Page id="page" title="{i18n>title}">
+    <Table id="test"
+        inset="false"
+        items= "{EMPLOYEE}" >
+        	<headerToolbar>
+			<OverflowToolbar id="idProdToolBar">
+				<content>
+					<Title id="idProductH" text="HelloLetsGo" level="H2"/>
+					<ToolbarSpacer />
+				</content>
+			</OverflowToolbar>
+		</headerToolbar>
+        <columns>
+            <Column id="colEmpID" > 
+                <Text id="txtEmpID" text="{i18n>empID}" />
+            </Column>
+            <Column id="colFName" > 
+                <Text id="txtFName" text="{i18n>fName}" />
+            </Column>
+            <Column id="colLName" > 
+                <Text id="txtLName" text="{i18n>lName}" />
+            </Column>
+            <Column id="colAge" > 
+                <Text id="txtAge" text="{i18n>age}" />
+            </Column>
+            <Column id="colDoh" > 
+                <Text id="txtDoh" text="{i18n>dOH}" />
+            </Column>
+            <Column id="colcL" > 
+                <Text id="txtcL" text="{i18n>cL}" />
+            </Column>
+            <Column id="colcP" > 
+                <Text id="txtcP" text="{i18n>cP}" />
+            </Column>
+        </columns>
+        <items>
+            <ColumnListItem vAlign="Middle">
+                <cells>
+                    <Text text="{EmployeeID}" />
+                    <Text text="{FirstName}" />
+                    <Text text="{LastName}" />
+                    <Text text="{Age}" />
+                    <Text text="{DateHire}" />
+                    <Text text="{CareerLevel}" />
+                    <Text text="{CurrentProject}" />
+                </cells>
+            </ColumnListItem>
+        </items>
+        </Table>
+    </Page>
+</mvc:View>

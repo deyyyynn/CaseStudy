@@ -1,0 +1,92 @@
+[
+  {
+    "FirstName": "Alice",
+    "LastName": "Johnson",
+    "EmployeeID": "EmployeeIDJohnsonAlice1506",
+    "Age": 29,
+    "DateHire": "06/15/2020",
+    "CareerLevel": "CL",
+    "CurrentProject": "Apollo"
+  },
+  {
+    "FirstName": "Brian",
+    "LastName": "Smith",
+    "EmployeeID": "EmployeeIDSmithBrian1003",
+    "Age": 35,
+    "DateHire": "03/10/2018",
+    "CareerLevel": "SE",
+    "CurrentProject": "Orion"
+  },
+  {
+    "FirstName": "Carla",
+    "LastName": "Brown",
+    "EmployeeID": "EmployeeIDBrownCarla0511",
+    "Age": 28,
+    "DateHire": "11/05/2021",
+    "CareerLevel": "JR",
+    "CurrentProject": "Helix"
+  },
+  {
+    "FirstName": "David",
+    "LastName": "Taylor",
+    "EmployeeID": "EmployeeIDTaylorDavid2201",
+    "Age": 42,
+    "DateHire": "01/22/2010",
+    "CareerLevel": "MG",
+    "CurrentProject": "Solaris"
+  },
+  {
+    "FirstName": "Eva",
+    "LastName": "Adams",
+    "EmployeeID": "EmployeeIDAdamsEva3008",
+    "Age": 33,
+    "DateHire": "08/30/2019",
+    "CareerLevel": "SE",
+    "CurrentProject": "Nova"
+  },
+  {
+    "FirstName": "Frank",
+    "LastName": "Wilson",
+    "EmployeeID": "EmployeeIDWilsonFrank0104",
+    "Age": 26,
+    "DateHire": "04/01/2023",
+    "CareerLevel": "JR",
+    "CurrentProject": "Titan"
+  },
+  {
+    "FirstName": "Grace",
+    "LastName": "Lee",
+    "EmployeeID": "EmployeeIDLeeGrace1909",
+    "Age": 30,
+    "DateHire": "09/19/2017",
+    "CareerLevel": "CL",
+    "CurrentProject": "Orion"
+  },
+  {
+    "FirstName": "Henry",
+    "LastName": "Martin",
+    "EmployeeID": "EmployeeIDMartinHenry1212",
+    "Age": 37,
+    "DateHire": "12/12/2015",
+    "CareerLevel": "MG",
+    "CurrentProject": "Apollo"
+  },
+  {
+    "FirstName": "Isabel",
+    "LastName": "Clark",
+    "EmployeeID": "EmployeeIDClarkIsabel0307",
+    "Age": 25,
+    "DateHire": "07/03/2022",
+    "CareerLevel": "JR",
+    "CurrentProject": "Helix"
+  },
+  {
+    "FirstName": "John",
+    "LastName": "Davis",
+    "EmployeeID": "EmployeeIDDavisJohn2505",
+    "Age": 31,
+    "DateHire": "05/25/2016",
+    "CareerLevel": "SE",
+    "CurrentProject": "Nova"
+  }
+]

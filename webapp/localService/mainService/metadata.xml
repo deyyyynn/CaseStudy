@@ -1,0 +1,105 @@
+<edmx:Edmx Version="1.0" xmlns:edmx="http://schemas.microsoft.com/ado/2007/06/edmx" xmlns:sap="http://www.sap.com/Protocols/SAPData">
+<edmx:DataServices xmlns:m="http://schemas.microsoft.com/ado/2007/08/dataservices/metadata" m:DataServiceVersion="2.0">
+<Schema xmlns="http://schemas.microsoft.com/ado/2008/09/edm" Namespace="EMPLOYEE_SRV">
+<EntityType Name="EMPLOYEE">
+<Key>
+<PropertyRef Name="EmployeeID"/>
+</Key>
+<Property Name="EmployeeID" Type="Edm.String" Nullable="false" MaxLength="40"/>
+<Property Name="FirstName" Type="Edm.String" sap:semantics="givenname" Nullable="false"/>
+<Property Name="LastName" Type="Edm.String" Nullable="false"/>
+<Property Name="Age" Type="Edm.Int16" Nullable="false" MaxLength="2"/>
+<Property Name="DateHire" Type="Edm.Date" Nullable="false"/>
+<Property Name="CareerLevel" Type="Edm.String" Nullable="false" MaxLength="2"/>
+<Property Name="CurrentProject" Type="Edm.String" Nullable="true" MaxLength="40"/>
+<NavigationProperty Name="SKILLS" Relationship="EMPLOYEE_SRV.FK_EMPLOYEE_SKILL" ToRole="SKILL" FromRole="EMPLOYEE" />
+<NavigationProperty Name="CAREER" Relationship="EMPLOYEE_SRV.FK_EMPLOYEE_LEVEL" ToRole="CAREERLIST" FromRole="EMPLOYEE"/>
+<NavigationProperty Name="PROJECT" Relationship="EMPLOYEE_SRV.FK_EMPLOYEE_PROJECT" ToRole="PROJECTLIST" FromRole="EMPLOYEE"/>
+</EntityType>
+<EntityType Name="PROJECTLIST">
+<Key>
+<PropertyRef Name="ProjectID"/>
+</Key>
+<Property Name="ProjectID" Type="Edm.String" Nullable="false" MaxLength="10"/>
+<Property Name="ProjectName" Type="Edm.String" Nullable="false" MaxLength="40"/>
+<NavigationProperty Name="PROJECTS" Relationship="EMPLOYEE_SRV.FK_EMPLOYEE_PROJECT" ToRole="EMPLOYEE" FromRole="PROJECTLIST" />
+</EntityType>
+<EntityType Name="SKILL">
+<Key>
+<PropertyRef Name="SkillID"/>
+<PropertyRef Name="EmployeeID"/>
+</Key>
+<Property Name="SkillID" Type="Edm.String" Nullable="false" MaxLength="40"/>
+<Property Name="EmployeeID" Type="Edm.String" Nullable="false" MaxLength="10"/>
+<Property Name="ProficiencyLevel" Type="Edm.String" MaxLength="2" Nullable="false"/>
+<NavigationProperty Name="EMPLOYEE" Relationship="EMPLOYEE_SRV.FK_EMPLOYEE_SKILL" ToRole="EMPLOYEE" FromRole="SKILL"/>
+<NavigationProperty Name="PROFICIENCYLIST" Relationship="EMPLOYEE_SRV.FK_SKILL_PROFICIENCY" ToRole="PROFICIENCYLIST" FromRole="SKILL"/>
+<NavigationProperty Name="SKILLLIST" Relationship="EMPLOYEE_SRV.FK_SKILL_SKILLS" ToRole="SKILLLIST" FromRole="SKILL"/> <!-- This is the key fix -->
+</EntityType>
+<EntityType Name="PROFICIENCYLIST">
+<Key>
+<PropertyRef Name="ProficiencyID"/>
+</Key>
+<Property Name="ProficiencyID" Type="Edm.String" Nullable="false" MaxLength="10"/>
+<Property Name="ProficiencyLevel" Type="Edm.String" Nullable="false" MaxLength="2"/>
+<NavigationProperty Name="PROFICIENCYLISTS" Relationship="EMPLOYEE_SRV.FK_SKILL_PROFICIENCY" ToRole="SKILL" FromRole="PROFICIENCYLIST" />
+</EntityType>
+<EntityType Name="SKILLLIST">
+<Key>
+<PropertyRef Name="SkillID"/>
+</Key>
+<Property Name="SkillID" Type="Edm.String" Nullable="false" MaxLength="10"/>
+<Property Name="SkillName" Type="Edm.String" Nullable="false" MaxLength="20"/>
+<NavigationProperty Name="SKILLLISTS" Relationship="EMPLOYEE_SRV.FK_SKILL_SKILLS" ToRole="SKILL" FromRole="SKILLLIST"/>
+</EntityType>
+<EntityType Name="CAREERLIST">
+<Key>
+<PropertyRef Name="CareerID"/>
+</Key>
+<Property Name="CareerID" Type="Edm.String" Nullable="false" MaxLength="10"/>
+<Property Name="CareerLevel" Type="Edm.String" Nullable="false" MaxLength="2"/>
+<NavigationProperty Name="CAREERS" Relationship="EMPLOYEE_SRV.FK_EMPLOYEE_LEVEL" ToRole="EMPLOYEE" FromRole="CAREERLIST"/>
+</EntityType>
+<Association Name="FK_EMPLOYEE_SKILL">
+<End Type="EMPLOYEE_SRV.EMPLOYEE" Role="EMPLOYEE" Multiplicity="1"/>
+<End Type="EMPLOYEE_SRV.SKILL" Role="SKILL" Multiplicity="*"/>
+<ReferentialConstraint>
+<Principal Role="EMPLOYEE">
+<PropertyRef Name="EmployeeID"/>
+</Principal>
+<Dependent Role="SKILL">
+<PropertyRef Name="EmployeeID"/>
+</Dependent>
+</ReferentialConstraint>
+</Association>
+<Association Name="FK_SKILL_SKILLS">
+<End Type="EMPLOYEE_SRV.SKILLLIST" Role="SKILLLIST" Multiplicity="1"/>
+<End Type="EMPLOYEE_SRV.SKILL" Role="SKILL" Multiplicity="1"/>
+<ReferentialConstraint>
+<Principal Role="SKILLLIST">
+<PropertyRef Name="SkillID"/>
+</Principal>
+<Dependent Role="SKILL">
+<PropertyRef Name="SkillID"/>
+</Dependent>
+</ReferentialConstraint>
+</Association>
+<EntityContainer Name="EMPLOYEE_SRV_Entities" m:IsDefaultEntityContainer="true">
+<AssociationSet Name="FK_EMPLOYEE_SKILL" Association="EMPLOYEE_SRV.FK_EMPLOYEE_SKILL">
+<End Role="EMPLOYEE" EntitySet="EMPLOYEE" />
+<End Role="SKILL" EntitySet="SKILL" />
+</AssociationSet>
+<AssociationSet Name="FK_SKILL_SKILLS" Association="EMPLOYEE_SRV.FK_SKILL_SKILLS">
+<End Role="SKILLLIST" EntitySet="SKILLLIST" />
+<End Role="SKILL" EntitySet="SKILL" />
+</AssociationSet>
+<EntitySet Name="EMPLOYEE" EntityType="EMPLOYEE_SRV.EMPLOYEE" />
+<EntitySet Name="SKILL" EntityType="EMPLOYEE_SRV.SKILL" />
+<EntitySet Name="SKILLLIST" EntityType="EMPLOYEE_SRV.SKILLLIST" />
+<EntitySet Name="PROFICIENCYLIST" EntityType="EMPLOYEE_SRV.PROFICIENCYLIST" />
+<EntitySet Name="CAREERLIST" EntityType="EMPLOYEE_SRV.CAREERLIST" />
+<EntitySet Name="PROJECTLIST" EntityType="EMPLOYEE_SRV.PROJECTLIST" />
+</EntityContainer>
+</Schema>
+</edmx:DataServices>
+</edmx:Edmx>
