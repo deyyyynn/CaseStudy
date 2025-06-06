@@ -30,8 +30,7 @@ sap.ui.define([
             this._fetchEmployeeCount();
         },
         onClickAdd: function (){
-            var oRouter = this.getOwnerComponent().getRouter();
-            oRouter.navTo("RouteCreatePage");
+            this.getOwnerComponent().getRouter().navTo("RouteCreatePage");
         }
     });
 });
