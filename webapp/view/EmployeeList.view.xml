@@ -4,17 +4,20 @@
     <Page id="page" title="{i18n>title}">
     <Table id="test"
         inset="false"
-        items= "{EMPLOYEE}" >
+		mode="MultiSelect"
+        items= "{/EMPLOYEE}" >
         	<headerToolbar>
 			<OverflowToolbar id="idProdToolBar">
 				<content>
-					<Title id="idProductH" text="HelloLetsGo" level="H2"/>
+					<Title id="idProductH" text="{i18n>landingPage}" level="H2"/>
 					<ToolbarSpacer />
+                    <Button id="addButton" text="{i18n>add}" ></Button>
+                    <Button id="delButton" text="{i18n>del}" type="Negative"></Button>
 				</content>
 			</OverflowToolbar>
 		</headerToolbar>
         <columns>
-            <Column id="colEmpID" > 
+            <Column id="colEmpID" width="15rem"> 
                 <Text id="txtEmpID" text="{i18n>empID}" />
             </Column>
             <Column id="colFName" > 
@@ -23,7 +26,7 @@
             <Column id="colLName" > 
                 <Text id="txtLName" text="{i18n>lName}" />
             </Column>
-            <Column id="colAge" > 
+            <Column id="colAge" hAlign="End" > 
                 <Text id="txtAge" text="{i18n>age}" />
             </Column>
             <Column id="colDoh" > 

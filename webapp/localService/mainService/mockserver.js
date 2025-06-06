@@ -46,7 +46,7 @@ sap.ui.define([
 
                 oMainDataSource = "/sap/opu/odata/sap/EMPLOYEE_SRV",
 
-                sMetadataUrl = jQuery.sap.getModulePath(_sAppModulePath + "localService/metadata",".xml"),
+                sMetadataUrl = jQuery.sap.getModulePath(_sAppModulePath + "localService/mainService/data",".xml"),
 
                 // ensure there is a trailing slash
 
