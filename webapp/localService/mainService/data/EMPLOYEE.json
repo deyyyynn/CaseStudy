@@ -5,7 +5,7 @@
     "EmployeeID": "EmployeeIDJohnsonAlice1506",
     "Age": 29,
     "DateHire": "06/15/2020",
-    "CareerLevel": "CL",
+    "CareerLevel": "CL10",
     "CurrentProject": "Apollo"
   },
   {
@@ -14,7 +14,7 @@
     "EmployeeID": "EmployeeIDSmithBrian1003",
     "Age": 35,
     "DateHire": "03/10/2018",
-    "CareerLevel": "SE",
+    "CareerLevel": "CL9",
     "CurrentProject": "Orion"
   },
   {
@@ -23,7 +23,7 @@
     "EmployeeID": "EmployeeIDBrownCarla0511",
     "Age": 28,
     "DateHire": "11/05/2021",
-    "CareerLevel": "JR",
+    "CareerLevel": "CL7",
     "CurrentProject": "Helix"
   },
   {
@@ -32,7 +32,7 @@
     "EmployeeID": "EmployeeIDTaylorDavid2201",
     "Age": 42,
     "DateHire": "01/22/2010",
-    "CareerLevel": "MG",
+    "CareerLevel": "CL6",
     "CurrentProject": "Solaris"
   },
   {
@@ -41,7 +41,7 @@
     "EmployeeID": "EmployeeIDAdamsEva3008",
     "Age": 33,
     "DateHire": "08/30/2019",
-    "CareerLevel": "SE",
+    "CareerLevel": "CL5",
     "CurrentProject": "Nova"
   },
   {
@@ -50,7 +50,7 @@
     "EmployeeID": "EmployeeIDWilsonFrank0104",
     "Age": 26,
     "DateHire": "04/01/2023",
-    "CareerLevel": "JR",
+    "CareerLevel": "CL4",
     "CurrentProject": "Titan"
   },
   {
@@ -59,7 +59,7 @@
     "EmployeeID": "EmployeeIDLeeGrace1909",
     "Age": 30,
     "DateHire": "09/19/2017",
-    "CareerLevel": "CL",
+    "CareerLevel": "CL3",
     "CurrentProject": "Orion"
   },
   {
@@ -68,7 +68,7 @@
     "EmployeeID": "EmployeeIDMartinHenry1212",
     "Age": 37,
     "DateHire": "12/12/2015",
-    "CareerLevel": "MG",
+    "CareerLevel": "CL2",
     "CurrentProject": "Apollo"
   },
   {
@@ -77,7 +77,7 @@
     "EmployeeID": "EmployeeIDClarkIsabel0307",
     "Age": 25,
     "DateHire": "07/03/2022",
-    "CareerLevel": "JR",
+    "CareerLevel": "CL1",
     "CurrentProject": "Helix"
   },
   {
@@ -86,7 +86,7 @@
     "EmployeeID": "EmployeeIDDavisJohn2505",
     "Age": 31,
     "DateHire": "05/25/2016",
-    "CareerLevel": "SE",
+    "CareerLevel": "CL8",
     "CurrentProject": "Nova"
   }
 ]
