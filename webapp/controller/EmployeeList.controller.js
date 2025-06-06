@@ -28,6 +28,10 @@ sap.ui.define([
         },
         _onRouteMatched: function(){
             this._fetchEmployeeCount();
+        },
+        onClickAdd: function (){
+            var oRouter = this.getOwnerComponent().getRouter();
+            oRouter.navTo("RouteCreatePage");
         }
     });
 });
