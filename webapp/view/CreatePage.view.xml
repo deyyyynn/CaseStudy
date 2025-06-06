@@ -1,0 +1,55 @@
+<mvc:View 
+    xmlns:core="sap.ui.core" 
+    xmlns:mvc="sap.ui.core.mvc" 
+    xmlns="sap.m" 
+    xmlns:sap.ui.core="sap.ui.core" 
+    xmlns:sap.ui.layout.form="sap.ui.layout.form"
+    controllerName="sapips.training.employeeapp.controller.CreatePage">
+
+    <Page id="idCreatePage" title="{i18n>title}">
+        <content>
+            <sap.ui.layout.form:SimpleForm editable="true" layout="ResponsiveGridLayout" id="formCreateRec">
+                <sap.ui.layout.form:content>
+                    <sap.ui.core:Title text="{i18n>titleHeader}" id="titleCreateRec"/>
+                    <!-- EID -->
+                    <Label text="{i18n>eidTxt}" id="eidLbl"/>
+                    <Input width="100%" id="i_eid" editable="false"/>
+                    
+                    <!-- First Name -->
+                    <Label text="{i18n>fnameTxt}" id="fnameLbl"/>
+                    <Input width="100%" id="i_fname" placeholder="{i18n>plchldrTxt}" required="true" maxLength="32"/>
+                    
+                    <!-- Last Name -->
+                    <Label text="{i18n>lnameTxt}" id="lnameLbl"/>
+                    <Input width="100%" id="i_lname" placeholder="{i18n>plchldrTxt}" required="true" maxLength="32"/>
+
+                    <!-- Age -->
+                    <Label text="{i18n>ageTxt}" id="ageLbl"/>
+                    <Input width="100%" id="i_age" placeholder="{i18n>plchldrTxt}" required="true"/>
+                    
+                    <!-- Date of Hire -->
+                    <Label text="{i18n>hdateTxt}" id="hdateLbl"/>
+                    <DatePicker id="datePicker" placeholder="{i18n>phdateTxt}"/>
+
+                    <!-- Career Level -->
+                    <Label text="{i18n>clvlTxt}" id="clvlLbl"/>
+                    <Select id="sel_clvl">
+                        <items>
+                            <core:Item key="cLevel" text="{}" id="itm_clvl"/>
+                            <!-- CareerList>CareerLevel -->
+                        </items>                    
+                    </Select>
+
+                    <!-- Current Project -->
+                    <Label text="{i18n>cprojTxt}" id="cprojLbl"/>
+                    <Select id="sel_cproj">
+                        <items>
+                            <core:Item key="cProj" text="{}" id="itm_cproj"/>
+                            <!-- ProjectList>ProjectName -->
+                        </items>                    
+                    </Select>
+                </sap.ui.layout.form:content>
+            </sap.ui.layout.form:SimpleForm>
+        </content>
+    </Page>
+</mvc:View>
