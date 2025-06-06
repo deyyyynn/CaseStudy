@@ -1,12 +1,14 @@
 sap.ui.define([
-    "sap/ui/core/mvc/Controller"
-], (Controller) => {
+    "sap/ui/core/mvc/Controller",
+    "sap/ui/model/json/JSONModel",
+    "sap/m/MessageToast"
+], (Controller,JSONModel) => {
     "use strict";
 
     return Controller.extend("sapips.training.employeeapp.controller.EmployeeList", {
         onInit() {
             var oRouter = this.getOwnerComponent().getRouter();
-            oRouter.getRoute("RouteEmployeeList").attachPatternMatched(this.onRouteMatched, this);
+            oRouter.getRoute("RouteEmployeeList").attachPatternMatched(this._onRouteMatched, this);
         },
         _fetchEmployeeCount: function () {
             var oModel = this.getOwnerComponent().getModel();
