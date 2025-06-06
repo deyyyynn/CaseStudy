@@ -4,17 +4,21 @@
     <Page id="page" title="{i18n>title}">
     <Table id="test"
         inset="false"
-        items= "{EMPLOYEE}" >
+		mode="MultiSelect"
+        items= "{/EMPLOYEE}" >
         	<headerToolbar>
-			<OverflowToolbar id="idProdToolBar">
+			<Toolbar id="idProdToolBar">
 				<content>
-					<Title id="idProductH" text="HelloLetsGo" level="H2"/>
+					<Title id="idProductH" level="H2" text="{i18n>landingPage} ({employeeCountModel>/employeeCount})"  />
 					<ToolbarSpacer />
+                    <Input id="searchField" placeholder="Search" width="200px" />
+                    <Button id="addButton" text="{i18n>add}" ></Button>
+                    <Button id="delButton" text="{i18n>del}" type="Reject"></Button>
 				</content>
-			</OverflowToolbar>
+			</Toolbar>
 		</headerToolbar>
         <columns>
-            <Column id="colEmpID" > 
+            <Column id="colEmpID" width="15rem"> 
                 <Text id="txtEmpID" text="{i18n>empID}" />
             </Column>
             <Column id="colFName" > 
@@ -23,7 +27,7 @@
             <Column id="colLName" > 
                 <Text id="txtLName" text="{i18n>lName}" />
             </Column>
-            <Column id="colAge" > 
+            <Column id="colAge" hAlign="End" > 
                 <Text id="txtAge" text="{i18n>age}" />
             </Column>
             <Column id="colDoh" > 
