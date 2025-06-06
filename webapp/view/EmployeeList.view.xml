@@ -7,14 +7,15 @@
 		mode="MultiSelect"
         items= "{/EMPLOYEE}" >
         	<headerToolbar>
-			<OverflowToolbar id="idProdToolBar">
+			<Toolbar id="idProdToolBar">
 				<content>
 					<Title id="idProductH" text="{i18n>landingPage}" level="H2"/>
 					<ToolbarSpacer />
+                    <Input id="searchField" placeholder="Search" width="200px"  />
                     <Button id="addButton" text="{i18n>add}" ></Button>
-                    <Button id="delButton" text="{i18n>del}" type="Negative"></Button>
+                    <Button id="delButton" text="{i18n>del}" type="Reject"></Button>
 				</content>
-			</OverflowToolbar>
+			</Toolbar>
 		</headerToolbar>
         <columns>
             <Column id="colEmpID" width="15rem"> 
