@@ -106,9 +106,16 @@
         },
         {
           "name": "RouteViewPage",
-          "pattern": "ViewPage/",
+          "pattern": "ViewPage",
           "target": [
             "TargetViewPage"
+          ]
+        },
+        {
+          "name": "EmployeeDetail",
+          "pattern": "employee/{employeeId}",
+          "target": [
+            "EmployeeDetail"
           ]
         }
       ],
@@ -124,6 +131,11 @@
         "TargetViewPage": {
           "viewId": "ViewPage",
           "viewName": "ViewPage"
+        },
+        "EmployeeDetail": {
+        "viewId": "ViewPage",  
+        "viewName": "ViewPage",
+        "viewLevel": 2
         }
       }
     },
