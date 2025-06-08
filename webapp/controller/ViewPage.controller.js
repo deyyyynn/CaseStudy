@@ -8,38 +8,20 @@ sap.ui.define([
 
     return Controller.extend("sapips.training.employeeapp.controller.ViewPage", {
         onInit() {
-            var oRouter = this.getOwnerComponent().getRouter();
-                oRouter.getRoute("RouteViewPage").attachPatternMatched(this._onRouteMatched, this);
+            this.getOwnerComponent().getRouter().getRoute("RouteViewPage").attachPatternMatched(this._onRouteMatched, this);
         },
-        handleClose: function () {
-			var oHistory = History.getInstance();
-            var sPreviousHash = oHistory.getPreviousHash();
-            var oRouter = this.getOwnerComponent().getRouter();
 
-            if (sPreviousHash !== undefined) {
-                window.history.go(-1);
-            } else {
-                oRouter.navTo("RouteEmployeeList", {}, true);
-            }
-		},
-        _fetchSkillCount: function () {
-            var oModel = this.getOwnerComponent().getModel();
+        _onRouteMatched: function (oEvent) {
+            const empId = oEvent.getParameter("arguments").employeeId;
+            const sPath = `/EMPLOYEE('${empId}')`;
 
-            oModel.refresh(true);
-            // Read the total count from the /EMPLOYEE endpoint using $count
-            oModel.read("/SKILL/$count", {
-                success: function (oData) {
-                    // Set the total count of employees in the model
-                    var oCountModel = new JSONModel({ employeeCount: oData });
-                    this.getView().setModel(oCountModel, "employeeCountModel");
-                }.bind(this),
-                error: function () {
-                    MessageToast.show("Error fetching employee skill count.");
+            // Bind the entire view to the employee
+            this.getView().bindElement({
+                path: sPath,
+                parameters: {
+                    expand: "Skills" // optional: ensure Skills are preloaded
                 }
             });
-        },
-        _onRouteMatched: function(){
-            this._fetchSkillCount();
         }
     });
 });
