@@ -2,7 +2,7 @@
     xmlns:mvc="sap.ui.core.mvc"
     xmlns="sap.m">
     <Page id="page" title="{i18n>title}">
-    <Table id="test"
+    <Table id="employeeTable"
         inset="false"
 		mode="MultiSelect"
         items= "{/EMPLOYEE}" >
@@ -11,7 +11,7 @@
 				<content>
 					<Title id="idProductH" level="H2" text="{i18n>landingPage} ({employeeCountModel>/employeeCount})"  />
 					<ToolbarSpacer />
-                    <Input id="searchField" placeholder="Search" width="200px" />
+                    <SearchField id="searchField" width="200px" search="onSearch" />
                     <Button id="addButton" text="{i18n>add}" press="onClickAdd"></Button>
                     <Button id="delButton" text="{i18n>del}" type="Reject"></Button>
 				</content>
@@ -41,13 +41,13 @@
             </Column>
         </columns>
         <items>
-            <ColumnListItem vAlign="Middle">
+            <ColumnListItem vAlign="Middle" type="Navigation" press="onEmployeePress">
                 <cells>
                     <Text text="{EmployeeID}" />
                     <Text text="{FirstName}" />
                     <Text text="{LastName}" />
                     <Text text="{Age}" />
-                    <Text text="{DateHire}" />
+                    <Text text="{ path: 'DateHire', formatter: '.formatter.formatDate' }" />
                     <Text text="{CareerLevel}" />
                     <Text text="{CurrentProject}" />
                 </cells>
