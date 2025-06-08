@@ -60,25 +60,25 @@ sap.ui.define([
 
              // FILTERS----------------------------------------------------------------------------
             if (!isNaN(Number(sQuery)) && sQuery.length === 2) {
-                // Likely age (e.g., "25")
+                // Age
                 let iAge = parseInt(sQuery, 10);
-                if (iAge >= 18 && iAge <= 70) {
+                if (iAge >= 0 && iAge <= 90) {
                     aFilters.push(new Filter("Age", FilterOperator.EQ, iAge));
                 }
             } else if (sQuery.length === 8 && !isNaN(Number(sQuery))) {
-                // Likely a date in MMDDYYYY, DDMMYYYY, or YYYYMMDD format
+                // Date
                 let sDate = formatter.toModelDateFormat(sQuery);
                 if (sDate) {
                     aFilters.push(new Filter("DateHire", FilterOperator.Contains, sDate));
                 }
             } else if (sQuery.toUpperCase().startsWith("CL") && sQuery.length <= 4) {
-                // Likely CareerLevel (e.g., CL5, CL10)
+                // Career level
                 aFilters.push(new Filter("CareerLevel", FilterOperator.EQ, sQuery.toUpperCase()));
             } else if (sQuery.startsWith("EmployeeID")) {
                 // EmployeeID
                 aFilters.push(new Filter("EmployeeID", FilterOperator.EQ, sQuery));
             } else {
-                // Fallback to name/project filters
+                // Name and Project
                 aFilters.push(new Filter("FirstName", FilterOperator.Contains, sCapitalizedQuery));
                 aFilters.push(new Filter("LastName", FilterOperator.Contains, sCapitalizedQuery));
                 aFilters.push(new Filter("CurrentProject", FilterOperator.Contains, sCapitalizedQuery));
@@ -92,6 +92,17 @@ sap.ui.define([
                     and: false // OR logic — match if any field contains the query
                 }));
             }
+        },
+        //Nav to Employee View Page
+        onEmployeePress: function(oEvent) {
+            var oItem = oEvent.getSource();
+            var oContext = oItem.getBindingContext();
+            var sEmployeeID = oContext.getProperty("EmployeeID");
+        
+            // Navigate to detail route, pass EmployeeID as parameter
+            this.getOwnerComponent().getRouter().navTo("EmployeeDetail", {
+                employeeId: sEmployeeID
+            });
         }
     });
 });
