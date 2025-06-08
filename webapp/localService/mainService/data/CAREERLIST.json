@@ -4,9 +4,9 @@
   { "CareerId": "CR003", "CareerLevel": "CL8" },
   { "CareerId": "CR004", "CareerLevel": "CL7" },
   { "CareerId": "CR005", "CareerLevel": "CL6" },
-  { "CareerId": "CR005", "CareerLevel": "CL5" },
-  { "CareerId": "CR005", "CareerLevel": "CL4" },
-  { "CareerId": "CR005", "CareerLevel": "CL3" },
-  { "CareerId": "CR005", "CareerLevel": "CL2" },
-  { "CareerId": "CR005", "CareerLevel": "CL1" }
+  { "CareerId": "CR006", "CareerLevel": "CL5" },
+  { "CareerId": "CR007", "CareerLevel": "CL4" },
+  { "CareerId": "CR008", "CareerLevel": "CL3" },
+  { "CareerId": "CR009", "CareerLevel": "CL2" },
+  { "CareerId": "CR010", "CareerLevel": "CL1" }
 ]
