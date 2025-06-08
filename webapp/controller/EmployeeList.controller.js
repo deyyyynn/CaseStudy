@@ -31,6 +31,9 @@ sap.ui.define([
         },
         onClickAdd: function (){
             this.getOwnerComponent().getRouter().navTo("RouteCreatePage");
+        },
+        onListItemPress: function (){
+            this.getOwnerComponent().getRouter().navTo("RouteViewPage");
         }
     });
 });

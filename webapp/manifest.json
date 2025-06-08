@@ -103,6 +103,13 @@
           "target": [
             "TargetCreatePage"
           ]
+        },
+        {
+          "name": "RouteViewPage",
+          "pattern": "ViewPage/",
+          "target": [
+            "TargetViewPage"
+          ]
         }
       ],
       "targets": {
@@ -113,6 +120,10 @@
         "TargetCreatePage": {
           "viewId": "CreatePage",
           "viewName": "CreatePage"
+        },
+        "TargetViewPage": {
+          "viewId": "ViewPage",
+          "viewName": "ViewPage"
         }
       }
     },

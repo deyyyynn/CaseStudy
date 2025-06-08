@@ -1,7 +1,7 @@
 sap.ui.define([
     "sap/ui/core/mvc/Controller",
     "sap/ui/model/json/JSONModel",
-    "sap/ui/core/routing/History"
+    "sap/ui/core/routing/History",
 ], (Controller, JSONModel, History) => {
     "use strict";
 
