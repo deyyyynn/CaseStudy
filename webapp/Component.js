@@ -14,13 +14,20 @@ sap.ui.define([
 
         init() {
             
-            // call the base component's init function
             UIComponent.prototype.init.apply(this, arguments);
 
-            // set the device model
             this.setModel(models.createDeviceModel(), "device");
 
-            // enable routing
+            // Load employee model
+            var oEmployeeModel = new sap.ui.model.json.JSONModel();
+            oEmployeeModel.loadData("model/employee.json");
+            this.setModel(oEmployeeModel, "employee");
+
+            // Load skill model
+            var oSkillModel = new sap.ui.model.json.JSONModel();
+            oSkillModel.loadData("model/skill.json");
+            this.setModel(oSkillModel, "skill");
+
             this.getRouter().initialize();
 
         }

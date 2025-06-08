@@ -4,17 +4,11 @@
 		xmlns:m="sap.m"
 		xmlns:f="sap.f"
 		xmlns:form="sap.ui.layout.form">
-	<ObjectPageLayout id="ObjectPageLayout"
-					showTitleInHeaderContent="true"
-					alwaysShowContentHeader="false"
-					preserveHeaderStateOnScroll="false"
-					headerContentPinnable="true"
-					isChildPage="true"
-					upperCaseAnchorBar="false">
+	<ObjectPageLayout id="ObjectPageLayout" showTitleInHeaderContent="true" isChildPage="true">
 				<headerTitle>
 					<ObjectPageDynamicHeaderTitle id="objPgeDyn">
 						<expandedHeading>
-							<m:Title id="fNameTitle" text="{FirstName} {LastName}" wrapping="true" class="sapUiSmallMarginEnd"/>
+							<m:Title id="fNameTitle" text="{employee>FirstName} {employee>LastName}" wrapping="true" class="sapUiSmallMarginEnd"/>
 						</expandedHeading>
 
 					</ObjectPageDynamicHeaderTitle>
@@ -24,15 +18,15 @@
 					<m:FlexBox id="flexB" wrap="Wrap" fitContainer="true" alignItems="Stretch">
 						<m:VBox id="vBox" justifyContent="Center" class="sapUiSmallMarginEnd">
 							<m:Label id="fNameHead" text="{i18n>fName}"/>
-							<m:Text id="fNLName" text="{FirstName} {LastName}"/>
+							<m:Text id="fNLName" text="{employee>FirstName} {employee>LastName}"/>
 						</m:VBox>
 						<m:VBox id="vBoxs" justifyContent="Center" class="sapUiSmallMarginEnd">
 							<m:Label id="lvlText" text="{i18n>clvlTxt}"/>
-							<m:Text id="careerLevel" text="{CareerLevel}"/>
+							<m:Text id="careerLevel" text="{employee>CareerLevel}"/>
 						</m:VBox>
                         <m:VBox id="vBox3" justifyContent="Center" class="sapUiSmallMarginEnd">
 							<m:Label id="lvlTxt2" text="{i18n>clvlTxt}"/>
-							<m:Text id="carLvl" text="{CareerLevel}"/>
+							<m:Text id="carLvl" text="{employee>CareerLevel}"/>
 						</m:VBox>
 					</m:FlexBox>
 				</headerContent>
@@ -54,19 +48,19 @@
 								columnsM="1">
 								<form:content>
                                     <m:Label id="eidTxt" text="eidTxt"/>
-                                    <m:Text id="empId" text="{EmployeeID}" />
+                                    <m:Text id="empId" text="{employee>EmployeeID}" />
                                     <m:Label id="fName" text="{i18n>fName}"/>
-                                    <m:Text id="firstName" text="{FirstName}" />
+                                    <m:Text id="firstName" text="{employee>FirstName}" />
                                     <m:Label id="lName" text="{i18n>lnameTxt}"/>
-                                    <m:Text id="lastName" text="{LastName}" />
+                                    <m:Text id="lastName" text="{employee>LastName}" />
                                     <m:Label id="ageText" text="{i18n>ageTxt}"/>
-                                    <m:Text id="age" text="{Age}" />
+                                    <m:Text id="age" text="{employee>Age}" />
                                     <m:Label id="hDateTxt" text="{i18n>hdateTxt}"/>
-                                    <m:Text id="dateHire" text="{DateHire}" />
+                                    <m:Text id="dateHire" text="{employee>DateHire}" />
                                     <m:Label id="lvlTxt" text="{i18n>clvlTxt}"/>
-                                    <m:Text id="careerLvl" text="{CareerLevel}" />
+                                    <m:Text id="careerLvl" text="{employee>CareerLevel}" />
                                     <m:Label id="projTxt" text="{i18n>cprojTxt}"/>
-                                    <m:Text id="current" text="{CurrentProject}" />
+                                    <m:Text id="current" text="{employee>CurrentProject}" />
 
 								</form:content>
 							</form:SimpleForm>
@@ -79,7 +73,7 @@
 				<subSections>
 					<ObjectPageSubSection id="objectPageSubSec">
 						<blocks>
-                            <m:Table id="skillsTable" inset="false" mode="SingleSelectMaster">
+                            <m:Table id="skillsTable" inset="false" mode="SingleSelectMaster" items="{filteredSkills>/Skills}" >
                                 <m:columns>
                                     <m:Column id="idCol1">
                                         <m:Text id="idColText1" text="{i18n>skillTxt}" />
@@ -91,8 +85,8 @@
 								<m:items>
 									<m:ColumnListItem id="columnListItem" vAlign="Middle">
 										<m:cells>
-											<m:Text id="skillName" text="{SkillName}" />
-											<m:Text id="proficiencyId" text="{ProficiencyID}" />
+											<m:Text id="skillName" text="{filteredSkills>SkillName}" />
+											<m:Text id="proficiencyId" text="{filteredSkills>ProficiencyID}" />
 										</m:cells>
 									</m:ColumnListItem>
 								</m:items>

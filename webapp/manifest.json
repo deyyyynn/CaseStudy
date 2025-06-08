@@ -24,6 +24,14 @@
           "localUri": "localService/mainService/metadata.xml",
           "odataVersion": "2.0"
         }
+      },
+      "employee": {
+      "uri": "model/employee.json",
+      "type": "JSON"
+      },
+      "skill": {
+        "uri": "model/skill.json",
+        "type": "JSON"
       }
     }
   },
@@ -67,8 +75,15 @@
         "dataSource": "mainService",
         "preload": true,
         "settings": {}
+      },
+      "employee": {
+        "type": "sap.ui.model.json.JSONModel",
+        "dataSource": "employee"
+      },
+      "skill": {
+        "type": "sap.ui.model.json.JSONModel",
+        "dataSource": "skill"
       }
-      
     },
     "resources": {
       "css": [
