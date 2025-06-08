@@ -96,12 +96,23 @@
           "target": [
             "TargetEmployeeList"
           ]
+        },
+        {
+          "name": "RouteCreatePage",
+          "pattern": "CreatePage/",
+          "target": [
+            "TargetCreatePage"
+          ]
         }
       ],
       "targets": {
         "TargetEmployeeList": {
           "id": "EmployeeList",
           "name": "EmployeeList"
+        },
+        "TargetCreatePage": {
+          "viewId": "CreatePage",
+          "viewName": "CreatePage"
         }
       }
     },

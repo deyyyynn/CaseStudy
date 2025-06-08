@@ -1,0 +1,89 @@
+<mvc:View xmlns:core="sap.ui.core" xmlns:mvc="sap.ui.core.mvc" xmlns="sap.m" xmlns:sap.ui.core="sap.ui.core" xmlns:sap.ui.layout.form="sap.ui.layout.form" controllerName="sapips.training.employeeapp.controller.CreatePage">
+
+    <Page id="idCreatePage" title="{i18n>title}" showNavButton="true" navButtonPress="onClickBack">
+        <content>
+            <sap.ui.layout.form:SimpleForm editable="true" layout="ResponsiveGridLayout" id="formCreateRec">
+                <sap.ui.layout.form:content>
+                    <sap.ui.core:Title text="{i18n>titleHeader}" id="titleCreateRec"/>
+                    <!-- EID -->
+                    <Label text="{i18n>eidTxt}" id="eidLbl"/>
+                    <Input width="100%" id="i_eid" editable="false"/>
+                    
+                    <!-- First Name -->
+                    <Label text="{i18n>fnameTxt}" id="fnameLbl"/>
+                    <Input width="100%" id="i_fname" placeholder="{i18n>plchldrTxt}" required="true" maxLength="32"/>
+                    
+                    <!-- Last Name -->
+                    <Label text="{i18n>lnameTxt}" id="lnameLbl"/>
+                    <Input width="100%" id="i_lname" placeholder="{i18n>plchldrTxt}" required="true" maxLength="32"/>
+
+                    <!-- Age -->
+                    <Label text="{i18n>ageTxt}" id="ageLbl"/>
+                    <Input width="100%" id="i_age" placeholder="{i18n>plchldrTxt}" required="true"/>
+                    
+                    <!-- Date of Hire -->
+                    <Label text="{i18n>hdateTxt}" id="hdateLbl"/>
+                    <DatePicker id="datePicker"/>
+
+                    <!-- Career Level -->
+                    <Label text="{i18n>clvlTxt}" id="clvlLbl"/>
+                    <Select id="sel_clvl" items="{/CAREERLIST}">
+                        <items>
+                            <core:Item text="{CareerLevel}" id="itm_clvl"/>
+                        </items>                    
+                    </Select>
+
+                    <!-- Current Project -->
+                    <Label text="{i18n>cprojTxt}" id="cprojLbl"/>
+                    <Select id="sel_cproj" items="{/PROJECTLIST}">
+                        <items>
+                            <core:Item text="{ProjectName}" id="itm_cproj"/>
+                        </items>                    
+                    </Select>
+                </sap.ui.layout.form:content>
+            </sap.ui.layout.form:SimpleForm>
+
+            <!-- Add Skill -->
+            <Table noDataText="Drop column list items here and columns in the area above" id="table0" mode="MultiSelect">
+                <items>
+                    <ColumnListItem type="Active" id="item1">
+                        <cells>
+                            <Text text="Row 1 Cell 1" id="text7"/>
+                            <Text text="Row 1 Cell 2" id="text8"/>
+                        </cells>
+                    </ColumnListItem>
+                </items>
+                <columns>
+                    <Column id="column0">
+                        <header>
+                            <Label text="{i18n>skillTxt}" id="skillLbl"/>
+                        </header>
+                    </Column>
+                    <Column id="column1">
+                        <header>
+                            <Label text="{i18n>pro}" id="profLvl"/>
+                        </header>
+                    </Column></columns>
+                <headerToolbar>
+                    <Toolbar width="100%" id="toolbar1">
+                        <content>
+                            <Title text="{i18n>skills}" id="title4"/>
+                            <ToolbarSpacer id="spacer0"/>
+                            <Button text="{i18n>add}" id="addBtn"/>
+                            <Button text="{i18n>del}" id="delBtn" type="Reject"/>
+                        </content>
+                    </Toolbar>
+                </headerToolbar>
+            </Table>
+        </content>
+    <footer>
+        <Toolbar width="100%" id="idfooter">
+            <content>
+                <ToolbarSpacer id="spacer1"/>
+                <Button text="{i18n>sv}" id="saveBtn" type="Emphasized"/>
+                <Button text="{i18n>cancel}" id="cancelBtn"/>
+            </content>
+        </Toolbar>
+    </footer>
+    </Page>
+</mvc:View>
