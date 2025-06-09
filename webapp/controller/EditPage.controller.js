@@ -16,6 +16,7 @@ sap.ui.define([
 
         _onObjectMatched: function (oEvent) {
             const sEmployeeID = oEvent.getParameter("arguments").EmployeeID;
+            const sProficiencyID = oEvent.getParameter("arguments").ProficiencyID;
             const oModel = this.getOwnerComponent().getModel();
 
             // Fetch employee data based on EmployeeID
@@ -45,6 +46,17 @@ sap.ui.define([
                     MessageBox.error("Failed to load employee skills.");
                 }
             });
+
+            // Fetch Proficiency
+            oModel.read("/PROFICIENCYLIST", {
+                success: function (oData) {
+                    const oProfModel = new JSONModel(oData.results);
+                    this.getView().setModel(oProfModel, "proficiencyList");
+                }.bind(this),
+                error: function () {
+                    MessageBox.error("Could not load proficiency levels.");
+                }
+            });
         },
 
         onClickBack: function () {
@@ -61,19 +73,51 @@ sap.ui.define([
         onSave: function () {
             const oModel = this.getOwnerComponent().getModel();
             const oEmpData = this.getView().getModel("employeedetails").getData();
+            const sEmpPath = "/EMPLOYEE('" + oEmpData.EmployeeID + "')";
 
-            const sPath = "/EMPLOYEE('" + oEmpData.EmployeeID + "')";
-
-            oModel.update(sPath, oEmpData, {
+            // Update employee details
+            oModel.update(sEmpPath, oEmpData, {
                 success: function () {
-                    MessageBox.success("Employee updated successfully!", {
-                        onClose: this.onClickBack.bind(this)
-                    });
+                    // After employee update, update skills
+                    this._updateSkills()
+                        .then(() => {
+                            MessageBox.success("Employee and skills updated successfully!", {
+                                onClose: this.onClickBack.bind(this)
+                            });
+                        })
+                        .catch(() => {
+                            MessageBox.error("Employee updated, but error updating skills.");
+                        });
                 }.bind(this),
                 error: function () {
                     MessageBox.error("Error updating employee.");
                 }
             });
+        },
+
+        _updateSkills: function () {
+            const oModel = this.getOwnerComponent().getModel();
+            const aSkills = this.getView().getModel("skills").getData();
+
+            // Update each skill entry via OData update call, returns Promise for all
+            const aPromises = aSkills.map(skill => {
+                // Assuming SKILL entity is keyed by EmployeeID and SkillID
+                const sSkillPath = `/SKILL(EmployeeID='${skill.EmployeeID}',SkillID='${skill.SkillID}')`;
+
+                // Payload to update only proficiency (adjust if other fields needed)
+                const oPayload = {
+                    ProficiencyID: skill.ProficiencyID
+                };
+
+                return new Promise((resolve, reject) => {
+                    oModel.update(sSkillPath, oPayload, {
+                        success: () => resolve(),
+                        error: () => reject()
+                    });
+                });
+            });
+
+            return Promise.all(aPromises);
         }
     });
 });
