@@ -58,7 +58,7 @@
 				<subSections>
 					<ObjectPageSubSection id="objectPageSubSec">
 						<blocks>
-                            <m:Table id="skillsTable" inset="false" mode="SingleSelectMaster" items="{skills>/EmployeeID}">
+                            <m:Table id="skillsTable" inset="false" mode="SingleSelectMaster" items="{skills>/Skills}">
                                 <m:columns>
                                     <m:Column id="idCol1">
                                         <m:Text id="idColText1" text="{i18n>skillTxt}"/>
@@ -70,8 +70,8 @@
 								<m:items>
 									<m:ColumnListItem id="columnListItem" vAlign="Middle">
 										<m:cells>
-											<m:Text id="skillName" text="{skills>/SkillName}"/>
-											<m:Text id="proficiencyId" text="{skills>/ProficiencyID}"/>
+											<m:Text id="skillName" text="{skills>SkillName}"/>
+											<m:Text id="proficiencyId" text="{skills>ProficiencyID}"/>
 										</m:cells>
 									</m:ColumnListItem>
 								</m:items>
