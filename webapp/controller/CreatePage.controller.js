@@ -74,6 +74,51 @@ sap.ui.define([
 
         onClickSave: function(){
             var oView = this.getView();
+
+            // Validations for first name, last name, age
+            var oFname = oView.byId("i_fname");
+            var oLname = oView.byId("i_lname");
+            var oAge = oView.byId("i_age");
+
+            var sNewFname = oFname.getValue().trim();
+            var sNewLname = oLname.getValue().trim();
+            var sNewAge = oAge.getValue().trim();
+
+            var bValid = true;
+
+            var nameRegex = /^[A-Za-z\s\-]+$/;
+            var ageRegex = /^[0-9]+$/;
+
+            if (!sNewFname || !nameRegex.test(sNewFname)) {
+                oFname.setValueState("Error");
+                oFname.setValueStateText("This is a required field and must contain letters.");
+                bValid = false;
+            } else {
+                oFname.setValueState("None");
+            }
+
+            if (!sNewLname || !nameRegex.test(sNewLname)) {
+                oLname.setValueState("Error");
+                oLname.setValueStateText("This is a required field and must contain letters.");
+                bValid = false;
+            } else {
+                oLname.setValueState("None");
+            }
+
+            var iAge = parseInt(sNewAge);
+            if (!sNewAge || !ageRegex.test(sNewAge) || iAge <= 0 || iAge > 90) {
+                oAge.setValueState("Error");
+                oAge.setValueStateText("This is a required field and must contain numbers.");
+                bValid = false;
+            } else {
+                oAge.setValueState("None");
+            }
+
+            if (!bValid) {
+                return; 
+            }
+            // end of validation
+    
             var sNewFname = oView.byId("i_fname").getValue();
             var sNewLname = oView.byId("i_lname").getValue();
             var sNewAge = oView.byId("i_age").getValue();
@@ -254,6 +299,5 @@ sap.ui.define([
                 oView.byId("i_eid").setValue("");
             }
         }
-
     });
 });
