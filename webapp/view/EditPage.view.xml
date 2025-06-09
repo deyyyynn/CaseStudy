@@ -91,7 +91,7 @@
         <footer>
             <Toolbar id="_IDGenToolbar">
                 <ToolbarSpacer id="_IDGenToolbarSpacer1" />
-                <Button id="_IDGenButton1" text="{i18n>save}" type="Emphasized" press=".onSave" />
+                <Button id="_IDGenButton1" text="{i18n>upbtn}" type="Emphasized" press=".onSave" />
                 <Button id="_IDGenButton2" text="{i18n>cancel}" press=".onClickBack" />
             </Toolbar>
         </footer>

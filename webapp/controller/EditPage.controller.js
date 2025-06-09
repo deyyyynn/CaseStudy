@@ -68,56 +68,7 @@ sap.ui.define([
             } else {
                 this.getOwnerComponent().getRouter().navTo("RouteEmployeeList", {}, true);
             }
-        },
-
-        onSave: function () {
-            const oModel = this.getOwnerComponent().getModel();
-            const oEmpData = this.getView().getModel("employeedetails").getData();
-            const sEmpPath = "/EMPLOYEE('" + oEmpData.EmployeeID + "')";
-
-            // Update employee details
-            oModel.update(sEmpPath, oEmpData, {
-                success: function () {
-                    // After employee update, update skills
-                    this._updateSkills()
-                        .then(() => {
-                            MessageBox.success("Employee and skills updated successfully!", {
-                                onClose: this.onClickBack.bind(this)
-                            });
-                        })
-                        .catch(() => {
-                            MessageBox.error("Employee updated, but error updating skills.");
-                        });
-                }.bind(this),
-                error: function () {
-                    MessageBox.error("Error updating employee.");
-                }
-            });
-        },
-
-        _updateSkills: function () {
-            const oModel = this.getOwnerComponent().getModel();
-            const aSkills = this.getView().getModel("skills").getData();
-
-            // Update each skill entry via OData update call, returns Promise for all
-            const aPromises = aSkills.map(skill => {
-                // Assuming SKILL entity is keyed by EmployeeID and SkillID
-                const sSkillPath = `/SKILL(EmployeeID='${skill.EmployeeID}',SkillID='${skill.SkillID}')`;
-
-                // Payload to update only proficiency (adjust if other fields needed)
-                const oPayload = {
-                    ProficiencyID: skill.ProficiencyID
-                };
-
-                return new Promise((resolve, reject) => {
-                    oModel.update(sSkillPath, oPayload, {
-                        success: () => resolve(),
-                        error: () => reject()
-                    });
-                });
-            });
-
-            return Promise.all(aPromises);
         }
+        
     });
 });
