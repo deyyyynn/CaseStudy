@@ -1,9 +1,10 @@
 sap.ui.define([
     "sap/ui/core/mvc/Controller",
     "sap/ui/model/json/JSONModel",
+	"sap/m/MessageBox",
     "sap/ui/core/routing/History",
     "sap/m/library"
-], (Controller, JSONModel, History, mobileLibrary) => {
+], (Controller, JSONModel, MessageBox, History, mobileLibrary) => {
     "use strict";
 
     return Controller.extend("sapips.training.employeeapp.controller.CreatePage", {
@@ -139,19 +140,56 @@ sap.ui.define([
         },
 
         onPressDelete: function(){
+            // var oTable = this.byId("idSkillList");
+            // var aSelectedItems = oTable.getSelectedItems();
+        
+            // if (!aSelectedItems.length) {
+            //     sap.m.MessageToast.show("Please select at least one row to delete."); //Change to Message Box
+            //     return;
+            // }
+
+            // aSelectedItems.forEach(function (oItem) {
+            //     oTable.removeItem(oItem);
+            // });
+
+            // oTable.removeSelections();
+
             var oTable = this.byId("idSkillList");
             var aSelectedItems = oTable.getSelectedItems();
-        
-            if (!aSelectedItems.length) {
-                sap.m.MessageToast.show("Please select at least one row to delete."); //Change to Message Box
+
+            if (aSelectedItems.length === 0) {
+                MessageBox.warning("Must select at least 1 employee.");
                 return;
             }
 
-            aSelectedItems.forEach(function (oItem) {
-                oTable.removeItem(oItem);
-            });
+            MessageBox.confirm("Are you sure you want to delete the selected skill/s?", {
+                onClose: function (oAction) {
+                    if (oAction === sap.m.MessageBox.Action.OK) {
+                        var oModel = this.getOwnerComponent().getModel();
+                        var iPending = aSelectedItems.length;
+                        var bErrorOccurred = false;
+                        
+                        aSelectedItems.forEach(function (oItem) {
+                            var sPath = oItem.getBindingContext().getPath();
 
-            oTable.removeSelections();
+                            oModel.remove(sPath, {
+                                success: function () {
+                                    iPending--;
+                                    if (iPending === 0 && !bErrorOccurred) {
+                                        MessageBox.success("Selected skill(s) deleted successfully.");
+                                    }
+                                },
+                                error: function () {
+                                    bErrorOccurred = true;
+                                    MessageBox.error("Failed to delete one or more skills.");
+                                }
+                            });
+                        });
+
+                        oTable.removeSelections();
+                    }
+                }.bind(this)
+            });
         },
 
         onPressAdd: function (){
