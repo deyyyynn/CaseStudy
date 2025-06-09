@@ -1,42 +1,28 @@
 sap.ui.define([
     "sap/ui/core/mvc/Controller",
-    "sap/ui/core/routing/History",
     "sap/ui/model/json/JSONModel",
     "sap/ui/model/Filter",
-    "sap/m/MessageBox"
-    
-], (Controller, History, JSONModel,Filter,MessageBox) => {
+    "./formatter",
+    "sap/m/MessageBox"  
+], (Controller, JSONModel,Filter, formatter, MessageBox) => {
     "use strict";
 
     return Controller.extend("sapips.training.employeeapp.controller.ViewPage", {
-        onInit() {
-           // var oRouter = this.getOwnerComponent().getRouter();
-            //    oRouter.getRoute("RouteViewPage").attachPatternMatched(this._onRouteMatched, this);
-            this.getOwnerComponent().getRouter().getRoute("RouteViewPage")
-                .attachPatternMatched(this._onObjectMatched, this);
+        formatter: formatter,
+        onInit: function() {
+            this.getOwnerComponent().getRouter().getRoute("RouteViewPage").attachPatternMatched(this._onObjectMatched, this);
         },
-        /*handleClose: function () {
-			var oHistory = History.getInstance();
-            var sPreviousHash = oHistory.getPreviousHash();
-            var oRouter = this.getOwnerComponent().getRouter();
 
-            if (sPreviousHash !== undefined) {
-                window.history.go(-1);
-            } else {
-                oRouter.navTo("RouteEmployeeList", {}, true);
-            }
-		},
-        */
         _fetchSkillCount: function () {
-            var oModel = this.getOwnerComponent().getModel();
+            let oModel = this.getOwnerComponent().getModel();
 
             oModel.refresh(true);
             // Read the total count from the /EMPLOYEE endpoint using $count
             oModel.read("/SKILL/$count", {
                 success: function (oData) {
                     // Set the total count of employees in the model
-                    var oCountModel = new JSONModel({ employeeCount: oData });
-                    this.getView().setModel(oCountModel, "employeeCountModel");
+                    let oCountModel = new JSONModel({ skillsCount: oData });
+                    this.getView().setModel(oCountModel, "skillsCountModel");
                 }.bind(this),
                 error: function () {
                     MessageBox.error("Error fetching employee skill count.");
@@ -45,14 +31,16 @@ sap.ui.define([
         },
         
         _onObjectMatched: function (oEvent) {
-            var sEmployeeID = oEvent.getParameter("arguments").EmployeeID;
-            var oModel = this.getOwnerComponent().getModel();
+            let sEmployeeID = oEvent.getParameter("arguments").EmployeeID;
+            let oModel = this.getOwnerComponent().getModel();
+
+            this._fetchSkillCount(sEmployeeID);
 
             // Read employee data
             oModel.read("/EMPLOYEE", {
                 filters: [new Filter("EmployeeID", "EQ", sEmployeeID)],
                 success: function (oData) {
-                    var oEmployeeModel = new JSONModel(oData.results[0]);
+                    let oEmployeeModel = new JSONModel(oData.results[0]);
                     this.getView().setModel(oEmployeeModel, "employeedetails");
                 }.bind(this),
                 error: function () {
@@ -64,7 +52,14 @@ sap.ui.define([
             oModel.read("/SKILL", {
                 filters: [new Filter("EmployeeID", "EQ", sEmployeeID)],
                 success: function (oData) {
-                    var oSkillsModel = new JSONModel(oData.results[0]);
+                    let aUniqueSkills = oData.results.filter((item, index, self) =>
+                        index === self.findIndex(t =>
+                            t.SkillName === item.SkillName && t.ProficiencyID === item.ProficiencyID
+                        )
+                    );
+            
+                    // Set model with named array path
+                    let oSkillsModel = new JSONModel({ Skills: aUniqueSkills });
                     this.getView().setModel(oSkillsModel, "skills");
                 }.bind(this),
                 error: function () {
@@ -72,11 +67,5 @@ sap.ui.define([
                 }
             });
         }
-
-
-        /*_onRouteMatched: function(){
-            this._fetchSkillCount();
-        }
-            */
     });
 });

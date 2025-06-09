@@ -1,21 +1,92 @@
-<mvc:View controllerName="sapips.training.employeeapp.controller.ViewPage" 
-		height="100%"
-		xmlns:mvc="sap.ui.core.mvc"
-		xmlns="sap.m"
-		xmlns:core="sap.ui.core"
-		xmlns:layout="sap.ui.layout"
->
-	<ObjectHeader
-		id="oh1"
-		responsive="true"
-		title="{employeedetails>/FirstName} {employeedetails>/LastName}"
-		backgroundDesign="Translucent">
-		<attributes>
-			<ObjectAttribute
-				title="Career Level"
-				text="{skills>/SkillName}"/>
-		</attributes>
-		<headerContainer>
-		</headerContainer>
-	</ObjectHeader>
+<mvc:View xmlns="sap.uxap" xmlns:mvc="sap.ui.core.mvc" xmlns:m="sap.m" xmlns:f="sap.f" xmlns:form="sap.ui.layout.form" controllerName="sapips.training.employeeapp.controller.ViewPage">
+	<ObjectPageLayout id="ObjectPageLayout" showTitleInHeaderContent="true" isChildPage="true" showFooter="true">
+				<headerTitle>
+					<ObjectPageDynamicHeaderTitle id="objPgeDyn">
+						<expandedHeading>
+							<m:Title id="fNameTitle" text="{employeedetails>/FirstName} {employeedetails&gt;/LastName}" wrapping="true" class="sapUiSmallMarginEnd"/>
+						</expandedHeading>
+
+						<snappedHeading>
+							<m:Title id="subHead" text="{employeedetails>/FirstName} {employeedetails&gt;/LastName}" wrapping="true" class="sapUiTinyMarginEnd"/>
+						</snappedHeading>
+
+					</ObjectPageDynamicHeaderTitle>
+				</headerTitle>
+
+				<headerContent>
+					<m:FlexBox id="flexB" wrap="Wrap" fitContainer="true" alignItems="Stretch">
+						<m:VBox id="vBox" justifyContent="Center" class="sapUiSmallMarginEnd">
+							<m:Label id="lvlText" text="{i18n>clvlTxt}"/>
+						</m:VBox>
+						<m:VBox id="vBoxs" justifyContent="Center" class="sapUiSmallMarginEnd">
+							<m:Text id="careerLevel" text="{employeedetails>/CareerLevel}"/>
+						</m:VBox>
+					</m:FlexBox>
+				</headerContent>
+
+		<sections>
+			<ObjectPageSection id="objPgeSec" title="Employee Information">
+				<subSections>
+					<ObjectPageSubSection id="objPgSub">
+						<blocks>
+							<form:SimpleForm id="employeeForm" maxContainerCols="2" editable="false" layout="ResponsiveGridLayout" labelSpanL="12" labelSpanM="12" emptySpanL="0" emptySpanM="0" columnsL="1" columnsM="1">
+								<form:content>
+                                    <m:Label id="eidTxt" text="{i18n>eidTxt}"/>
+                                    <m:Text id="empId" text="{employeedetails>/EmployeeID}"/>
+                                    <m:Label id="fName" text="{i18n>fName}"/>
+                                    <m:Text id="firstName" text="{employeedetails>/FirstName}"/>
+                                    <m:Label id="lName" text="{i18n>lnameTxt}"/>
+                                    <m:Text id="lastName" text="{employeedetails>/LastName}"/>
+                                    <m:Label id="ageText" text="{i18n>ageTxt}"/>
+                                    <m:Text id="age" text="{employeedetails>/Age}"/>
+                                    <m:Label id="hDateTxt" text="{i18n>hdateTxt}"/>
+                                    <m:Text id="hireDate" text="{ path: 'employeedetails>/DateHire', formatter: '.formatter.formatDate' }"/>
+                                    <m:Label id="lvlTxt" text="{i18n>clvlTxt}"/>
+                                    <m:Text id="careerLvl" text="{employeedetails>/CareerLevel}"/>
+                                    <m:Label id="projTxt" text="{i18n>cprojTxt}"/>
+                                    <m:Text id="current" text="{employeedetails>/CurrentProject}"/>
+
+								</form:content>
+							</form:SimpleForm>
+						</blocks>
+					</ObjectPageSubSection>
+				</subSections>
+			</ObjectPageSection>
+			</sections>
+		
+		<ObjectPageSection id="objectPageSec" title="{i18n>Skills} ({skillsCountModel>/skillsCount})">
+				<subSections>
+					<ObjectPageSubSection id="objectPageSubSec">
+						<blocks>
+                            <m:Table id="skillsTable" inset="false" mode="SingleSelectMaster" items="{skills>/Skills}">
+                                <m:columns>
+                                    <m:Column id="idCol1">
+                                        <m:Text id="idColText1" text="{i18n>skillTxt}"/>
+                                    </m:Column>
+                                    <m:Column id="idCol2">
+                                        <m:Text id="idColText2" text="{i18n>pro}"/>
+                                    </m:Column>
+                                </m:columns>
+								<m:items>
+									<m:ColumnListItem id="columnListItem" vAlign="Middle">
+										<m:cells>
+											<m:Text id="skillName" text="{skills>SkillName}"/>
+											<m:Text id="proficiencyId" text="{skills>ProficiencyID}"/>
+										</m:cells>
+									</m:ColumnListItem>
+								</m:items>
+                            </m:Table>
+						</blocks>
+					</ObjectPageSubSection>
+				</subSections>
+			</ObjectPageSection>
+	<footer>
+	    <m:Toolbar width="100%" id="idFooterButton">
+	        <m:content><m:ToolbarSpacer id="idsSacer"/>
+	            <Button xmlns="sap.m" text="{i18n>editBtn}" id="button4" press="onClickEdit" type="Emphasized"/>
+	            <Button xmlns="sap.m" text="{i18n>Cancel}" id="button5" press="onClickCancel"/>
+	        </m:content>
+	    </m:Toolbar>
+	</footer>
+	</ObjectPageLayout>		
 </mvc:View>
