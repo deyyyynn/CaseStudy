@@ -7,6 +7,13 @@
     "ProficiencyLevel": "A"
   },
   {
+    "EmployeeID": "EmployeeIDJohnsonAlice1506",
+    "SkillID": "SK002",
+    "ProficiencyID": "P2",
+    "SkillName": "C#", 
+    "ProficiencyLevel": "B"
+  },
+  {
     "EmployeeID": "EmployeeIDSmithBrian1003",
     "SkillID": "SK002",
     "ProficiencyID": "P2",

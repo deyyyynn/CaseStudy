@@ -14,14 +14,14 @@ sap.ui.define([
         },
 
         _fetchSkillCount: function () {
-            var oModel = this.getOwnerComponent().getModel();
+            let oModel = this.getOwnerComponent().getModel();
 
             oModel.refresh(true);
             // Read the total count from the /EMPLOYEE endpoint using $count
             oModel.read("/SKILL/$count", {
                 success: function (oData) {
                     // Set the total count of employees in the model
-                    var oCountModel = new JSONModel({ skillsCount: oData });
+                    let oCountModel = new JSONModel({ skillsCount: oData });
                     this.getView().setModel(oCountModel, "skillsCountModel");
                 }.bind(this),
                 error: function () {
@@ -31,8 +31,8 @@ sap.ui.define([
         },
         
         _onObjectMatched: function (oEvent) {
-            var sEmployeeID = oEvent.getParameter("arguments").EmployeeID;
-            var oModel = this.getOwnerComponent().getModel();
+            let sEmployeeID = oEvent.getParameter("arguments").EmployeeID;
+            let oModel = this.getOwnerComponent().getModel();
 
             this._fetchSkillCount(sEmployeeID);
 
@@ -40,7 +40,7 @@ sap.ui.define([
             oModel.read("/EMPLOYEE", {
                 filters: [new Filter("EmployeeID", "EQ", sEmployeeID)],
                 success: function (oData) {
-                    var oEmployeeModel = new JSONModel(oData.results[0]);
+                    let oEmployeeModel = new JSONModel(oData.results[0]);
                     this.getView().setModel(oEmployeeModel, "employeedetails");
                 }.bind(this),
                 error: function () {
@@ -59,7 +59,7 @@ sap.ui.define([
                     );
             
                     // Set model with named array path
-                    var oSkillsModel = new JSONModel({ Skills: aUniqueSkills });
+                    let oSkillsModel = new JSONModel({ Skills: aUniqueSkills });
                     this.getView().setModel(oSkillsModel, "skills");
                 }.bind(this),
                 error: function () {
