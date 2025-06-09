@@ -16,22 +16,24 @@ sap.ui.define([
     return Controller.extend("sapips.training.employeeapp.controller.EmployeeList", {
         formatter: formatter,
         onInit() {
-            var oRouter = this.getOwnerComponent().getRouter();
+            let oRouter = this.getOwnerComponent().getRouter();
             oRouter.getRoute("RouteEmployeeList").attachPatternMatched(this._onRouteMatched, this);
+           
         },
         _fetchEmployeeCount: function () {
-            var oModel = this.getOwnerComponent().getModel();
+            let oModel = this.getOwnerComponent().getModel();
 
             oModel.refresh(true);
-            // Read the total count from the /EMPLOYEE endpoint using $count
+
             oModel.read("/EMPLOYEE/$count", {
                 success: function (oData) {
-                    // Set the total count of employees in the model
-                    var oCountModel = new JSONModel({ employeeCount: oData });
+
+                    let oCountModel = new JSONModel({ employeeCount: oData });
                     this.getView().setModel(oCountModel, "employeeCountModel");
                 }.bind(this),
                 error: function () {
-                    MessageBox.error("Error fetching employee count.");
+                    let errFetch = this.getView().getModel("i18n").getResourceBundle().getText("errFetch");
+                    MessageBox.error(errFetch);
                 }
             });
         },
@@ -43,88 +45,85 @@ sap.ui.define([
         },
         
         onSearch: function (oEvent) {
-            var sQuery = oEvent.getSource().getValue();
-            var oTable = this.byId("employeeTable");
-            var oBinding = oTable.getBinding("items");
+            let sQuery = oEvent.getSource().getValue();
+            let oTable = this.byId("employeeTable");
+            let oBinding = oTable.getBinding("items");
             
             if (!sQuery) {
                 if (oBinding) {
-                    oBinding.filter([]); // Clear filters = show all data
+                    oBinding.filter([]); 
                 }
                 return;
             }
 
-            var aFilters = [];
+            let aFilters = [];
           
-            // Capitalized query (used for fields like CurrentProject)
-            var sCapitalizedQuery = sQuery.charAt(0).toUpperCase() + sQuery.slice(1).toLowerCase();
+            
+            let sCapitalizedQuery = sQuery.charAt(0).toUpperCase() + sQuery.slice(1).toLowerCase();
 
-             // FILTERS----------------------------------------------------------------------------
             if (!isNaN(Number(sQuery)) && sQuery.length === 2) {
-                // Age
                 let iAge = parseInt(sQuery, 10);
                 if (iAge >= 0 && iAge <= 90) {
                     aFilters.push(new Filter("Age", FilterOperator.EQ, iAge));
                 }
             } else if (sQuery.length === 8 && !isNaN(Number(sQuery))) {
-                // Date
+
                 let sDate = formatter.toModelDateFormat(sQuery);
                 if (sDate) {
                     aFilters.push(new Filter("DateHire", FilterOperator.Contains, sDate));
                 }
             } else if (sQuery.toUpperCase().startsWith("CL") && sQuery.length <= 4) {
-                // Career level
+                
                 aFilters.push(new Filter("CareerLevel", FilterOperator.EQ, sQuery.toUpperCase()));
             } else if (sQuery.startsWith("EmployeeID")) {
-                // EmployeeID
+                
                 aFilters.push(new Filter("EmployeeID", FilterOperator.EQ, sQuery));
             } else {
-                // Name and Project
+                
                 aFilters.push(new Filter("FirstName", FilterOperator.Contains, sCapitalizedQuery));
                 aFilters.push(new Filter("LastName", FilterOperator.Contains, sCapitalizedQuery));
                 aFilters.push(new Filter("CurrentProject", FilterOperator.Contains, sCapitalizedQuery));
             }
-            // FILTERS----------------------------------------------------------------------------
-
+            
 
             if (oBinding) {
                 oBinding.filter(new Filter({
                     filters: aFilters,
-                    and: false // OR logic — match if any field contains the query
+                    and: false 
                 }));
             }
         },
-        //Delete
+
         onDelete: function(){
             
-            var oTable = this.byId("employeeTable");
-            var aSelectedItems = oTable.getSelectedItems();
-
+            let oTable = this.byId("employeeTable");
+            let aSelectedItems = oTable.getSelectedItems();
+            let oerrDel = this.getView().getModel("i18n").getResourceBundle();
             if (aSelectedItems.length === 0) {
-                MessageBox.warning("Must select at least 1 employee.");
+                MessageBox.warning(oerrDel.getText("delWarn"));
                 return;
             }
 
             MessageBox.confirm("Are you sure you want to delete the selected employee/s?", {
                 onClose: function (oAction) {
                     if (oAction === sap.m.MessageBox.Action.OK) {
-                        var oModel = this.getOwnerComponent().getModel();
-                        var iPending = aSelectedItems.length;
-                        var bErrorOccurred = false;
+                        let oModel = this.getOwnerComponent().getModel();
+                        let iPending = aSelectedItems.length;
+                        let bErrorOccurred = false;
                         
                         aSelectedItems.forEach(function (oItem) {
-                            var sPath = oItem.getBindingContext().getPath();
+                            let sPath = oItem.getBindingContext().getPath();
 
                             oModel.remove(sPath, {
                                 success: function () {
                                     iPending--;
                                     if (iPending === 0 && !bErrorOccurred) {
-                                        MessageBox.success("Selected employee(s) deleted successfully.");
+                                        MessageBox.success("{i18n>delsuc}");
                                     }
                                 },
                                 error: function () {
                                     bErrorOccurred = true;
-                                    MessageBox.error("Failed to delete one or more employees.");
+                                    MessageBox.error("{i18n>delFail}");
                                 }
                             });
                         });
@@ -135,9 +134,8 @@ sap.ui.define([
             });
         },
 
-        //Nav to Employee View Page
         onEmployeePress: function(oEvent) {
-            var sEmployeeID = oEvent.getSource().getBindingContext().getProperty("EmployeeID");
+            let sEmployeeID = oEvent.getSource().getBindingContext().getProperty("EmployeeID");
             this.getOwnerComponent().getRouter().navTo("RouteViewPage", {
                 EmployeeID: sEmployeeID
             });
