@@ -54,7 +54,7 @@
                                     <m:Label id="ageText" text="{i18n>ageTxt}"/>
                                     <m:Text id="age" text="{employeedetails>/Age}" />
                                     <m:Label id="hDateTxt" text="{i18n>hdateTxt}"/>
-                                    <m:Text id="dateHire" text="{employeedetails>/DateHire}" />
+                                    <m:Text id="hireDate" text="{ path: 'employeedetails>/DateHire', formatter: '.formatter.formatDate' }" />
                                     <m:Label id="lvlTxt" text="{i18n>clvlTxt}"/>
                                     <m:Text id="careerLvl" text="{employeedetails>/CareerLevel}" />
                                     <m:Label id="projTxt" text="{i18n>cprojTxt}"/>

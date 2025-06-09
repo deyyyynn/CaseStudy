@@ -1,21 +1,15 @@
 sap.ui.define([
     "sap/ui/core/mvc/Controller",
-    "sap/ui/core/routing/History",
     "sap/ui/model/json/JSONModel",
     "sap/ui/model/Filter",
-    "sap/m/MessageBox"
-    
-], (Controller, History, JSONModel,Filter,MessageBox) => {
+    "./formatter",
+    "sap/m/MessageBox"  
+], (Controller, JSONModel,Filter, formatter, MessageBox) => {
     "use strict";
 
     return Controller.extend("sapips.training.employeeapp.controller.ViewPage", {
+        formatter: formatter,
         onInit: function() {
-            // Assuming you have route matched setup
-            // var oRouter = sap.ui.core.UIComponent.getRouterFor(this);
-            // oRouter.getRoute("employeeRouteName").attachPatternMatched(this._onRouteMatched, this);
-        
-            // // Load skill model once here if not loaded already
-            // this._oSkillModel = this.getOwnerComponent().getModel("skill");
             this.getOwnerComponent().getRouter().getRoute("RouteViewPage").attachPatternMatched(this._onObjectMatched, this);
         },
 
