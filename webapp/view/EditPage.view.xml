@@ -1,0 +1,88 @@
+<mvc:View xmlns:core="sap.ui.core"
+          xmlns:mvc="sap.ui.core.mvc"
+          xmlns="sap.m"
+          xmlns:sap.ui.layout.form="sap.ui.layout.form"
+          controllerName="sapips.training.employeeapp.controller.EditPage">
+
+    <Page id="idEditPage" title="{i18n>editTitle}" showNavButton="true" navButtonPress="onClickBack">
+        <content>
+            <sap.ui.layout.form:SimpleForm
+                editable="true"
+                layout="ResponsiveGridLayout"
+                id="formEditRec">
+
+                <sap.ui.layout.form:content>
+                    <core:Title id="_IDGenTitle1" text="{i18n>titleHeader}" />
+
+                    <!-- EID (read-only) -->
+                    <Label id="_IDGenLabel" text="{i18n>eidTxt}" />
+                    <Input id="_IDGenInput" value="{employeedetails>/EmployeeID}" editable="false" width="100%" />
+
+                    <!-- First Name -->
+                    <Label id="_IDGenLabel1" text="{i18n>fnameTxt}" />
+                    <Input id="_IDGenInput1" value="{employeedetails>/FirstName}" width="100%" required="true" />
+
+                    <!-- Last Name -->
+                    <Label id="_IDGenLabel2" text="{i18n>lnameTxt}" />
+                    <Input id="_IDGenInput2" value="{employeedetails>/LastName}" width="100%" required="true" />
+
+                    <!-- Age -->
+                    <Label id="_IDGenLabel3" text="{i18n>ageTxt}" />
+                    <Input id="_IDGenInput3" value="{employeedetails>/Age}" width="100%" required="true" />
+
+                    <!-- Hire Date -->
+                    <Label id="_IDGenLabel4" text="{i18n>hdateTxt}" />
+                    <DatePicker id="_IDGenDatePicker" value="{employeedetails>/DateHire}" displayFormat="yyyy-MM-dd" />
+
+                    <!-- Career Level -->
+                    <Label id="_IDGenLabel5" text="{i18n>clvlTxt}" />
+                    <Select id="_IDGenSelect" selectedKey="{employeedetails>/CareerLevel}" items="{/CAREERLIST}">
+                        <items>
+                            <core:Item id="_IDGenItem" key="{CareerLevel}" text="{CareerLevel}" />
+                        </items>
+                    </Select>
+
+                    <!-- Current Project -->
+                    <Label id="_IDGenLabel6" text="{i18n>cprojTxt}" />
+                    <Select id="_IDGenSelect1" selectedKey="{employeedetails>/CurrentProject}" items="{/PROJECTLIST}">
+                        <items>
+                            <core:Item id="_IDGenItem1" key="{ProjectName}" text="{ProjectName}" />
+                        </items>
+                    </Select>
+                </sap.ui.layout.form:content>
+            </sap.ui.layout.form:SimpleForm>
+
+            <!-- Skills Table (optional) -->
+            <Table id="skillsTable1" items="{skills>/}">
+                <columns>
+                    <Column id="_IDGenColumn">
+                        <header>
+                            <Label id="_IDGenLabel7" text="{i18n>skillTxt}" />
+                        </header>
+                    </Column>
+                    <Column id="_IDGenColumn1">
+                        <header>
+                            <Label id="_IDGenLabel8" text="{i18n>pro}" />
+                        </header>
+                    </Column>
+                </columns>
+                <items>
+                    <ColumnListItem id="_IDGenColumnListItem">
+                        <cells>
+                            <Text id="_IDGenText" text="{skills>SkillName}" />
+                            <Text id="_IDGenText1" text="{skills>ProficiencyID}" />
+                        </cells>
+                    </ColumnListItem>
+                </items>
+            </Table>
+        </content>
+
+        <footer>
+            <Toolbar id="_IDGenToolbar">
+                <ToolbarSpacer id="_IDGenToolbarSpacer1" />
+                <Button id="_IDGenButton1" text="{i18n>save}" type="Emphasized" press=".onSave" />
+                <Button id="_IDGenButton2" text="{i18n>cancel}" press=".onClickBack" />
+            </Toolbar>
+        </footer>
+    </Page>
+</mvc:View>

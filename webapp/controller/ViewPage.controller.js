@@ -57,6 +57,26 @@ sap.ui.define([
                     MessageBox.error("Failed to load skills.");
                 }
             });
+        },
+        onClickEdit: function () {
+            var oModel = this.getView().getModel("employeedetails");
+
+            if (!oModel) {
+                MessageBox.error("Employee details model not available.");
+                return;
+            }
+
+            var sEmployeeID = oModel.getProperty("/EmployeeID");
+
+            if (sEmployeeID) {
+                var oRouter = this.getOwnerComponent().getRouter();
+                console.log("Navigating to EditPage for EmployeeID:", sEmployeeID);
+                oRouter.navTo("RouteEditPage", {
+                    EmployeeID: sEmployeeID
+                });
+            } else {
+                MessageBox.warning("Employee ID not found in the model.");
+            }
         }
     });
 });

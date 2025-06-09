@@ -1,18 +1,13 @@
-<mvc:View controllerName="sapips.training.employeeapp.controller.ViewPage"
-		xmlns="sap.uxap"
-		xmlns:mvc="sap.ui.core.mvc"
-		xmlns:m="sap.m"
-		xmlns:f="sap.f"
-		xmlns:form="sap.ui.layout.form">
-	<ObjectPageLayout id="ObjectPageLayout" showTitleInHeaderContent="true" isChildPage="true">
+<mvc:View xmlns="sap.uxap" xmlns:mvc="sap.ui.core.mvc" xmlns:m="sap.m" xmlns:f="sap.f" xmlns:form="sap.ui.layout.form" controllerName="sapips.training.employeeapp.controller.ViewPage">
+	<ObjectPageLayout id="ObjectPageLayout" showTitleInHeaderContent="true" isChildPage="true" showFooter="true">
 				<headerTitle>
 					<ObjectPageDynamicHeaderTitle id="objPgeDyn">
 						<expandedHeading>
-							<m:Title id="fNameTitle" text="{employeedetails>/FirstName} {employeedetails>/LastName}" wrapping="true" class="sapUiSmallMarginEnd"/>
+							<m:Title id="fNameTitle" text="{employeedetails>/FirstName} {employeedetails&gt;/LastName}" wrapping="true" class="sapUiSmallMarginEnd"/>
 						</expandedHeading>
 
 						<snappedHeading>
-							<m:Title id="subHead" text="{employeedetails>/FirstName} {employeedetails>/LastName}" wrapping="true" class="sapUiTinyMarginEnd"/>
+							<m:Title id="subHead" text="{employeedetails>/FirstName} {employeedetails&gt;/LastName}" wrapping="true" class="sapUiTinyMarginEnd"/>
 						</snappedHeading>
 
 					</ObjectPageDynamicHeaderTitle>
@@ -34,31 +29,22 @@
 				<subSections>
 					<ObjectPageSubSection id="objPgSub">
 						<blocks>
-							<form:SimpleForm id="employeeForm"
-								maxContainerCols="2"
-								editable="false"
-								layout="ResponsiveGridLayout"
-								labelSpanL="12"
-								labelSpanM="12"
-								emptySpanL="0"
-								emptySpanM="0"
-								columnsL="1"
-								columnsM="1">
+							<form:SimpleForm id="employeeForm" maxContainerCols="2" editable="false" layout="ResponsiveGridLayout" labelSpanL="12" labelSpanM="12" emptySpanL="0" emptySpanM="0" columnsL="1" columnsM="1">
 								<form:content>
                                     <m:Label id="eidTxt" text="{i18n>eidTxt}"/>
-                                    <m:Text id="empId" text="{employeedetails>/EmployeeID}" />
+                                    <m:Text id="empId" text="{employeedetails>/EmployeeID}"/>
                                     <m:Label id="fName" text="{i18n>fName}"/>
-                                    <m:Text id="firstName" text="{employeedetails>/FirstName}" />
+                                    <m:Text id="firstName" text="{employeedetails>/FirstName}"/>
                                     <m:Label id="lName" text="{i18n>lnameTxt}"/>
-                                    <m:Text id="lastName" text="{employeedetails>/LastName}" />
+                                    <m:Text id="lastName" text="{employeedetails>/LastName}"/>
                                     <m:Label id="ageText" text="{i18n>ageTxt}"/>
-                                    <m:Text id="age" text="{employeedetails>/Age}" />
+                                    <m:Text id="age" text="{employeedetails>/Age}"/>
                                     <m:Label id="hDateTxt" text="{i18n>hdateTxt}"/>
-                                    <m:Text id="hireDate" text="{ path: 'employeedetails>/DateHire', formatter: '.formatter.formatDate' }" />
+                                    <m:Text id="hireDate" text="{ path: 'employeedetails>/DateHire', formatter: '.formatter.formatDate' }"/>
                                     <m:Label id="lvlTxt" text="{i18n>clvlTxt}"/>
-                                    <m:Text id="careerLvl" text="{employeedetails>/CareerLevel}" />
+                                    <m:Text id="careerLvl" text="{employeedetails>/CareerLevel}"/>
                                     <m:Label id="projTxt" text="{i18n>cprojTxt}"/>
-                                    <m:Text id="current" text="{employeedetails>/CurrentProject}" />
+                                    <m:Text id="current" text="{employeedetails>/CurrentProject}"/>
 
 								</form:content>
 							</form:SimpleForm>
@@ -72,20 +58,20 @@
 				<subSections>
 					<ObjectPageSubSection id="objectPageSubSec">
 						<blocks>
-                            <m:Table id="skillsTable" inset="false" mode="SingleSelectMaster" items="{skills>/EmployeeID}">
+                            <m:Table id="skillsTable" inset="false" mode="SingleSelectMaster" items="">
                                 <m:columns>
                                     <m:Column id="idCol1">
-                                        <m:Text id="idColText1" text="{i18n>skillTxt}" />
+                                        <m:Text id="idColText1" text="{i18n>skillTxt}"/>
                                     </m:Column>
                                     <m:Column id="idCol2">
-                                        <m:Text id="idColText2" text="{i18n>pro}" />
+                                        <m:Text id="idColText2" text="{i18n>pro}"/>
                                     </m:Column>
                                 </m:columns>
 								<m:items>
 									<m:ColumnListItem id="columnListItem" vAlign="Middle">
 										<m:cells>
-											<m:Text id="skillName" text="{skills>/SkillName}" />
-											<m:Text id="proficiencyId" text="{skills>/ProficiencyID}" />
+											<m:Text id="skillName" text="{skills>/SkillName}"/>
+											<m:Text id="proficiencyId" text="{skills>/ProficiencyID}"/>
 										</m:cells>
 									</m:ColumnListItem>
 								</m:items>
@@ -94,5 +80,11 @@
 					</ObjectPageSubSection>
 				</subSections>
 			</ObjectPageSection>
+			<footer>
+			<m:OverflowToolbar id="_IDGenOverflowToolbar1">
+				<m:ToolbarSpacer id="_IDGenToolbarSpacer"/>
+				<m:Button id="_IDGenButton" text="{i18n>editBtn}" press="onClickEdit" type="Emphasized"/>
+			</m:OverflowToolbar>
+    </footer>
 	</ObjectPageLayout>	 		
 </mvc:View>
