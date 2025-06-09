@@ -13,7 +13,7 @@
 					<ToolbarSpacer />
                     <SearchField id="searchField" width="200px" search="onSearch" />
                     <Button id="addButton" text="{i18n>add}" press="onClickAdd"></Button>
-                    <Button id="delButton" text="{i18n>del}" type="Reject"></Button>
+                    <Button id="delButton" text="{i18n>del}" type="Reject" press="onDelete"></Button>
 				</content>
 			</Toolbar>
 		</headerToolbar>
