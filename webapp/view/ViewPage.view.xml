@@ -13,7 +13,7 @@
 		<attributes>
 			<ObjectAttribute
 				title="Career Level"
-				text="{employeedetails>/CareerLevel}"/>
+				text="{skills>/SkillName}"/>
 		</attributes>
 		<headerContainer>
 		</headerContainer>
