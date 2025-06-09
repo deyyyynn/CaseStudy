@@ -21,8 +21,8 @@ sap.ui.define([
             oModel.read("/SKILL/$count", {
                 success: function (oData) {
                     // Set the total count of employees in the model
-                    var oCountModel = new JSONModel({ employeeCount: oData });
-                    this.getView().setModel(oCountModel, "employeeCountModel");
+                    var oCountModel = new JSONModel({ skillsCount: oData });
+                    this.getView().setModel(oCountModel, "skillsCountModel");
                 }.bind(this),
                 error: function () {
                     MessageBox.error("Error fetching employee skill count.");
@@ -31,6 +31,7 @@ sap.ui.define([
         },
         
         _onObjectMatched: function (oEvent) {
+            this._fetchSkillCount();
             var sEmployeeID = oEvent.getParameter("arguments").EmployeeID;
             var oModel = this.getOwnerComponent().getModel();
 
