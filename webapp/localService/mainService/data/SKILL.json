@@ -3,8 +3,8 @@
     "EmployeeID": "EmployeeIDJohnsonAlice1506",
     "SkillID": "SK001",
     "ProficiencyID": "P1",
-    "SkillName": "Java",
-    "ProficiencyLevel": "A"
+    "SkillName": ["Java", "C#"],
+    "ProficiencyLevel": ["A","B"]
   },
   {
     "EmployeeID": "EmployeeIDSmithBrian1003",

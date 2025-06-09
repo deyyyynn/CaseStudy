@@ -1,32 +1,18 @@
 sap.ui.define([
     "sap/ui/core/mvc/Controller",
-    "sap/ui/core/routing/History",
     "sap/ui/model/json/JSONModel",
     "sap/ui/model/Filter",
-    "sap/m/MessageBox"
-    
-], (Controller, History, JSONModel,Filter,MessageBox) => {
+    "./formatter",
+    "sap/m/MessageBox"  
+], (Controller, JSONModel,Filter, formatter, MessageBox) => {
     "use strict";
 
     return Controller.extend("sapips.training.employeeapp.controller.ViewPage", {
-        onInit() {
-           // var oRouter = this.getOwnerComponent().getRouter();
-            //    oRouter.getRoute("RouteViewPage").attachPatternMatched(this._onRouteMatched, this);
-            this.getOwnerComponent().getRouter().getRoute("RouteViewPage")
-                .attachPatternMatched(this._onObjectMatched, this);
+        formatter: formatter,
+        onInit: function() {
+            this.getOwnerComponent().getRouter().getRoute("RouteViewPage").attachPatternMatched(this._onObjectMatched, this);
         },
-        /*handleClose: function () {
-			var oHistory = History.getInstance();
-            var sPreviousHash = oHistory.getPreviousHash();
-            var oRouter = this.getOwnerComponent().getRouter();
 
-            if (sPreviousHash !== undefined) {
-                window.history.go(-1);
-            } else {
-                oRouter.navTo("RouteEmployeeList", {}, true);
-            }
-		},
-        */
         _fetchSkillCount: function () {
             var oModel = this.getOwnerComponent().getModel();
 
@@ -72,11 +58,5 @@ sap.ui.define([
                 }
             });
         }
-
-
-        /*_onRouteMatched: function(){
-            this._fetchSkillCount();
-        }
-            */
     });
 });
