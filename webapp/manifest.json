@@ -103,7 +103,15 @@
           "target": [
             "TargetCreatePage"
           ]
+        },
+        {
+        "name": "RouteViewPage",
+        "pattern": "ViewPage/{EmployeeID}",
+        "target": [
+            "TargetViewPage"
+          ]
         }
+        
       ],
       "targets": {
         "TargetEmployeeList": {
@@ -113,6 +121,10 @@
         "TargetCreatePage": {
           "viewId": "CreatePage",
           "viewName": "CreatePage"
+        },
+        "TargetViewPage": {
+          "viewId": "ViewPage",
+          "viewName": "ViewPage"
         }
       }
     },
