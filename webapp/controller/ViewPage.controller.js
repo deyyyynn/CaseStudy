@@ -9,11 +9,11 @@ sap.ui.define([
     return Controller.extend("sapips.training.employeeapp.controller.ViewPage", {
         onInit: function() {
             // Assuming you have route matched setup
-            var oRouter = sap.ui.core.UIComponent.getRouterFor(this);
-            oRouter.getRoute("employeeRouteName").attachPatternMatched(this._onRouteMatched, this);
+            // var oRouter = sap.ui.core.UIComponent.getRouterFor(this);
+            // oRouter.getRoute("employeeRouteName").attachPatternMatched(this._onRouteMatched, this);
         
-            // Load skill model once here if not loaded already
-            this._oSkillModel = this.getOwnerComponent().getModel("skill");
+            // // Load skill model once here if not loaded already
+            // this._oSkillModel = this.getOwnerComponent().getModel("skill");
         },
         
         _onRouteMatched: function(oEvent) {

@@ -41,7 +41,7 @@
             </Column>
         </columns>
          <items>
-            <ColumnListItem vAlign="Middle" type="Navigation" press="onEmployeePress" >
+            <ColumnListItem vAlign="Middle" type="Navigation" press="onEmployeePress">
                 <cells>
                     <Text text="{EmployeeID}" />
                     <Text text="{FirstName}" />

@@ -48,19 +48,19 @@
 								columnsM="1">
 								<form:content>
                                     <m:Label id="eidTxt" text="eidTxt"/>
-                                    <m:Text id="empId" text="{employee>EmployeeID}" />
+                                    <m:Text id="empId" text="{EmployeeID}" />
                                     <m:Label id="fName" text="{i18n>fName}"/>
-                                    <m:Text id="firstName" text="{employee>FirstName}" />
+                                    <m:Text id="firstName" text="{FirstName}" />
                                     <m:Label id="lName" text="{i18n>lnameTxt}"/>
-                                    <m:Text id="lastName" text="{employee>LastName}" />
+                                    <m:Text id="lastName" text="{LastName}" />
                                     <m:Label id="ageText" text="{i18n>ageTxt}"/>
-                                    <m:Text id="age" text="{employee>Age}" />
+                                    <m:Text id="age" text="{Age}" />
                                     <m:Label id="hDateTxt" text="{i18n>hdateTxt}"/>
-                                    <m:Text id="dateHire" text="{employee>DateHire}" />
+                                    <m:Text id="dateHire" text="{DateHire}" />
                                     <m:Label id="lvlTxt" text="{i18n>clvlTxt}"/>
-                                    <m:Text id="careerLvl" text="{employee>CareerLevel}" />
+                                    <m:Text id="careerLvl" text="{CareerLevel}" />
                                     <m:Label id="projTxt" text="{i18n>cprojTxt}"/>
-                                    <m:Text id="current" text="{employee>CurrentProject}" />
+                                    <m:Text id="current" text="{CurrentProject}" />
 
 								</form:content>
 							</form:SimpleForm>
@@ -85,8 +85,8 @@
 								<m:items>
 									<m:ColumnListItem id="columnListItem" vAlign="Middle">
 										<m:cells>
-											<m:Text id="skillName" text="{filteredSkills>SkillName}" />
-											<m:Text id="proficiencyId" text="{filteredSkills>ProficiencyID}" />
+											<m:Text id="skillName" text="{SkillName}" />
+											<m:Text id="proficiencyId" text="{ProficiencyID}" />
 										</m:cells>
 									</m:ColumnListItem>
 								</m:items>
@@ -96,7 +96,7 @@
 				</subSections>
 			</ObjectPageSection>
 		</sections>
-        <f:footer>
+        <!-- <f:footer>
             <Toolbar width="100%" id="idfooter" >
                 <content>
                     <ToolbarSpacer id="spacer1"/>
@@ -104,6 +104,6 @@
                     <Button text="{i18n>cancel}" id="cancelBtn"/>
                 </content>
             </Toolbar>
-        </f:footer>    
+        </f:footer>     -->
 	</ObjectPageLayout>
 </mvc:View>
