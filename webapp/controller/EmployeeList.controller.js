@@ -36,19 +36,6 @@ sap.ui.define([
         },
         _onRouteMatched: function(){
             this._fetchEmployeeCount();
-            // Wait for metadata to ensure model is ready
-            this.getOwnerComponent().getModel().metadataLoaded().then(() => {
-                var oTable = this.byId("employeeTable"); 
-                var oBinding = oTable.getBinding("items");
-                if (oBinding) {
-                    var aSorters = [
-                        new sap.ui.model.Sorter("FirstName", false),
-                        new sap.ui.model.Sorter("LastName", false)
-                    ];
-                    oBinding.sort(aSorters);
-                }
-            });
-            
         },
         onClickAdd: function (){
             this.getOwnerComponent().getRouter().navTo("RouteCreatePage");
@@ -108,20 +95,9 @@ sap.ui.define([
         },
         //Nav to Employee View Page
         onEmployeePress: function(oEvent) {
-            // this.getOwnerComponent().getRouter().navTo("RouteViewPage");
-            var oItem = oEvent.getSource();
-            var oContext = oItem.getBindingContext();
-            
-            if (!oContext) {
-                sap.m.MessageToast.show("No employee context found");
-                return;
-            }
-
-            var sEmployeeID = oContext.getProperty("EmployeeID");
-        
-            // Navigate to detail route, pass EmployeeID as parameter
+            var sEmployeeID = oEvent.getSource().getBindingContext().getProperty("EmployeeID");
             this.getOwnerComponent().getRouter().navTo("RouteViewPage", {
-                employeeId: sEmployeeID
+                EmployeeID: sEmployeeID
             });
         }
     });

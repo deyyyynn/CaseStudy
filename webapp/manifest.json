@@ -106,11 +106,11 @@
         },
         {
           "name": "RouteViewPage",
-          "pattern": "ViewPage/",
+          "pattern": "ViewPage/{EmployeeID}",
           "target": [
-            "TargetViewPage"
-          ]
-        }
+              "TargetViewPage"
+            ]
+          }
       ],
       "targets": {
         "TargetEmployeeList": {

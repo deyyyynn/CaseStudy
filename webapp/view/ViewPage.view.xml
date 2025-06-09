@@ -8,8 +8,12 @@
 				<headerTitle>
 					<ObjectPageDynamicHeaderTitle id="objPgeDyn">
 						<expandedHeading>
-							<m:Title id="fNameTitle" text="{employee>FirstName} {employee>LastName}" wrapping="true" class="sapUiSmallMarginEnd"/>
+							<m:Title id="fNameTitle" text="{employeedetails>/FirstName} {employeedetails>/LastName}" wrapping="true" class="sapUiSmallMarginEnd"/>
 						</expandedHeading>
+
+						<snappedHeading>
+							<m:Title id="subHead" text="{employeedetails>/FirstName} {employeedetails>/LastName}" wrapping="true" class="sapUiTinyMarginEnd"/>
+						</snappedHeading>
 
 					</ObjectPageDynamicHeaderTitle>
 				</headerTitle>
@@ -17,16 +21,10 @@
 				<headerContent>
 					<m:FlexBox id="flexB" wrap="Wrap" fitContainer="true" alignItems="Stretch">
 						<m:VBox id="vBox" justifyContent="Center" class="sapUiSmallMarginEnd">
-							<m:Label id="fNameHead" text="{i18n>fName}"/>
-							<m:Text id="fNLName" text="{employee>FirstName} {employee>LastName}"/>
+							<m:Label id="lvlText" text="{i18n>clvlTxt}"/>
 						</m:VBox>
 						<m:VBox id="vBoxs" justifyContent="Center" class="sapUiSmallMarginEnd">
-							<m:Label id="lvlText" text="{i18n>clvlTxt}"/>
-							<m:Text id="careerLevel" text="{employee>CareerLevel}"/>
-						</m:VBox>
-                        <m:VBox id="vBox3" justifyContent="Center" class="sapUiSmallMarginEnd">
-							<m:Label id="lvlTxt2" text="{i18n>clvlTxt}"/>
-							<m:Text id="carLvl" text="{employee>CareerLevel}"/>
+							<m:Text id="careerLevel" text="{employeedetails>/CareerLevel}"/>
 						</m:VBox>
 					</m:FlexBox>
 				</headerContent>
@@ -47,20 +45,20 @@
 								columnsL="1"
 								columnsM="1">
 								<form:content>
-                                    <m:Label id="eidTxt" text="eidTxt"/>
-                                    <m:Text id="empId" text="{EmployeeID}" />
+                                    <m:Label id="eidTxt" text="{i18n>eidTxt}"/>
+                                    <m:Text id="empId" text="{employeedetails>/EmployeeID}" />
                                     <m:Label id="fName" text="{i18n>fName}"/>
-                                    <m:Text id="firstName" text="{FirstName}" />
+                                    <m:Text id="firstName" text="{employeedetails>/FirstName}" />
                                     <m:Label id="lName" text="{i18n>lnameTxt}"/>
-                                    <m:Text id="lastName" text="{LastName}" />
+                                    <m:Text id="lastName" text="{employeedetails>/LastName}" />
                                     <m:Label id="ageText" text="{i18n>ageTxt}"/>
-                                    <m:Text id="age" text="{Age}" />
+                                    <m:Text id="age" text="{employeedetails>/Age}" />
                                     <m:Label id="hDateTxt" text="{i18n>hdateTxt}"/>
-                                    <m:Text id="dateHire" text="{DateHire}" />
+                                    <m:Text id="dateHire" text="{employeedetails>/DateHire}" />
                                     <m:Label id="lvlTxt" text="{i18n>clvlTxt}"/>
-                                    <m:Text id="careerLvl" text="{CareerLevel}" />
+                                    <m:Text id="careerLvl" text="{employeedetails>/CareerLevel}" />
                                     <m:Label id="projTxt" text="{i18n>cprojTxt}"/>
-                                    <m:Text id="current" text="{CurrentProject}" />
+                                    <m:Text id="current" text="{employeedetails>/CurrentProject}" />
 
 								</form:content>
 							</form:SimpleForm>
@@ -85,8 +83,8 @@
 								<m:items>
 									<m:ColumnListItem id="columnListItem" vAlign="Middle">
 										<m:cells>
-											<m:Text id="skillName" text="{SkillName}" />
-											<m:Text id="proficiencyId" text="{ProficiencyID}" />
+											<m:Text id="skillName" text="{skills>/SkillName}" />
+											<m:Text id="proficiencyId" text="{skills>/ProficiencyID}" />
 										</m:cells>
 									</m:ColumnListItem>
 								</m:items>
