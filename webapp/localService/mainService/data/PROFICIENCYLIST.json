@@ -1,7 +1,7 @@
 [
-  { "ProficiencyId": "P1", "ProficiencyLevel": "A" },
-  { "ProficiencyId": "P2", "ProficiencyLevel": "B" },
-  { "ProficiencyId": "P3", "ProficiencyLevel": "C" },
-  { "ProficiencyId": "P4", "ProficiencyLevel": "D" },
-  { "ProficiencyId": "P5", "ProficiencyLevel": "E" }
+  { "ProficiencyID": "P1", "ProficiencyLevel": "A" },
+  { "ProficiencyID": "P2", "ProficiencyLevel": "B" },
+  { "ProficiencyID": "P3", "ProficiencyLevel": "C" },
+  { "ProficiencyID": "P4", "ProficiencyLevel": "D" },
+  { "ProficiencyID": "P5", "ProficiencyLevel": "E" }
 ]

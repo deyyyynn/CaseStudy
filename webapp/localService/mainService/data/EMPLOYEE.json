@@ -1,89 +1,89 @@
 [
   {
+    "EmployeeID": "EmployeeIDJohnsonAlice1506",
     "FirstName": "Alice",
     "LastName": "Johnson",
-    "EmployeeID": "EmployeeIDJohnsonAlice1506",
     "Age": 29,
     "DateHire": "06152020",
     "CareerLevel": "CL10",
     "CurrentProject": "Apollo"
   },
   {
+    "EmployeeID": "EmployeeIDSmithBrian1003",
     "FirstName": "Brian",
     "LastName": "Smith",
-    "EmployeeID": "EmployeeIDSmithBrian1003",
     "Age": 35,
     "DateHire": "03102018",
     "CareerLevel": "CL9",
     "CurrentProject": "Orion"
   },
   {
+    "EmployeeID": "EmployeeIDBrownCarla0511",
     "FirstName": "Carla",
     "LastName": "Brown",
-    "EmployeeID": "EmployeeIDBrownCarla0511",
     "Age": 28,
     "DateHire": "11052021",
     "CareerLevel": "CL7",
     "CurrentProject": "Helix"
   },
   {
+    "EmployeeID": "EmployeeIDTaylorDavid2201",
     "FirstName": "David",
     "LastName": "Taylor",
-    "EmployeeID": "EmployeeIDTaylorDavid2201",
     "Age": 42,
     "DateHire": "01222010",
     "CareerLevel": "CL6",
     "CurrentProject": "Solaris"
   },
   {
+    "EmployeeID": "EmployeeIDAdamsEva3008",
     "FirstName": "Eva",
     "LastName": "Adams",
-    "EmployeeID": "EmployeeIDAdamsEva3008",
     "Age": 33,
     "DateHire": "08302019",
     "CareerLevel": "CL5",
     "CurrentProject": "Nova"
   },
   {
+    "EmployeeID": "EmployeeIDWilsonFrank0104",
     "FirstName": "Frank",
     "LastName": "Wilson",
-    "EmployeeID": "EmployeeIDWilsonFrank0104",
     "Age": 26,
     "DateHire": "04012023",
     "CareerLevel": "CL4",
     "CurrentProject": "Titan"
   },
   {
+    "EmployeeID": "EmployeeIDLeeGrace1909",
     "FirstName": "Grace",
     "LastName": "Lee",
-    "EmployeeID": "EmployeeIDLeeGrace1909",
     "Age": 30,
     "DateHire": "09192017",
     "CareerLevel": "CL3",
     "CurrentProject": "Orion"
   },
   {
+    "EmployeeID": "EmployeeIDMartinHenry1212",
     "FirstName": "Henry",
     "LastName": "Martin",
-    "EmployeeID": "EmployeeIDMartinHenry1212",
     "Age": 37,
     "DateHire": "12122015",
     "CareerLevel": "CL2",
     "CurrentProject": "Apollo"
   },
   {
+    "EmployeeID": "EmployeeIDClarkIsabel0307",
     "FirstName": "Isabel",
     "LastName": "Clark",
-    "EmployeeID": "EmployeeIDClarkIsabel0307",
     "Age": 25,
     "DateHire": "07032022",
     "CareerLevel": "CL1",
     "CurrentProject": "Helix"
   },
   {
+    "EmployeeID": "EmployeeIDDavisJohn2505",
     "FirstName": "John",
     "LastName": "Davis",
-    "EmployeeID": "EmployeeIDDavisJohn2505",
     "Age": 31,
     "DateHire": "05252016",
     "CareerLevel": "CL8",

@@ -95,13 +95,9 @@ sap.ui.define([
         },
         //Nav to Employee View Page
         onEmployeePress: function(oEvent) {
-            var oItem = oEvent.getSource();
-            var oContext = oItem.getBindingContext();
-            var sEmployeeID = oContext.getProperty("EmployeeID");
-        
-            // Navigate to detail route, pass EmployeeID as parameter
-            this.getOwnerComponent().getRouter().navTo("EmployeeDetail", {
-                employeeId: sEmployeeID
+            var sEmployeeID = oEvent.getSource().getBindingContext().getProperty("EmployeeID");
+            this.getOwnerComponent().getRouter().navTo("RouteViewPage", {
+                EmployeeID: sEmployeeID
             });
         }
     });

@@ -1,0 +1,21 @@
+<mvc:View controllerName="sapips.training.employeeapp.controller.ViewPage" 
+		height="100%"
+		xmlns:mvc="sap.ui.core.mvc"
+		xmlns="sap.m"
+		xmlns:core="sap.ui.core"
+		xmlns:layout="sap.ui.layout"
+>
+	<ObjectHeader
+		id="oh1"
+		responsive="true"
+		title="{employeedetails>/FirstName} {employeedetails>/LastName}"
+		backgroundDesign="Translucent">
+		<attributes>
+			<ObjectAttribute
+				title="Career Level"
+				text="{employeedetails>/CareerLevel}"/>
+		</attributes>
+		<headerContainer>
+		</headerContainer>
+	</ObjectHeader>
+</mvc:View>
