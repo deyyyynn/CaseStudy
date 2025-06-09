@@ -110,8 +110,14 @@
         "target": [
             "TargetViewPage"
           ]
-        }
-        
+        },
+        {
+          "name": "RouteEditPage",
+          "pattern": "EditPage/{EmployeeID}",
+          "target": [
+            "TargetEditPage"
+          ]
+        }        
       ],
       "targets": {
         "TargetEmployeeList": {
@@ -125,6 +131,11 @@
         "TargetViewPage": {
           "viewId": "ViewPage",
           "viewName": "ViewPage"
+        },
+        "TargetEditPage": {
+        "viewId": "EditPage",
+        "viewName": "EditPage",
+        "viewLevel": 2
         }
       }
     },
