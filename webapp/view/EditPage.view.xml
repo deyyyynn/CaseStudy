@@ -12,7 +12,7 @@
                 id="formEditRec">
 
                 <sap.ui.layout.form:content>
-                    <core:Title id="_IDGenTitle1" text="{i18n>titleHeader}" />
+                    <core:Title id="_IDGenTitle1" text="{= ${employeedetails>/FirstName} + ' ' + ${employeedetails>/LastName} }" />
 
                     <!-- EID (read-only) -->
                     <Label id="_IDGenLabel" text="{i18n>eidTxt}" />
@@ -52,25 +52,36 @@
                 </sap.ui.layout.form:content>
             </sap.ui.layout.form:SimpleForm>
 
-            <!-- Skills Table (optional) -->
+            <!-- Skills Table  -->
             <Table id="skillsTable1" items="{skills>/}">
                 <columns>
-                    <Column id="_IDGenColumn">
+                    <Column id="_IDGenColumn1">
                         <header>
                             <Label id="_IDGenLabel7" text="{i18n>skillTxt}" />
                         </header>
                     </Column>
-                    <Column id="_IDGenColumn1">
+                    <Column id="_IDGenColumn2">
                         <header>
                             <Label id="_IDGenLabel8" text="{i18n>pro}" />
                         </header>
                     </Column>
                 </columns>
+
                 <items>
                     <ColumnListItem id="_IDGenColumnListItem">
                         <cells>
-                            <Text id="_IDGenText" text="{skills>SkillName}" />
-                            <Text id="_IDGenText1" text="{skills>ProficiencyID}" />
+                            <!-- Skill Select Dropdown -->
+                            <Select id="_IDGenSelect2"
+                                width="100%"
+                                selectedKey="{skills>SkillID}"
+                                items="{/SKILL}">
+                                <core:Item id="_IDGenItem2" key="{SkillID}" text="{SkillName}" />
+                            </Select>
+
+                            <!-- Proficiency Select Dropdown -->
+                           <Select id="proficiencyselect" width="100%" selectedKey="{proficiency>ProficiencyID}" items="{proficiencyList>/}">
+                                <core:Item id="proficiencyItem" key="{proficiencyList>ProficiencyID}" text="{proficiencyList>ProficiencyID}" />
+                            </Select>
                         </cells>
                     </ColumnListItem>
                 </items>
