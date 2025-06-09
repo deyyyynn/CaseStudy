@@ -4,12 +4,13 @@ sap.ui.define([
 	"sap/ui/model/Filter",
 	"sap/ui/model/FilterOperator",
     "./formatter",
-    "sap/m/MessageToast"
+    "sap/m/MessageBox"
 ], (Controller,
     JSONModel,
 	Filter,
 	FilterOperator,
-    formatter) => {
+    formatter,
+    MessageBox) => {
     "use strict";
 
     return Controller.extend("sapips.training.employeeapp.controller.EmployeeList", {
@@ -30,7 +31,7 @@ sap.ui.define([
                     this.getView().setModel(oCountModel, "employeeCountModel");
                 }.bind(this),
                 error: function () {
-                    MessageToast.show("Error fetching employee count.");
+                    MessageBox.error("Error fetching employee count.");
                 }
             });
         },
@@ -93,6 +94,47 @@ sap.ui.define([
                 }));
             }
         },
+        //Delete
+        onDelete: function(){
+            
+            var oTable = this.byId("employeeTable");
+            var aSelectedItems = oTable.getSelectedItems();
+
+            if (aSelectedItems.length === 0) {
+                MessageBox.warning("Must select at least 1 employee.");
+                return;
+            }
+
+            MessageBox.confirm("Are you sure you want to delete the selected employee/s?", {
+                onClose: function (oAction) {
+                    if (oAction === sap.m.MessageBox.Action.OK) {
+                        var oModel = this.getOwnerComponent().getModel();
+                        var iPending = aSelectedItems.length;
+                        var bErrorOccurred = false;
+                        
+                        aSelectedItems.forEach(function (oItem) {
+                            var sPath = oItem.getBindingContext().getPath();
+
+                            oModel.remove(sPath, {
+                                success: function () {
+                                    iPending--;
+                                    if (iPending === 0 && !bErrorOccurred) {
+                                        MessageBox.success("Selected employee(s) deleted successfully.");
+                                    }
+                                },
+                                error: function () {
+                                    bErrorOccurred = true;
+                                    MessageBox.error("Failed to delete one or more employees.");
+                                }
+                            });
+                        });
+
+                        oTable.removeSelections();
+                    }
+                }.bind(this)
+            });
+        },
+
         //Nav to Employee View Page
         onEmployeePress: function(oEvent) {
             var sEmployeeID = oEvent.getSource().getBindingContext().getProperty("EmployeeID");
