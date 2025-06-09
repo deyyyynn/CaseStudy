@@ -31,9 +31,10 @@ sap.ui.define([
         },
         
         _onObjectMatched: function (oEvent) {
-            this._fetchSkillCount();
             var sEmployeeID = oEvent.getParameter("arguments").EmployeeID;
             var oModel = this.getOwnerComponent().getModel();
+
+            this._fetchSkillCount(sEmployeeID);
 
             // Read employee data
             oModel.read("/EMPLOYEE", {
@@ -51,7 +52,14 @@ sap.ui.define([
             oModel.read("/SKILL", {
                 filters: [new Filter("EmployeeID", "EQ", sEmployeeID)],
                 success: function (oData) {
-                    var oSkillsModel = new JSONModel(oData.results[0]);
+                    let aUniqueSkills = oData.results.filter((item, index, self) =>
+                        index === self.findIndex(t =>
+                            t.SkillName === item.SkillName && t.ProficiencyID === item.ProficiencyID
+                        )
+                    );
+            
+                    // Set model with named array path
+                    var oSkillsModel = new JSONModel({ Skills: aUniqueSkills });
                     this.getView().setModel(oSkillsModel, "skills");
                 }.bind(this),
                 error: function () {
