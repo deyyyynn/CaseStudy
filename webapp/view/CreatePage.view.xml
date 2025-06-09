@@ -1,21 +1,21 @@
 <mvc:View xmlns:core="sap.ui.core" xmlns:mvc="sap.ui.core.mvc" xmlns="sap.m" xmlns:sap.ui.core="sap.ui.core" xmlns:sap.ui.layout.form="sap.ui.layout.form" controllerName="sapips.training.employeeapp.controller.CreatePage">
 
-    <Page id="idCreatePage" title="{i18n>title}" showNavButton="true" navButtonPress="onClickBack">
+    <Page id="idCreatePage" title="{i18n>title}">
         <content>
             <sap.ui.layout.form:SimpleForm editable="true" layout="ResponsiveGridLayout" id="formCreateRec">
                 <sap.ui.layout.form:content>
                     <sap.ui.core:Title text="{i18n>titleHeader}" id="titleCreateRec"/>
                     <!-- EID -->
                     <Label text="{i18n>eidTxt}" id="eidLbl"/>
-                    <Input width="100%" id="i_eid" editable="false"/>
+                    <Input width="100%" id="i_eid" editable="false" />
                     
                     <!-- First Name -->
                     <Label text="{i18n>fnameTxt}" id="fnameLbl"/>
-                    <Input width="100%" id="i_fname" placeholder="{i18n>plchldrTxt}" required="true" maxLength="32"/>
+                    <Input width="100%" id="i_fname" placeholder="{i18n>plchldrTxt}" required="true" maxLength="32" liveChange="onNameChange"/>
                     
                     <!-- Last Name -->
                     <Label text="{i18n>lnameTxt}" id="lnameLbl"/>
-                    <Input width="100%" id="i_lname" placeholder="{i18n>plchldrTxt}" required="true" maxLength="32"/>
+                    <Input width="100%" id="i_lname" placeholder="{i18n>plchldrTxt}" required="true" maxLength="32" liveChange="onNameChange"/>
 
                     <!-- Age -->
                     <Label text="{i18n>ageTxt}" id="ageLbl"/>
@@ -23,7 +23,7 @@
                     
                     <!-- Date of Hire -->
                     <Label text="{i18n>hdateTxt}" id="hdateLbl"/>
-                    <DatePicker id="datePicker"/>
+                    <DatePicker id="datePicker" change="onNameChange"/>
 
                     <!-- Career Level -->
                     <Label text="{i18n>clvlTxt}" id="clvlLbl"/>
@@ -44,12 +44,22 @@
             </sap.ui.layout.form:SimpleForm>
 
             <!-- Add Skill -->
-            <Table noDataText="Drop column list items here and columns in the area above" id="table0" mode="MultiSelect">
+            <Table noDataText="{i18n>noskillTxt}" id="idSkillList" mode="MultiSelect" items="{/SKILL}">
+                <headerToolbar>
+                    <Toolbar width="100%" id="toolbar1">
+                        <content>
+                            <Title text="{i18n>skills}" id="title4"/>
+                            <ToolbarSpacer id="spacer0"/>
+                            <Button text="{i18n>add}" id="addBtn" press="onAddSkill"/>
+                            <Button text="{i18n>del}" id="delBtn" type="Reject" press="onPressDelete"/>
+                        </content>
+                    </Toolbar>
+                </headerToolbar>
                 <items>
                     <ColumnListItem type="Active" id="item1">
                         <cells>
-                            <Text text="Row 1 Cell 1" id="text7"/>
-                            <Text text="Row 1 Cell 2" id="text8"/>
+                            <Text id="_IDGenText1" text="{SkillName}"/>
+                            <Text id="_IDGenText2" text="{ProficiencyLevel}"/>
                         </cells>
                     </ColumnListItem>
                 </items>
@@ -64,24 +74,14 @@
                             <Label text="{i18n>pro}" id="profLvl"/>
                         </header>
                     </Column></columns>
-                <headerToolbar>
-                    <Toolbar width="100%" id="toolbar1">
-                        <content>
-                            <Title text="{i18n>skills}" id="title4"/>
-                            <ToolbarSpacer id="spacer0"/>
-                            <Button text="{i18n>add}" id="addBtn"/>
-                            <Button text="{i18n>del}" id="delBtn" type="Reject"/>
-                        </content>
-                    </Toolbar>
-                </headerToolbar>
             </Table>
         </content>
     <footer>
         <Toolbar width="100%" id="idfooter">
             <content>
                 <ToolbarSpacer id="spacer1"/>
-                <Button text="{i18n>sv}" id="saveBtn" type="Emphasized"/>
-                <Button text="{i18n>cancel}" id="cancelBtn"/>
+                <Button text="{i18n>sv}" id="saveBtn" type="Emphasized" press="onClickSave"/>
+                <Button text="{i18n>cancel}" id="cancelBtn" press="onCancelCreate"/>
             </content>
         </Toolbar>
     </footer>
