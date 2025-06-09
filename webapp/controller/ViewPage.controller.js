@@ -64,7 +64,7 @@ sap.ui.define([
             oModel.read("/SKILL", {
                 filters: [new Filter("EmployeeID", "EQ", sEmployeeID)],
                 success: function (oData) {
-                    var oSkillsModel = new JSONModel(oData.results);
+                    var oSkillsModel = new JSONModel(oData.results[0]);
                     this.getView().setModel(oSkillsModel, "skills");
                 }.bind(this),
                 error: function () {
