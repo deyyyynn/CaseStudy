@@ -1,5 +1,5 @@
 <mvc:View xmlns="sap.uxap" xmlns:mvc="sap.ui.core.mvc" xmlns:m="sap.m" xmlns:f="sap.f" xmlns:form="sap.ui.layout.form" controllerName="sapips.training.employeeapp.controller.ViewPage">
-	<ObjectPageLayout id="ObjectPageLayout" showTitleInHeaderContent="true" isChildPage="true">
+	<ObjectPageLayout id="ObjectPageLayout" showTitleInHeaderContent="true" isChildPage="true" showFooter="true">
 				<headerTitle>
 					<ObjectPageDynamicHeaderTitle id="objPgeDyn">
 						<expandedHeading>
@@ -80,5 +80,13 @@
 					</ObjectPageSubSection>
 				</subSections>
 			</ObjectPageSection>
+	<footer>
+	    <m:Toolbar width="100%" id="idFooterButton">
+	        <m:content><m:ToolbarSpacer id="idsSacer"/>
+	            <Button xmlns="sap.m" text="{i18n>editBtn}" id="button4" press="onClickEdit" type="Emphasized"/>
+	            <Button xmlns="sap.m" text="{i18n>Cancel}" id="button5" press="onClickCancel"/>
+	        </m:content>
+	    </m:Toolbar>
+	</footer>
 	</ObjectPageLayout>		
 </mvc:View>
