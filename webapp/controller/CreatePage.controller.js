@@ -71,63 +71,11 @@ sap.ui.define([
 		},
 
         onClickSave: function(){
-<<<<<<< HEAD
             let oView = this.getView();
             let sNewFname = oView.byId("i_fname").getValue();
             let sNewLname = oView.byId("i_lname").getValue();
             let sNewAge = oView.byId("i_age").getValue();
-=======
-            var oView = this.getView();
-
-            var sNewFname = oFname.getValue().trim();
-            var sNewLname = oLname.getValue().trim();
-            var sNewAge = oAge.getValue().trim();
-
-            // Validations for first name, last name, age
-            let oFname = oView.byId("i_fname");
-            let oLname = oView.byId("i_lname");
-            let oAge = oView.byId("i_age");
-
-            let bValid = true;
-
-            let nameRegex = /^[A-Za-z\s\-]+$/;
-            let ageRegex = /^[0-9]+$/;
-
-            if (!sNewFname || !nameRegex.test(sNewFname)) {
-                oFname.setValueState("Error");
-                oFname.setValueStateText("This is a required field and must contain letters.");
-                bValid = false;
-            } else {
-                oFname.setValueState("None");
-            }
-
-            if (!sNewLname || !nameRegex.test(sNewLname)) {
-                oLname.setValueState("Error");
-                oLname.setValueStateText("This is a required field and must contain letters.");
-                bValid = false;
-            } else {
-                oLname.setValueState("None");
-            }
-
-            let iAge = parseInt(sNewAge);
-            if (!sNewAge || !ageRegex.test(sNewAge) || iAge <= 0 || iAge > 90) {
-                oAge.setValueState("Error");
-                oAge.setValueStateText("Required field. Age must not be 0 or greater than 90.");
-                bValid = false;
-            } else {
-                oAge.setValueState("None");
-            }
-
-            if (!bValid) {
-                return; 
-            }
-            // end of validation
-    
-            var sNewFname = oView.byId("i_fname").getValue();
-            var sNewLname = oView.byId("i_lname").getValue();
-            var sNewAge = oView.byId("i_age").getValue();
->>>>>>> 99113a49c714856c4773f968cda29fb5cf8d0f41
-
+        
             //-----[START] Validations - First Name, Last Name, and Age----------
             let oFname = oView.byId("i_fname");
             let oLname = oView.byId("i_lname");
@@ -361,25 +309,6 @@ sap.ui.define([
                 oView.byId("i_eid").setValue("");
             }
         },
-<<<<<<< HEAD
-						
-        onAgeChange: function (oEvent) {							
-            const oInput = oEvent.getSource();							
-            let sValue = oInput.getValue();							
-                                    
-            // Allow only numbers							
-            sValue = sValue.replace(/[^0-9]/g, "");							
-                                    
-            // Prevent values > 90							
-             let iAge = parseInt(sValue, 10);							
-             if (iAge > 90) {							
-             sValue = "90";							
-            }							
-                                    
-             // Set the cleaned value back							
-            oInput.setValue(sValue);							
-            }												
-=======
 
         // [START] Age field restrictions - numbers only
         onAgeChange: function (oEvent) {
@@ -399,6 +328,6 @@ sap.ui.define([
                 oInput.setValue(sValue);
             }       
         // [END] Age field restrictions - numbers only
->>>>>>> 99113a49c714856c4773f968cda29fb5cf8d0f41
+
     });
 });
