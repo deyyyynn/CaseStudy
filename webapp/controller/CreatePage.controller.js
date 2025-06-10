@@ -192,7 +192,7 @@ sap.ui.define([
         },
 
         onPressDelete: function(){
-            let oTable = this.byId("idSkillList");
+            let oTable = this.byId("idSkillList1");
             let aSelectedItems = oTable.getSelectedItems();
 
             if (aSelectedItems.length === 0) {
