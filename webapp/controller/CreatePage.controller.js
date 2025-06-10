@@ -76,7 +76,6 @@ sap.ui.define([
             let sNewLname = oView.byId("i_lname").getValue();
             let sNewAge = oView.byId("i_age").getValue();
         
-            //-----[START] Validations - First Name, Last Name, and Age----------
             let oFname = oView.byId("i_fname");
             let oLname = oView.byId("i_lname");
             let oAge   = oView.byId("i_age");
@@ -114,7 +113,6 @@ sap.ui.define([
             if (!bValid) {
                 return; 
             }
-            //----------[END] Validations - First Name, Last Name, and Age----------
 
             let oDate = oView.byId("datePicker").getDateValue();
 
@@ -265,10 +263,6 @@ sap.ui.define([
 
         onNameChange: function () {
             const oView = this.getView();
-            //const sFirstName = oView.byId("i_fname").getValue().trim(); // <- comment out - CLM
-            //const sLastName = oView.byId("i_lname").getValue().trim(); // <- comment out - CLM
-            
-            //----------[START] fName, lName restrictions----------
             const oFnameInput = oView.byId("i_fname");
             const oLnameInput = oView.byId("i_lname"); 
 
@@ -289,7 +283,6 @@ sap.ui.define([
                     sLastName = sLastName.slice(1); 
                     }
                     oLnameInput.setValue(sLastName); 
-            //----------[END] First and Last Name restrictions----------
 
             const oDatePicker = oView.byId("datePicker");
         
@@ -310,7 +303,6 @@ sap.ui.define([
             }
         },
 
-        // [START] Age field restrictions - numbers only
         onAgeChange: function (oEvent) {
                 const oInput = oEvent.getSource();
                 let sValue = oInput.getValue();
@@ -323,11 +315,8 @@ sap.ui.define([
                 if (iAge > 90) {
                     sValue = "90";
                 }
-
                 // Set the cleaned value back
                 oInput.setValue(sValue);
-            }       
-        // [END] Age field restrictions - numbers only
-
+        }       
     });
 });
