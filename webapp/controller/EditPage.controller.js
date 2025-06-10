@@ -86,9 +86,8 @@ sap.ui.define([
                 oModel.read("/SKILL", {
                     filters: [oEmpFilter],
                     success: function (oData) {
-                        const oSkillsModel = new sap.ui.model.json.JSONModel(oData.results);
+                        const oSkillsModel = new sap.ui.model.json.JSONModel({ SKILL: oData.results });
                         oView.setModel(oSkillsModel, "skills");
-                        oSkillsModel.setProperty("/SKILL");
                     },
                     error: function () {
                         sap.m.MessageBox.error("Failed to load employee skills.");
@@ -181,7 +180,7 @@ sap.ui.define([
             );
      
             // Update Model
-            oModel.setProperty("/Skills", aUpdatedSkills);
+            oModel.setProperty("/SKILL", aUpdatedSkills);
      
             // Clear Table Selection
             oTable.removeSelections();
