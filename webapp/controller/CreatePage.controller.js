@@ -240,7 +240,21 @@ sap.ui.define([
                 MessageBox.information("Please select both Skill and Proficiency.");
                 return;
             }
-        
+            
+            // Avoid duplication of selected Skill
+            let oTable = oView.byId("idSkillList"); 
+            let aItems = oTable.getItems(); // CMERCADO
+            let bDuplicate = aItems.some(function (oItem) { 
+            let sExistingSkill = oItem.getBindingContext().getProperty("SkillName");
+            
+            return sExistingSkill === sNewSkill;
+            });
+
+            if (bDuplicate) {
+                MessageBox.warning(`${sNewSkill} has already been added.`);
+                return; 
+            }
+
             let oData = {
                 SkillName: sNewSkill,
                 ProficiencyID: sNewProf
