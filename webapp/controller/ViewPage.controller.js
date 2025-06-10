@@ -28,6 +28,8 @@ sap.ui.define([
             let sEmployeeID = oEvent.getParameter("arguments").EmployeeID;
             let oModel = this.getOwnerComponent().getModel();
 
+            oModel.refresh(true);
+
             // Load employee data
             oModel.read("/EMPLOYEE", {
                 filters: [new Filter("EmployeeID", "EQ", sEmployeeID)],
@@ -69,6 +71,26 @@ sap.ui.define([
                     MessageBox.error(sConfirmText);
                 }
             });
+        },
+        onClickEdit: function () {
+            var oModel = this.getView().getModel("employeedetails");
+
+            if (!oModel) {
+                MessageBox.error("Employee details model not available.");
+                return;
+            }
+
+            var sEmployeeID = oModel.getProperty("/EmployeeID");
+
+            if (sEmployeeID) {
+                var oRouter = this.getOwnerComponent().getRouter();
+                console.log("Navigating to EditPage for EmployeeID:", sEmployeeID);
+                oRouter.navTo("RouteEditPage", {
+                    EmployeeID: sEmployeeID
+                } ,true );
+            } else {
+                MessageBox.warning("Employee ID not found in the model.");
+            }
         }
     });
 });

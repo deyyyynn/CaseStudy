@@ -19,7 +19,7 @@
 
                     <!-- Age -->
                     <Label text="{i18n>ageTxt}" id="ageLbl"/>
-                    <Input width="100%" id="i_age" placeholder="{i18n>plchldrTxt}" required="true"/>
+                    <Input width="100%" id="i_age" placeholder="{i18n>plchldrTxt}"   required="true" maxLength="2"  liveChange="onAgeChange"/>
                     
                     <!-- Date of Hire -->
                     <Label text="{i18n>hdateTxt}" id="hdateLbl"/>

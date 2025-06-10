@@ -102,6 +102,44 @@ sap.ui.define([
             let sNewLname = oView.byId("i_lname").getValue();
             let sNewAge = oView.byId("i_age").getValue();
             let sNewEmployeeID = oView.byId("i_eid").getValue();
+        
+            let oFname = oView.byId("i_fname");
+            let oLname = oView.byId("i_lname");
+            let oAge   = oView.byId("i_age");
+            
+            let bValid = true;
+            
+            let nameRegex = /^[A-Za-z\s\-]+$/;
+            let ageRegex = /^[0-9]+$/;
+            
+            if (!sNewFname || !nameRegex.test(sNewFname)) {
+                oFname.setValueState("Error");
+                oFname.setValueStateText("This field is required and must contain valid name.");
+                bValid = false;
+            } else {
+                oFname.setValueState("None");
+            }
+            
+            if (!sNewLname || !nameRegex.test(sNewLname)) {
+                oLname.setValueState("Error");
+                oLname.setValueStateText("This field is required and must contain valid name.");
+                bValid = false;
+            } else {
+                oLname.setValueState("None");
+            }
+            
+            let iAge = parseInt(sNewAge);
+            if (!sNewAge || !ageRegex.test(sNewAge) || iAge <= 0 || iAge > 90) {
+                oAge.setValueState("Error");
+                oAge.setValueStateText("Required field. Enter age between 1 and 90");
+                bValid = false;
+            } else {
+                oAge.setValueState("None");
+            }
+            
+            if (!bValid) {
+                return; 
+            }
 
             let oDate = oView.byId("datePicker").getDateValue();
 
@@ -204,10 +242,12 @@ sap.ui.define([
         },
 
         onPressDelete: function(){
+          
             let oView = this.getView();
             let oModel = oView.getModel("skillsModel");
             let oTable = oView.byId("idSkillList");
             // Get all selected items
+          
             let aSelectedItems = oTable.getSelectedItems();
             if (aSelectedItems.length === 0) {
                 this.showMessageBox("warning", "msg_noSelected");
@@ -267,8 +307,27 @@ sap.ui.define([
 
         onNameChange: function () {
             const oView = this.getView();
-            const sFirstName = oView.byId("i_fname").getValue().trim();
-            const sLastName = oView.byId("i_lname").getValue().trim();
+            const oFnameInput = oView.byId("i_fname");
+            const oLnameInput = oView.byId("i_lname"); 
+
+            // FIRST NAME - Can only accept hyphen symbol
+            let sFirstName = oFnameInput.getValue();
+                sFirstName = sFirstName.replace(/[^A-Za-z\s\-]/g, ""); 
+                    if (sFirstName.startsWith("-")) 
+                    { 
+                    sFirstName = sFirstName.slice(1);
+                    }
+                    oFnameInput.setValue(sFirstName);
+
+            // LAST NAME - Can only accept hyphen symbol
+            let sLastName = oLnameInput.getValue();
+                sLastName = sLastName.replace(/[^A-Za-z\s\-]/g, ""); 
+                    if (sLastName.startsWith("-")) 
+                    {
+                    sLastName = sLastName.slice(1); 
+                    }
+                    oLnameInput.setValue(sLastName); 
+
             const oDatePicker = oView.byId("datePicker");
         
             if (sFirstName && sLastName && oDatePicker) {                
@@ -286,6 +345,22 @@ sap.ui.define([
                 // Clear ID if inputs are incomplete
                 oView.byId("i_eid").setValue("");
             }
-        }
+        },
+
+        onAgeChange: function (oEvent) {
+                const oInput = oEvent.getSource();
+                let sValue = oInput.getValue();
+
+                // Allow only numbers
+                sValue = sValue.replace(/[^0-9]/g, "");
+
+                // Prevent values > 90
+                let iAge = parseInt(sValue, 10);
+                if (iAge > 90) {
+                    sValue = "90";
+                }
+                // Set the cleaned value back
+                oInput.setValue(sValue);
+        }       
     });
 });
