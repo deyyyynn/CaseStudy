@@ -1,0 +1,130 @@
+<mvc:View xmlns:core="sap.ui.core"
+          xmlns:mvc="sap.ui.core.mvc"
+          xmlns="sap.m"
+          xmlns:sap.ui.layout.form="sap.ui.layout.form"
+          controllerName="sapips.training.employeeapp.controller.EditPage">
+
+    <Page id="idEditPage" title="{i18n>editTitle}" showNavButton="true" navButtonPress="onClickBack">
+        <content>
+            <sap.ui.layout.form:SimpleForm
+                editable="true"
+                layout="ResponsiveGridLayout"
+                id="formEditRec">
+
+                <sap.ui.layout.form:content>
+                    <core:Title id="_IDGenTitle1" text="{= ${employeedetails>/FirstName} + ' ' + ${employeedetails>/LastName} }" />
+
+                    <!-- EID (read-only) -->
+                    <Label id="_IDGenLabel" text="{i18n>eidTxt}" />
+                    <Input id="id_empid" value="{employeedetails>/EmployeeID}" editable="false" width="100%" />
+
+                    <!-- First Name -->
+                    <Label id="_IDGenLabel1" text="{i18n>fnameTxt}" />
+                    <Input id="id_fname" value="{employeedetails>/FirstName}" width="100%" required="true" maxLength="32" liveChange="onNameChange"/>
+
+                    <!-- Last Name -->
+                    <Label id="_IDGenLabel2" text="{i18n>lnameTxt}" />
+                    <Input id="id_lname" value="{employeedetails>/LastName}" width="100%" required="true" maxLength="32" liveChange="onNameChange"/>
+
+                    <!-- Age -->
+                    <Label id="_IDGenLabel3" text="{i18n>ageTxt}" />
+                    <Input id="id_age" value="{employeedetails>/Age}" width="100%" required="true" maxLength="2"  liveChange="onAgeChange"/>
+
+                    <!-- Hire Date -->
+                    <Label id="_IDGenLabel4" text="{i18n>hdateTxt}" />
+                    <DatePicker id="id_date" value="{employeedetails>/DateHire}" displayFormat="yyyy-MM-dd"/>
+
+                    <!-- Career Level -->
+                    <Label id="_IDGenLabel5" text="{i18n>clvlTxt}" />
+                    <Select id="id_career" selectedKey="{employeedetails>/CareerLevel}" items="{/CAREERLIST}">
+                        <items>
+                            <core:Item id="_IDGenItem" key="{CareerLevel}" text="{CareerLevel}" />
+                        </items>
+                    </Select>
+
+                    <!-- Current Project -->
+                    <Label id="_IDGenLabel6" text="{i18n>cprojTxt}" />
+                    <Select id="id_project" selectedKey="{employeedetails>/CurrentProject}" items="{/PROJECTLIST}">
+                        <items>
+                            <core:Item id="_IDGenItem1" key="{ProjectName}" text="{ProjectName}" />
+                        </items>
+                    </Select>
+                </sap.ui.layout.form:content>
+            </sap.ui.layout.form:SimpleForm>
+
+            <!-- Skills Table  -->
+            <!-- <Table id="skillsTable1" items="{skills>/}" inset="false" >
+                <columns>
+                    <Column id="_IDGenColumn1">
+                        <header>
+                            <Label id="_IDGenLabel7" text="{i18n>skillTxt}" />
+                        </header>
+                    </Column>
+                    <Column id="_IDGenColumn2">
+                        <header>
+                            <Label id="_IDGenLabel8" text="{i18n>pro}" />
+                        </header>
+                    </Column>
+                </columns>
+
+                <items> -->
+                    <!-- <ColumnListItem id="_IDGenColumnListItem">
+                        <cells> -->
+
+                            <!-- Skill Select Dropdown -->
+                            <!-- <Select id="_IDGenSelect2" width="100%" selectedKey="{skills>SkillID}" items="{skills>/}"> 
+                            <core:Item id="_IDGenItem2" key="{skills>SkillID}" text="{skills>SkillName}" />
+                            </Select> -->
+
+                            <!-- Proficiency Select Dropdown -->
+                           <!-- <Select id="proficiencyselect" width="100%" selectedKey="{skills>ProficiencyID}" items="{proficiencyList>/}">
+                                <core:Item id="proficiencyItem" key="{proficiencyList>ProficiencyID}" text="{proficiencyList>ProficiencyID}" />
+                            </Select>
+                        </cells>
+                    </ColumnListItem>
+                </items>
+            </Table> -->
+
+             <!-- Add Skill -->
+            <Table noDataText="{i18n>noskillTxt}" id="idSkillList1" mode="MultiSelect" items="{skills>/SKILL}">
+                <headerToolbar>
+                    <Toolbar width="100%" id="toolbar1">
+                        <content>
+                            <Title text="{i18n>skills}" id="title4"/>
+                            <ToolbarSpacer id="spacer0"/>
+                            <Button text="{i18n>add}" id="addBtn" press="onAddSkill"/>
+                            <Button text="{i18n>del}" id="delBtn" type="Reject" press="onPressDelete"/>
+                        </content>
+                    </Toolbar>
+                </headerToolbar>
+                <items>
+                    <ColumnListItem type="Active" id="item1">
+                        <cells>
+                            <Text id="_IDGenText1" text="{skills>SkillName}"/>
+                            <Text id="_IDGenText2" text="{skills>ProficiencyID}"/>
+                        </cells>
+                    </ColumnListItem>
+                </items>
+                <columns>
+                    <Column id="column0">
+                        <header>
+                            <Label text="{i18n>skillTxt}" id="skillLbl"/>
+                        </header>
+                    </Column>
+                    <Column id="column1">
+                        <header>
+                            <Label text="{i18n>pro}" id="profLvl"/>
+                        </header>
+                    </Column></columns>
+                </Table>
+        </content>
+
+        <footer>
+            <Toolbar id="_IDGenToolbar">
+                <ToolbarSpacer id="_IDGenToolbarSpacer1" />
+                <Button id="_IDGenButton1" text="{i18n>upbtn}" type="Emphasized" press="onClickSave" />
+                <Button id="_IDGenButton2" text="{i18n>cancel}" press="onClickCancel" />
+            </Toolbar>
+        </footer>
+    </Page>
+</mvc:View>
