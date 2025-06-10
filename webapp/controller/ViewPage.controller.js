@@ -28,6 +28,8 @@ sap.ui.define([
             let sEmployeeID = oEvent.getParameter("arguments").EmployeeID;
             let oModel = this.getOwnerComponent().getModel();
 
+            oModel.refresh(true);
+
             // Load employee data
             oModel.read("/EMPLOYEE", {
                 filters: [new Filter("EmployeeID", "EQ", sEmployeeID)],
@@ -83,7 +85,7 @@ sap.ui.define([
                 console.log("Navigating to EditPage for EmployeeID:", sEmployeeID);
                 oRouter.navTo("RouteEditPage", {
                     EmployeeID: sEmployeeID
-                });
+                } ,true );
             } else {
                 MessageBox.warning("Employee ID not found in the model.");
             }
