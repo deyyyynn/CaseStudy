@@ -19,7 +19,11 @@
 
                     <!-- Age -->
                     <Label text="{i18n>ageTxt}" id="ageLbl"/>
+<<<<<<< HEAD
                     <Input width="100%" id="i_age" placeholder="{i18n>plchldrTxt}"   required="true" maxLength="2"  liveChange="onAgeChange"/>
+=======
+                    <Input width="100%" id="i_age" placeholder="{i18n>plchldrTxt}" required="true" maxLength="2" liveChange="onAgeChange"/>
+>>>>>>> 99113a49c714856c4773f968cda29fb5cf8d0f41
                     
                     <!-- Date of Hire -->
                     <Label text="{i18n>hdateTxt}" id="hdateLbl"/>
