@@ -16,27 +16,27 @@
 
                     <!-- EID (read-only) -->
                     <Label id="_IDGenLabel" text="{i18n>eidTxt}" />
-                    <Input id="_IDGenInput" value="{employeedetails>/EmployeeID}" editable="false" width="100%" />
+                    <Input id="id_empid" value="{employeedetails>/EmployeeID}" editable="false" width="100%" />
 
                     <!-- First Name -->
                     <Label id="_IDGenLabel1" text="{i18n>fnameTxt}" />
-                    <Input id="_IDGenInput1" value="{employeedetails>/FirstName}" width="100%" required="true" />
+                    <Input id="id_fname" value="{employeedetails>/FirstName}" width="100%" required="true" />
 
                     <!-- Last Name -->
                     <Label id="_IDGenLabel2" text="{i18n>lnameTxt}" />
-                    <Input id="_IDGenInput2" value="{employeedetails>/LastName}" width="100%" required="true" />
+                    <Input id="id_lname" value="{employeedetails>/LastName}" width="100%" required="true" />
 
                     <!-- Age -->
                     <Label id="_IDGenLabel3" text="{i18n>ageTxt}" />
-                    <Input id="_IDGenInput3" value="{employeedetails>/Age}" width="100%" required="true" />
+                    <Input id="id_age" value="{employeedetails>/Age}" width="100%" required="true" />
 
                     <!-- Hire Date -->
                     <Label id="_IDGenLabel4" text="{i18n>hdateTxt}" />
-                    <DatePicker id="_IDGenDatePicker" value="{employeedetails>/DateHire}" displayFormat="yyyy-MM-dd" />
+                    <DatePicker id="id_date" value="{employeedetails>/DateHire}" displayFormat="yyyy-MM-dd" />
 
                     <!-- Career Level -->
                     <Label id="_IDGenLabel5" text="{i18n>clvlTxt}" />
-                    <Select id="_IDGenSelect" selectedKey="{employeedetails>/CareerLevel}" items="{/CAREERLIST}">
+                    <Select id="id_career" selectedKey="{employeedetails>/CareerLevel}" items="{/CAREERLIST}">
                         <items>
                             <core:Item id="_IDGenItem" key="{CareerLevel}" text="{CareerLevel}" />
                         </items>
@@ -44,7 +44,7 @@
 
                     <!-- Current Project -->
                     <Label id="_IDGenLabel6" text="{i18n>cprojTxt}" />
-                    <Select id="_IDGenSelect1" selectedKey="{employeedetails>/CurrentProject}" items="{/PROJECTLIST}">
+                    <Select id="id_project" selectedKey="{employeedetails>/CurrentProject}" items="{/PROJECTLIST}">
                         <items>
                             <core:Item id="_IDGenItem1" key="{ProjectName}" text="{ProjectName}" />
                         </items>
@@ -91,8 +91,8 @@
         <footer>
             <Toolbar id="_IDGenToolbar">
                 <ToolbarSpacer id="_IDGenToolbarSpacer1" />
-                <Button id="_IDGenButton1" text="{i18n>upbtn}" type="Emphasized" press=".onSave" />
-                <Button id="_IDGenButton2" text="{i18n>cancel}" press=".onClickBack" />
+                <Button id="_IDGenButton1" text="{i18n>upbtn}" type="Emphasized" press="onClickSave" />
+                <Button id="_IDGenButton2" text="{i18n>cancel}" press="onClickCancel" />
             </Toolbar>
         </footer>
     </Page>

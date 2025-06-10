@@ -68,7 +68,85 @@ sap.ui.define([
             } else {
                 this.getOwnerComponent().getRouter().navTo("RouteEmployeeList", {}, true);
             }
-        }
-        
+        },
+        onClickCancel: function () {
+            const oHistory = sap.ui.core.routing.History.getInstance();
+            const sPreviousHash = oHistory.getPreviousHash();
+
+            if (sPreviousHash !== undefined) {
+                history.go(-1);
+            } else {
+                oRouter.navTo("RouteViewPage", {
+                    EmployeeID: oEmpData.EmployeeID
+                });
+            }
+        },
+        onClickSave: function () {
+            let oView = this.getView();
+            let oModel = this.getOwnerComponent().getModel();
+            let oRouter = this.getOwnerComponent().getRouter();
+          
+            // Gather employee data from inputs
+            let oEmpData = {
+              FirstName: oView.byId("id_fname").getValue(),
+              LastName: oView.byId("id_lname").getValue(),
+              EmployeeID: oView.byId("id_empid").getValue(),
+              Age: oView.byId("id_age").getValue(),
+              DateHire: oView.byId("id_date").getValue(),
+              CareerLevel: oView.byId("id_career").getSelectedKey(),
+              CurrentProject: oView.byId("id_project").getSelectedKey()
+            };
+          
+            // Retrieve SkillID based on EmployeeID
+            let oSkillModel = this.getView().getModel("skills");
+            let aSkillData = oSkillModel.getData();
+            let aEmployeeSkills = aSkillData.filter(function (skill) {
+              return skill.EmployeeID === oEmpData.EmployeeID;
+            });
+          
+            // Update the employee data
+            let sEmpPath = "/EMPLOYEE('" + oEmpData.EmployeeID + "')";
+            let oEmpEntry = {
+              FirstName: oEmpData.FirstName,
+              LastName: oEmpData.LastName,
+              Age: oEmpData.Age,
+              DateHire: oEmpData.DateHire,
+              CareerLevel: oEmpData.CareerLevel,
+              CurrentProject: oEmpData.CurrentProject
+            };
+          
+            oModel.update(sEmpPath, oEmpEntry, {
+              success: function () {
+                sap.m.MessageToast.show("Employee updated successfully");
+          
+                // Update each associated skill
+                aEmployeeSkills.forEach(function (oSkill) {
+                  let sSkillPath = "/SKILL('" + oSkill.SkillID + "')";
+                  let oSkillEntry = {
+                    SkillID: oSkill.SkillID,
+                    SkillName: oSkill.SkillName,
+                    ProficiencyID: oSkill.ProficiencyID
+                  };
+          
+                  oModel.update(sSkillPath, oSkillEntry, {
+                    success: function () {
+                      sap.m.MessageToast.show("Skill updated successfully");
+                    },
+                    error: function () {
+                      sap.m.MessageToast.show("Error updating skill");
+                    }
+                  });
+                });
+          
+                // oRouter.navTo("RouteViewPage", {
+                //     EmployeeID: oEmpData.EmployeeID
+                // },true );
+                oRouter.navTo("RouteEmployeeList", {}, true);
+              },
+              error: function () {
+                sap.m.MessageToast.show("Error updating employee");
+              }
+            });
+          }          
     });
 });
