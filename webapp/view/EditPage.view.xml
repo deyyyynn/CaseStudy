@@ -53,7 +53,11 @@
             </sap.ui.layout.form:SimpleForm>
 
             <!-- Skills Table  -->
+<<<<<<< Updated upstream
             <Table id="skillsTable1" items="{skills>/}">
+=======
+            <!-- <Table id="skillsTable1" items="{skills>/}" inset="false" >
+>>>>>>> Stashed changes
                 <columns>
                     <Column id="_IDGenColumn1">
                         <header>
@@ -67,6 +71,7 @@
                     </Column>
                 </columns>
 
+<<<<<<< Updated upstream
                 <items>
                     <ColumnListItem id="_IDGenColumnListItem">
                         <cells>
@@ -80,12 +85,58 @@
 
                             <!-- Proficiency Select Dropdown -->
                            <Select id="proficiencyselect" width="100%" selectedKey="{proficiency>ProficiencyID}" items="{proficiencyList>/}">
+=======
+                <items> -->
+                    <!-- <ColumnListItem id="_IDGenColumnListItem">
+                        <cells> -->
+
+                            <!-- Skill Select Dropdown -->
+                            <!-- <Select id="_IDGenSelect2" width="100%" selectedKey="{skills>SkillID}" items="{skills>/}"> 
+                            <core:Item id="_IDGenItem2" key="{skills>SkillID}" text="{skills>SkillName}" />
+                            </Select> -->
+
+                            <!-- Proficiency Select Dropdown -->
+                           <!-- <Select id="proficiencyselect" width="100%" selectedKey="{skills>ProficiencyID}" items="{proficiencyList>/}">
+>>>>>>> Stashed changes
                                 <core:Item id="proficiencyItem" key="{proficiencyList>ProficiencyID}" text="{proficiencyList>ProficiencyID}" />
                             </Select>
                         </cells>
                     </ColumnListItem>
                 </items>
-            </Table>
+            </Table> -->
+
+             <!-- Add Skill -->
+            <Table noDataText="{i18n>noskillTxt}" id="idSkillList1" mode="MultiSelect" items="{skills>/}">
+                <headerToolbar>
+                    <Toolbar width="100%" id="toolbar1">
+                        <content>
+                            <Title text="{i18n>skills}" id="title4"/>
+                            <ToolbarSpacer id="spacer0"/>
+                            <Button text="{i18n>add}" id="addBtn" press="onAddSkill"/>
+                            <Button text="{i18n>del}" id="delBtn" type="Reject" press="onPressDelete"/>
+                        </content>
+                    </Toolbar>
+                </headerToolbar>
+                <items>
+                    <ColumnListItem type="Active" id="item1">
+                        <cells>
+                            <Text id="_IDGenText1" text="{skills>SkillName}"/>
+                            <Text id="_IDGenText2" text="{skills>ProficiencyID}"/>
+                        </cells>
+                    </ColumnListItem>
+                </items>
+                <columns>
+                    <Column id="column0">
+                        <header>
+                            <Label text="{i18n>skillTxt}" id="skillLbl"/>
+                        </header>
+                    </Column>
+                    <Column id="column1">
+                        <header>
+                            <Label text="{i18n>pro}" id="profLvl"/>
+                        </header>
+                    </Column></columns>
+                </Table>
         </content>
 
         <footer>
