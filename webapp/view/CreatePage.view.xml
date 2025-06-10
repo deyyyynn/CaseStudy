@@ -59,7 +59,7 @@
                     <ColumnListItem type="Active" id="item1">
                         <cells>
                             <Text id="_IDGenText1" text="{SkillName}"/>
-                            <Text id="_IDGenText2" text="{ProficiencyLevel}"/>
+                            <Text id="_IDGenText2" text="{ProficiencyID}"/>
                         </cells>
                     </ColumnListItem>
                 </items>

@@ -15,7 +15,7 @@
                     <Label text="{i18n>pro}" id="profLbl"/>
                     <Select id="sel_prof" items="{/PROFICIENCYLIST}">
                         <items>
-                            <core:Item text="{ProficiencyLevel}" id="itm_prof"/>
+                            <core:Item text="{ProficiencyID}" id="itm_prof"/>
                         </items>                    
                     </Select>
                 </sap.ui.layout.form:content>
