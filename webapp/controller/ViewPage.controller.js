@@ -3,40 +3,32 @@ sap.ui.define([
     "sap/ui/model/json/JSONModel",
     "sap/ui/model/Filter",
     "./formatter",
-    "sap/m/MessageBox"  
-], (Controller, JSONModel,Filter, formatter, MessageBox) => {
+    "sap/ui/core/routing/History",
+    "sap/m/MessageBox"
+], (Controller, JSONModel, Filter, formatter, History, MessageBox) => {
     "use strict";
 
     return Controller.extend("sapips.training.employeeapp.controller.ViewPage", {
         formatter: formatter,
-        onInit: function() {
+
+        onInit: function () {
             this.getOwnerComponent().getRouter().getRoute("RouteViewPage").attachPatternMatched(this._onObjectMatched, this);
         },
 
-        _fetchSkillCount: function () {
-            let oModel = this.getOwnerComponent().getModel();
-
-            oModel.refresh(true);
-            // Read the total count from the /EMPLOYEE endpoint using $count
-            oModel.read("/SKILL/$count", {
-                success: function (oData) {
-                    // Set the total count of employees in the model
-                    let oCountModel = new JSONModel({ skillsCount: oData });
-                    this.getView().setModel(oCountModel, "skillsCountModel");
-                }.bind(this),
-                error: function () {
-                    MessageBox.error("Error fetching employee skill count.");
-                }
-            });
+        onClickCancel: function () {
+            let sPreviousHash = History.getInstance().getPreviousHash();
+            if (sPreviousHash !== undefined) {
+                window.history.go(-1);
+            } else {
+                this.getOwnerComponent().getRouter().navTo("RouteEmployeeList", null, true);
+            }
         },
-        
+
         _onObjectMatched: function (oEvent) {
             let sEmployeeID = oEvent.getParameter("arguments").EmployeeID;
             let oModel = this.getOwnerComponent().getModel();
 
-            this._fetchSkillCount(sEmployeeID);
-
-            // Read employee data
+            // Load employee data
             oModel.read("/EMPLOYEE", {
                 filters: [new Filter("EmployeeID", "EQ", sEmployeeID)],
                 success: function (oData) {
@@ -48,19 +40,28 @@ sap.ui.define([
                 }
             });
 
-            // Read related skills (assuming navigation property or filtering is supported)
+            // Load skills and count table items
             oModel.read("/SKILL", {
                 filters: [new Filter("EmployeeID", "EQ", sEmployeeID)],
                 success: function (oData) {
+                    // Filter duplicates
                     let aUniqueSkills = oData.results.filter((item, index, self) =>
                         index === self.findIndex(t =>
                             t.SkillName === item.SkillName && t.ProficiencyID === item.ProficiencyID
                         )
                     );
-            
-                    // Set model with named array path
+
+                    // Set filtered skills model
                     let oSkillsModel = new JSONModel({ Skills: aUniqueSkills });
                     this.getView().setModel(oSkillsModel, "skills");
+
+                    // Wait for table update to get row count
+                    this.byId("skillsTable").attachEventOnce("updateFinished", () => {
+                        let iCount = this.byId("skillsTable").getItems().length;
+                        let oTableCountModel = new JSONModel({ skillsTableCount: iCount });
+                        this.getView().setModel(oTableCountModel, "skillsTableCountModel");
+                    });
+
                 }.bind(this),
                 error: function () {
                     MessageBox.error("Failed to load skills.");
