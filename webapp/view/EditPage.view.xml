@@ -53,7 +53,7 @@
             </sap.ui.layout.form:SimpleForm>
 
             <!-- Skills Table  -->
-            <Table id="skillsTable1" items="{skills>/}">
+            <Table id="skillsTable1" items="{skills>/}" inset="false" >
                 <columns>
                     <Column id="_IDGenColumn1">
                         <header>
@@ -70,18 +70,16 @@
                 <items>
                     <ColumnListItem id="_IDGenColumnListItem">
                         <cells>
+
                             <!-- Skill Select Dropdown -->
-                            <Select id="_IDGenSelect2"
-                                width="100%"
-                                selectedKey="{skills>SkillID}"
-                                items="{/SKILL}">
-                                <core:Item id="_IDGenItem2" key="{SkillID}" text="{SkillName}" />
+                            <Select id="_IDGenSelect2" width="100%" selectedKey="{skills>SkillID}" items="{/SKILL}"> 
+                            <core:Item id="_IDGenItem2" key="{SkillID}" text="{SkillName}" />
                             </Select>
 
                             <!-- Proficiency Select Dropdown -->
-                           <Select id="proficiencyselect" width="100%" selectedKey="{proficiency>ProficiencyID}" items="{proficiencyList>/}">
+                           <Select id="proficiencyselect" width="100%" selectedKey="{skills>ProficiencyID}" items="{proficiencyList>/}">
                                 <core:Item id="proficiencyItem" key="{proficiencyList>ProficiencyID}" text="{proficiencyList>ProficiencyID}" />
-                            </Select>
+                           </Select>
                         </cells>
                     </ColumnListItem>
                 </items>
