@@ -190,6 +190,8 @@ sap.ui.define([
             let oFname = oView.byId("id_fname");
             let oLname = oView.byId("id_lname");
             let oAge = oView.byId("id_age");
+            let oDateField = oView.byId("id_date");
+            let dDateValue = oDateField.getDateValue();
 
             let bValid = true;
 
@@ -219,6 +221,14 @@ sap.ui.define([
                 bValid = false;
             } else {
                 oAge.setValueState("None");
+            }
+
+            if (!dDateValue) {
+                oDateField.setValueState("Error");
+                oDateField.setValueStateText("Date of Hire is required.");
+                bValid = false;
+            } else {
+                oDateField.setValueState("None");
             }
 
             if (!bValid) {
