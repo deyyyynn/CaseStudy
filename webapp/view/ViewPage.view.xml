@@ -54,7 +54,7 @@
 			</ObjectPageSection>
 			</sections>
 		
-		<ObjectPageSection id="objectPageSec" title="{i18n>Skills} ({skillsCountModel>/skillsCount})">
+		<ObjectPageSection id="objectPageSec" title="{= ${i18n>Skills} + ' (' + ${skillsTableCountModel>/skillsTableCount} + ')' }">
 				<subSections>
 					<ObjectPageSubSection id="objectPageSubSec">
 						<blocks>
