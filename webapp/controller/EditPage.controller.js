@@ -2,8 +2,9 @@ sap.ui.define([
     "sap/ui/core/mvc/Controller",
     "sap/ui/model/json/JSONModel",
     "sap/ui/model/Filter",
-    "sap/m/MessageBox"
-], function (Controller, JSONModel, Filter, MessageBox) {
+    "sap/m/MessageBox",
+    "sap/ui/core/BusyIndicator"
+], function (Controller, JSONModel, Filter, MessageBox, BusyIndicator) {
     "use strict";
 
     return Controller.extend("sapips.training.employeeapp.controller.EditPage", {
@@ -15,49 +16,6 @@ sap.ui.define([
         },
 
         _onObjectMatched: function (oEvent) {
-        //     const sEmployeeID = oEvent.getParameter("arguments").EmployeeID;
-        //     const sProficiencyID = oEvent.getParameter("arguments").ProficiencyID;
-        //     const oModel = this.getOwnerComponent().getModel();
-
-        //     // Fetch employee data based on EmployeeID
-        //     oModel.read("/EMPLOYEE", {
-        //         filters: [new Filter("EmployeeID", "EQ", sEmployeeID)],
-        //         success: function (oData) {
-        //             if (oData.results && oData.results.length) {
-        //                 const oEmpModel = new JSONModel(oData.results[0]);
-        //                 this.getView().setModel(oEmpModel, "employeedetails");
-        //             } else {
-        //                 MessageBox.error("No employee found with ID " + sEmployeeID);
-        //             }
-        //         }.bind(this),
-        //         error: function () {
-        //             MessageBox.error("Failed to load employee data.");
-        //         }
-        //     });
-
-        //     // Fetch skills for the employee
-        //     oModel.read("/SKILL", {
-        //         filters: [new Filter("EmployeeID", "EQ", sEmployeeID)],
-        //         success: function (oData) {
-        //             const oSkillsModel = new JSONModel(oData.results);
-        //             this.getView().setModel(oSkillsModel, "skills");
-        //         }.bind(this),
-        //         error: function () {
-        //             MessageBox.error("Failed to load employee skills.");
-        //         }
-        //     });
-
-        //     // Fetch Proficiency
-        //     oModel.read("/PROFICIENCYLIST", {
-        //         success: function (oData) {
-        //             const oProfModel = new JSONModel(oData.results);
-        //             this.getView().setModel(oProfModel, "proficiencyList");
-        //         }.bind(this),
-        //         error: function () {
-        //             MessageBox.error("Could not load proficiency levels.");
-        //         }
-        //     });
-        // },
                 const sEmployeeID = oEvent.getParameter("arguments").EmployeeID;
                 const sProficiencyID = oEvent.getParameter("arguments").ProficiencyID; // If needed later
                 const oModel = this.getOwnerComponent().getModel();
@@ -93,18 +51,6 @@ sap.ui.define([
                         sap.m.MessageBox.error("Failed to load employee skills.");
                     }
                 });
-                
-
-                // Fetch proficiency list
-                // oModel.read("/PROFICIENCYLIST", {
-                //     success: function (oData) {
-                //         const oProfModel = new sap.ui.model.json.JSONModel(oData.results);
-                //         oView.setModel(oProfModel, "proficiencyList");
-                //     },
-                //     error: function () {
-                //         sap.m.MessageBox.error("Could not load proficiency levels.");
-                //     }
-                // });
             },
 
         onAddSkill: function (){
@@ -119,44 +65,11 @@ sap.ui.define([
             });
         },
         
+        onCancelDialog: function(){
+            this.getView().byId("idAddSkill").close();
+        },
        onPressDelete: function(){
-        //     let oTable = this.byId("idSkillList1");
-        //     let aSelectedItems = oTable.getSelectedItems();
-
-        //     if (aSelectedItems.length === 0) {
-        //         MessageBox.warning("Must select at least 1 employee.");
-        //         return;
-        //     }
-
-        //     MessageBox.confirm("Are you sure you want to delete the selected skill/s?", {
-        //         onClose:(oAction) => {
-        //             if (oAction === sap.m.MessageBox.Action.OK) {
-        //                 let oModel = this.getOwnerComponent().getModel();
-        //                 let iPending = aSelectedItems.length;
-        //                 let bErrorOccurred = false;
-                        
-        //                 aSelectedItems.forEach(function (oItem) {
-        //                     let sPath = oItem.getBindingContext().getPath();
-
-        //                     oModel.remove(sPath, {
-        //                         success: function () {
-        //                             iPending--;
-        //                             if (iPending === 0 && !bErrorOccurred) {
-        //                                 MessageBox.success("Selected skill(s) deleted successfully.");
-        //                             }
-        //                         },
-        //                         error: function () {
-        //                             bErrorOccurred = true;
-        //                             MessageBox.error("Failed to delete one or more skills.");
-        //                         }
-        //                     });
-        //                 });
-
-        //                 oTable.removeSelections();
-        //             }
-        //         }
-        //     });
-        // },
+       
             var oView = this.getView();
             var oModel = oView.getModel("skills");
             var oTable = oView.byId("idSkillList1");
@@ -164,7 +77,7 @@ sap.ui.define([
             // Get all selected items
             var aSelectedItems = oTable.getSelectedItems();
             if (aSelectedItems.length === 0) {
-                MessageToast.show("Please select at least one skill to delete!");
+                MessageBox.show("Please select at least one skill to delete!");
                 return;
             }
      
@@ -189,47 +102,42 @@ sap.ui.define([
         },
 
         onPressAdd: function (){
-            let oView = this.getView();
-
-            let sNewSkill = oView.byId("sel_skills").getSelectedItem()?.getText();
-            let sNewProf = oView.byId("sel_prof").getSelectedItem()?.getText();
-        
-            if (!sNewSkill || !sNewProf) {
-                MessageBox.information("Please select both Skill and Proficiency.");
+           
+            var oView = this.getView();
+            var oModel = oView.getModel("skills");
+            var oSkillComboBox = oView.byId("sel_skills");
+            var oProficiencyComboBox = oView.byId("sel_prof");
+            var oSelectedSkill = oSkillComboBox.getSelectedItem();
+            var oSelectedProficiency = oProficiencyComboBox.getSelectedItem();
+            if (!oSelectedSkill || !oSelectedProficiency) {
+                MessageBox.show("Please select both Skill and Proficiency Level!");
                 return;
             }
-            
-            // Avoid duplication of selected Skill
-            let oTable = oView.byId("idSkillList"); 
-            let aItems = oTable.getItems(); 
-            let bDuplicate = aItems.some(function (oItem) { 
-            let sExistingSkill = oItem.getBindingContext().getProperty("SkillName");
-            
-            return sExistingSkill === sNewSkill;
-            });
-
-            if (bDuplicate) {
-                MessageBox.warning(`${sNewSkill} has already been added.`);
-                return; 
-            }
-
-            let oData = {
-                SkillName: sNewSkill,
-                ProficiencyID: sNewProf
+            var sSkillID = oSelectedSkill.getKey();
+            var sSkillName = oSelectedSkill.getText();
+            var sProficiencyID = oSelectedProficiency.getText();
+            var sProficiency = oSelectedProficiency.getKey();
+            var aSkillsData = oModel.getProperty("/SKILL");
+            let oSkillPayLoad = {
+                SkillID : sSkillID,
+                SkillName : sSkillName,
+                ProficiencyID : sProficiencyID,
+                ProficiencyLevel : sProficiency
             };
-        
-            let oModel = this.getOwnerComponent().getModel();
-            let sEntity = "/SKILL";
-        
-            oModel.create(sEntity, oData, {
-                success: (data) => {
-                    MessageBox.success("Skill added successfully!");
-                    this.getView().byId("idAddSkill").close();
-                },
-                error: () => {
-                    MessageBox.error("Failed to add skill.");
-                }
-            });
+            //Check for Duplicate Entry
+            var bExists = aSkillsData.some(skill => skill.SkillID === sSkillID);
+            if (bExists) {
+                MessageBox.show("Skill already added!");
+                return;
+            }
+            // Add to SkillsData Array
+            aSkillsData.push(oSkillPayLoad);
+            oModel.setProperty("/SKILL", aSkillsData);
+            //oModel.setProperty("/skillsCount", aSkillsData.length());
+            oModel.refresh(true);
+            this.getView().byId("idAddSkill").close();
+            MessageBox.show("Skill Added!");
+            
 
         },
 
@@ -240,14 +148,14 @@ sap.ui.define([
             if (sPreviousHash !== undefined) {
                 history.go(-1);
             } else {
-                this.getOwnerComponent().getRouter().navTo("RouteEmployeeList", {}, true);
+                this.getOwnerComponent().getRouter().navTo("RouteViewPage", { EmployeeID: oEmpData.EmployeeID }, true);
             }
         },
         onClickCancel: function (oEvent) { 
-          
+            let oRouter = this.getOwnerComponent().getRouter();
             const oHistory = sap.ui.core.routing.History.getInstance();
             const sPreviousHash = oHistory.getPreviousHash();
-            let oEmpData = { EmployeeID: oView.byId("id_empid").getValue() } ;
+            let oEmpData = { EmployeeID: this.getView().byId("id_empid").getValue() } ;
 
             if (sPreviousHash !== undefined) {
                 history.go(-1);
@@ -261,7 +169,8 @@ sap.ui.define([
             let oView = this.getView();
             let oModel = this.getOwnerComponent().getModel();
             let oRouter = this.getOwnerComponent().getRouter();
-          
+            let sEmployeeID = oView.byId("id_empid").getValue();
+            let aEmployeeID = oView.byId("idSkillList1").getItems();
             // Gather employee data from inputs
             let oEmpData = {
               FirstName: oView.byId("id_fname").getValue(),
@@ -318,9 +227,9 @@ sap.ui.define([
            
             let oSkillModel = this.getView().getModel("skills");
             let aSkillData = oSkillModel.getData();
-            let aEmployeeSkills = aSkillData.filter(function (skill) {
-              return skill.EmployeeID === oEmpData.EmployeeID;
-            });
+            // let aEmployeeSkills = aSkillData.filter(function (skill) {
+            //   return skill.EmployeeID === oEmpData.EmployeeID;
+            // });
           
             // Update the employee data
             let sEmpPath = "/EMPLOYEE('" + oEmpData.EmployeeID + "')";
@@ -335,30 +244,8 @@ sap.ui.define([
           
             oModel.update(sEmpPath, oEmpEntry, {
               success: function () {
-                sap.m.MessageToast.show("Employee updated successfully");
-          
-                // Update each associated skill
-                aEmployeeSkills.forEach(function (oSkill) {
-                  let sSkillPath = "/SKILL('" + oSkill.SkillID + oSkill.SkillName + oSkill.ProficiencyID + oSkill.ProficiencyLevel + "')";
-                  let oSkillEntry = {
-                    
-                    SkillID: oSkill.SkillID,
-                    SkillName: oSkill.SkillName,
-                    ProficiencyID: oSkill.ProficiencyID,
-                    ProficiencyLevel: oSkill.ProficiencyLevel
-                  };
-          
-                  oModel.update(sSkillPath, oSkillEntry, {
-                    success: function () {
-                      sap.m.MessageToast.show("Skill updated successfully");
-                      oModel.refresh(true);
-                    },
-                    error: function () {
-                      sap.m.MessageToast.show("Error updating skill");
-                    }
-                  });
-                });
-          
+                sap.m.MessageBox.show("Employee updated successfully");
+
                 oRouter.navTo("RouteViewPage", {
                     EmployeeID: oEmpData.EmployeeID
                  },true );
@@ -366,11 +253,10 @@ sap.ui.define([
                 
               },
               error: function () {
-                sap.m.MessageToast.show("Error updating employee");
+                sap.m.MessageBox.show("Error updating employee");
               }
             });
-          },
-        
+          
         onNameChange: function () {
             // First Name and Last Name validation
             const oView = this.getView();
@@ -430,63 +316,55 @@ sap.ui.define([
             // Set the cleaned value back
             oInput.setValue(sValue);
         } 
-    //     onClickSave: function(oEvent){
-    //       let oView = this.getView();
-    //       let oModel = this.getOwnerComponent().getModel();
-    //       let oRouter = this.getOwnerComponent().getRouter();
-          
-    //       // Gather employee data from inputs
-    //       let oEmpData = {
-    //       FirstName: oView.byId("id_fname").getValue(),
-    //       LastName: oView.byId("id_lname").getValue(),
-    //       EmployeeID: oView.byId("id_empid").getValue(),
-    //       Age: oView.byId("id_age").getValue(),
-    //       DateHire: oView.byId("id_date").getValue(),
-    //       CareerLevel: oView.byId("id_career").getSelectedKey(),
-    //       CurrentProject: oView.byId("id_project").getSelectedKey() };
 
-    //       var oTable = this.byId("skillsTable1");
-    //       var aSelectedItems = oTable.getSelectedItems();
+            let oSkillModel1 = oView.getModel("skills");
+            let aSkillData1 = oSkillModel1.getProperty("/SKILL"); // all skill entries
+            let aToDelete = aSkillData1.filter(skill => skill.EmployeeID === sEmployeeID);
+        
+            aToDelete.forEach(function (oSkill) {
+                oModel.remove("/SKILL(EmployeeID='" + oSkill.EmployeeID + "',SkillID='" + oSkill.SkillID + "')", {
+                    success: function () {
+                        // Deletion success (optional: toast)
+                    }.bind(this),
+                    error: function (oError) {
+                        MessageBox.error("Error deleting old skills.");
+                    }.bind(this)
+                });
+            }, this);
+            
+            
+            let mParameters = {};
+            let oTable = oView.byId("idSkillList1");
+            let dTableData = oTable.getItems(); 
+            if(!dTableData || dTableData.length === 0){
+                MessageBox.show("Please add atleast 1 skill!");
+                return;
+            }
+            // Enable batch processing
+            oModel.setDeferredGroups(["batchSkill"]);
+            mParameters.groupId = "batchSkill";
+    
+            dTableData.forEach(function (oItem) {
+                let oContext = oItem.getBindingContext("skills"); // Get row binding context
+                let oData = oContext.getObject(); // Extract row data
+                
+                oData.EmployeeID = sEmployeeID;
+                // Add each skill to the batch request
+                oModel.create("/SKILL", oData, mParameters);
+            });
 
-    //       // if (aSelectedItems.length === 0) {
-    //       //     MessageBox.warning("Must select at least 1 skill.");
-    //       //     return;
-    //       // }
-
-    //       MessageBox.confirm("Are you sure you want to edit the employee record?", {
-    //           onClose: function (oAction) {
-    //               if (oAction === sap.m.MessageBox.Action.OK) {
-    //                   var oModel = this.getOwnerComponent().getModel();
-    //                   var iPending = aSelectedItems.length;
-    //                   var bErrorOccurred = false;
-                      
-    //                   aSelectedItems.forEach(function (oItem) {
-    //                       var sPath = oItem.getBindingContext().getPath();
-
-    //                       oModel.update(sEmpPath, oEmpEntry, {
-    //                        success: function () {
-    //                       oModel.update(sPath, {
-    //                           success: function () {
-    //                               iPending--;
-    //                               if (iPending === 0 && !bErrorOccurred) {
-    //                                   MessageBox.success("Employee record updated successfully.");
-    //                                   oModel.refresh(true);
-    //                               }
-    //                           },
-    //                           error: function () {
-    //                               bErrorOccurred = true;
-    //                               MessageBox.error("Failed to update Employee record.");
-    //                           }
-    //                       });
-    //                     }
-    //                   });
-    //                   });
-    //                   oRouter.navTo("RouteViewPage", {
-    //                   EmployeeID: oEmpData.EmployeeID },null,true );
-                      
-    //               }
-    //           }.bind(this)
-    //       });
-    //   }
+            // Submit batch request
+            oModel.submitChanges({
+                groupId: "batchSkill",
+                success: function () {
+                    MessageBox.show("All skills added successfully!");
+                    oModel.refresh(true);
+                },
+                error: function () {
+                    MessageBox.show("Error adding skills.");
+                }
+            });
+           
+          }   
     });
 });
