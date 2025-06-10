@@ -50,11 +50,14 @@ sap.ui.define([
             const oDatePicker = oView.byId("datePicker");
             oDatePicker.setDateValue(oToday);
 
-            // Get the table Skills
-            let oTable = this.getView().byId("idSkillList");
-        
-            // Clear the items in the table
-            oTable.removeAllItems();
+            //Clear Skill List Before Create
+            this.getView().setModel(new JSONModel({ SKILL: [] }), "createModel");
+
+            // Initialize Empty Model (Created on Button Press)
+            let oSkillModel = new JSONModel({
+                SkillsData: []
+            });
+            this.getView().setModel(oSkillModel, "skillsModel");
         },
 
         showMessageBox: function (sType, sKey, aParams = []) {
@@ -210,32 +213,41 @@ sap.ui.define([
 
         onPressAdd: function (){
             let oView = this.getView();
-            
-            let sNewSkill = oView.byId("sel_skills").getSelectedItem()?.getText();
-            let sNewProf = oView.byId("sel_prof").getSelectedItem()?.getText();
-        
-            if (!sNewSkill || !sNewProf) {
+            let oModel = oView.getModel("skillsModel");
+            let oSkillComboBox = oView.byId("sel_skills");
+            let oProficiencyComboBox = oView.byId("sel_prof");
+            let oSelectedSkill = oSkillComboBox.getSelectedItem();
+            let oSelectedProficiency = oProficiencyComboBox.getSelectedItem();
+            if (!oSelectedSkill || !oSelectedProficiency) {
                 this.showMessageBox("information", "msg_selectSkillProf");
                 return;
             }
-            let oData = {   
-                ProficiencyID: sNewProf,
-                SkillName: sNewSkill
+            let sSkillID = oSelectedSkill.getKey();
+            let sSkillName = oSelectedSkill.getText();
+            let sProficiencyID = oSelectedProficiency.getText();
+            let sProficiency = oSelectedProficiency.getKey();
+            let aSkillsData = oModel.getProperty("/SkillsData");
+            let oSkillPayLoad = {
+                SkillID : sSkillID,
+                SkillName : sSkillName,
+                ProficiencyID : sProficiencyID,
+                ProficiencyLevel : sProficiency
             };
-        
-            let oModel = this.getOwnerComponent().getModel();
-            let sEntity = "/SKILL";
-        
-            oModel.create(sEntity, oData, {
-                success: (data) => {
-                    this.showMessageBox("success", "msg_addSkillSuccess");
-                    this.getView().byId("idAddSkill").close();
-                },
-                error: () => {
-                    this.showMessageBox("error", "msg_addSkillFail");
-                }
-            });
 
+            //Check for Duplicate Entry
+            let bExists = aSkillsData.some(skill => skill.SkillID === sSkillID);
+            if (bExists) {
+                this.showMessageBox("warning", "msg_SkillDup");
+                return;
+            }
+
+            // Add to SkillsData Array
+            aSkillsData.push(oSkillPayLoad);
+            oModel.setProperty("/SkillsData", aSkillsData);
+            oModel.refresh(true);
+            this.getView().byId("idAddSkill").close();
+            this.showMessageBox("success", "msg_addSkillSuccess");
+            
         },
 
         onNameChange: function () {
