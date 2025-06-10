@@ -285,9 +285,9 @@ sap.ui.define([
                 sFirstName = sFirstName.replace(/[^A-Za-z\s\-]/g, ""); 
                     if (sFirstName.startsWith("-")) 
                     { 
-                     sFirstName = sFirstName.slice(1);
-                     }
-                     oFnameInput.setValue(sFirstName);
+                    sFirstName = sFirstName.slice(1);
+                    }
+                    oFnameInput.setValue(sFirstName);
 
             // LAST NAME - Can only accept hyphen symbol
             let sLastName = oLnameInput.getValue();
