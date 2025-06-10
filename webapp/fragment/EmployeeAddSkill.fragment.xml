@@ -7,7 +7,7 @@
                     <Label text="{i18n>skillTxt}" id="idSkillLbl"/>
                     <Select id="sel_skills" items="{/SKILLLIST}">
                         <items>
-                            <core:Item text="{SkillName}" key="{SkillID}" id="itm_skills"/>
+                            <core:Item key="{SkillID}" text="{SkillName}" id="itm_skills"/>
                         </items>                    
                     </Select>
 
@@ -15,7 +15,7 @@
                     <Label text="{i18n>pro}" id="profLbl"/>
                     <Select id="sel_prof" items="{/PROFICIENCYLIST}">
                         <items>
-                            <core:Item text="{ProficiencyID}" key="{ProficiencyLevel}" id="itm_prof" />
+                            <core:Item key="{ProficienctName}" text="{ProficiencyID}" id="itm_prof"/>
                         </items>                    
                     </Select>
                 </sap.ui.layout.form:content>

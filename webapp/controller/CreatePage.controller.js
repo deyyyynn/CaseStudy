@@ -3,8 +3,9 @@ sap.ui.define([
     "sap/ui/model/json/JSONModel",
 	"sap/m/MessageBox",
     "sap/ui/core/routing/History",
-    "sap/m/library"
-], (Controller, JSONModel, MessageBox, History, mobileLibrary) => {
+    "sap/m/library",
+    "sap/ui/core/BusyIndicator"
+], (Controller, JSONModel, MessageBox, History, BusyIndicator,mobileLibrary) => {
     "use strict";
 
     return Controller.extend("sapips.training.employeeapp.controller.CreatePage", {
@@ -49,7 +50,41 @@ sap.ui.define([
             const oToday = new Date();
             const oDatePicker = oView.byId("datePicker");
             oDatePicker.setDateValue(oToday);
+
+            //Clear Skill List Before Create
+            this.getView().setModel(new JSONModel({ SKILL: [] }), "createModel");
+
+            // Initialize Empty Model (Created on Button Press)
+            let oSkillModel = new JSONModel({
+                SkillsData: []
+            });
+            this.getView().setModel(oSkillModel, "skillsModel");
         },
+
+        showMessageBox: function (sType, sKey, aParams = []) {
+            const oResourceBundle = this.getOwnerComponent().getModel("i18n").getResourceBundle();
+            const sMessage = oResourceBundle.getText(sKey, aParams);
+        
+            switch (sType) {
+                case "success":
+                    MessageBox.success(sMessage);
+                    break;
+                case "error":
+                    MessageBox.error(sMessage);
+                    break;
+                case "warning":
+                    MessageBox.warning(sMessage);
+                    break;
+                case "information":
+                    MessageBox.information(sMessage);
+                    break;
+                case "confirm":
+                    MessageBox.confirm(sMessage);
+                    break;
+                default:
+                    MessageBox.show(sMessage);
+            }
+        },        
 
         onCancelCreate: function () {
 			let sPreviousHash = History.getInstance().getPreviousHash();
@@ -59,15 +94,6 @@ sap.ui.define([
 				this.getOwnerComponent().getRouter().navTo("RouteEmployeeList", null, true);
 			}
             let oModel = this.getOwnerComponent().getModel();
-
-            // Clear Skill List
-            oModel.read("/SKILL", {
-                success: function (oData) {
-                    oData.results.forEach(function (oEntry) {
-                        oModel.remove(`/SKILL(SkillID='${oEntry.SkillID}',EmployeeID='${oEntry.EmployeeID}')`);
-                    });
-                }
-            });
 		},
 
         onClickSave: function(){
@@ -75,6 +101,7 @@ sap.ui.define([
             let sNewFname = oView.byId("i_fname").getValue();
             let sNewLname = oView.byId("i_lname").getValue();
             let sNewAge = oView.byId("i_age").getValue();
+            let sNewEmployeeID = oView.byId("i_eid").getValue();
         
             let oFname = oView.byId("i_fname");
             let oLname = oView.byId("i_lname");
@@ -116,6 +143,12 @@ sap.ui.define([
 
             let oDate = oView.byId("datePicker").getDateValue();
 
+            let oTable = oView.byId("idSkillList");
+            let dTableData = oTable.getItems(); 
+            if(!dTableData || dTableData.length === 0){
+                this.showMessageBox("warning", "msg_noSelected");
+            }
+
             // Format DDMM for EmployeeID
             let sDateForEid = 
                 String(oDate.getDate()).padStart(2, '0') +
@@ -147,7 +180,7 @@ sap.ui.define([
             let aSkills = oSkillTable.getItems();
 
             if (aSkills.length === 0) {
-                MessageBox.warning("Employee must have at least one skill.");
+                this.showMessageBox("warning", "msg_noSkills");
                 return;
             }
 
@@ -157,22 +190,39 @@ sap.ui.define([
             
             oModel.create(sEntity, oData,{
                 success: (data)=>{
-                    MessageBox.success("Employee Records Created Successfully!");
+                    this.showMessageBox("success", "msg_created");
                     this.getOwnerComponent().getRouter().navTo("RouteEmployeeList", null, true);
-
-                    // Clear Skill List
-                    oModel.read("/SKILL", {
-                        success: function (oData) {
-                            oData.results.forEach(function (oEntry) {
-                                oModel.remove(`/SKILL(SkillID='${oEntry.SkillID}',EmployeeID='${oEntry.EmployeeID}')`);
-                            });
-                        }
-                    });
                 },
                 error: ()=>{
-                    MessageBox.error("Employee Records Not Created");
+                    this.showMessageBox("error", "msg_failedCreate");
                 }
             })
+        
+            let mParameters = {};
+
+            // Enable batch processing
+            oModel.setDeferredGroups(["batchSkill"]);
+            mParameters.groupId = "batchSkill";
+
+            dTableData.forEach(function (oItem) {
+                let oContext = oItem.getBindingContext("skillsModel"); // Get row binding context
+                let oData = oContext.getObject(); // Extract row data
+                
+                oData.EmployeeID = sNewEmployeeID;
+                // Add each skill to the batch request
+                oModel.create("/SKILL", oData, mParameters);
+            });
+
+            // Submit batch request
+            oModel.submitChanges({
+                groupId: "batchSkill",
+                success: function () {
+                    this.showMessageBox("success", "msg_addSkillSuccess");
+                },
+                error: function () {
+                    this.showMessageBox("error", "msg_addSkillFail");
+                }
+            });
         },
 
         onAddSkill: function (){
@@ -192,87 +242,67 @@ sap.ui.define([
         },
 
         onPressDelete: function(){
-            let oTable = this.byId("idSkillList1");
+          
+            let oView = this.getView();
+            let oModel = oView.getModel("skillsModel");
+            let oTable = oView.byId("idSkillList");
+            // Get all selected items
+          
             let aSelectedItems = oTable.getSelectedItems();
-
             if (aSelectedItems.length === 0) {
-                MessageBox.warning("Must select at least 1 employee.");
+                this.showMessageBox("warning", "msg_noSelected");
                 return;
             }
-
-            MessageBox.confirm("Are you sure you want to delete the selected skill/s?", {
-                onClose: function (oAction) {
-                    if (oAction === sap.m.MessageBox.Action.OK) {
-                        let oModel = this.getOwnerComponent().getModel();
-                        let iPending = aSelectedItems.length;
-                        let bErrorOccurred = false;
-                        
-                        aSelectedItems.forEach(function (oItem) {
-                            let sPath = oItem.getBindingContext().getPath();
-
-                            oModel.remove(sPath, {
-                                success: function () {
-                                    iPending--;
-                                    if (iPending === 0 && !bErrorOccurred) {
-                                        MessageBox.success("Selected skill(s) deleted successfully.");
-                                    }
-                                },
-                                error: function () {
-                                    bErrorOccurred = true;
-                                    MessageBox.error("Failed to delete one or more skills.");
-                                }
-                            });
-                        });
-
-                        oTable.removeSelections();
-                    }
-                }.bind(this)
-            });
+            // Get all SkillIDs to be deleted
+            let aSelectedSkillIDs = aSelectedItems.map(item => item.getBindingContext("skillsModel").getProperty("SkillID"));
+            // Filter out selected skills from SkillsData
+            let aSkillsData = oModel.getProperty("/SkillsData");
+            let aUpdatedSkills = aSkillsData.filter(skill => !aSelectedSkillIDs.includes(skill.SkillID));
+            // Update Model
+            oModel.setProperty("/SkillsData", aUpdatedSkills);
+            // Clear Table Selection
+            oTable.removeSelections();
+            oModel.refresh(true);
+            this.showMessageBox("success", "msg_deleteSuccess");
         },
 
         onPressAdd: function (){
             let oView = this.getView();
-
-            let sNewSkill = oView.byId("sel_skills").getSelectedItem()?.getText();
-            let sNewProf = oView.byId("sel_prof").getSelectedItem()?.getText();
-        
-            if (!sNewSkill || !sNewProf) {
-                MessageBox.information("Please select both Skill and Proficiency.");
+            let oModel = oView.getModel("skillsModel");
+            let oSkillComboBox = oView.byId("sel_skills");
+            let oProficiencyComboBox = oView.byId("sel_prof");
+            let oSelectedSkill = oSkillComboBox.getSelectedItem();
+            let oSelectedProficiency = oProficiencyComboBox.getSelectedItem();
+            if (!oSelectedSkill || !oSelectedProficiency) {
+                this.showMessageBox("information", "msg_selectSkillProf");
                 return;
             }
-            
-            // Avoid duplication of selected Skill
-            let oTable = oView.byId("idSkillList"); 
-            let aItems = oTable.getItems(); 
-            let bDuplicate = aItems.some(function (oItem) { 
-            let sExistingSkill = oItem.getBindingContext().getProperty("SkillName");
-            
-            return sExistingSkill === sNewSkill;
-            });
+            let sSkillID = oSelectedSkill.getKey();
+            let sSkillName = oSelectedSkill.getText();
+            let sProficiencyID = oSelectedProficiency.getText();
+            let sProficiency = oSelectedProficiency.getKey();
+            let aSkillsData = oModel.getProperty("/SkillsData");
+            let oSkillPayLoad = {
+                SkillID : sSkillID,
+                SkillName : sSkillName,
+                ProficiencyID : sProficiencyID,
+                ProficiencyLevel : sProficiency
+            };
 
-            if (bDuplicate) {
-                MessageBox.warning(`${sNewSkill} has already been added.`);
-                return; 
+            //Check for Duplicate Entry
+            let bExists = aSkillsData.some(skill => skill.SkillID === sSkillID);
+            if (bExists) {
+                this.showMessageBox("warning", "msg_SkillDup");
+                return;
             }
 
-            let oData = {
-                SkillName: sNewSkill,
-                ProficiencyID: sNewProf
-            };
-        
-            let oModel = this.getOwnerComponent().getModel();
-            let sEntity = "/SKILL";
-        
-            oModel.create(sEntity, oData, {
-                success: (data) => {
-                    MessageBox.success("Skill added successfully!");
-                    this.getView().byId("idAddSkill").close();
-                },
-                error: () => {
-                    MessageBox.error("Failed to add skill.");
-                }
-            });
-
+            // Add to SkillsData Array
+            aSkillsData.push(oSkillPayLoad);
+            oModel.setProperty("/SkillsData", aSkillsData);
+            oModel.refresh(true);
+            this.getView().byId("idAddSkill").close();
+            this.showMessageBox("success", "msg_addSkillSuccess");
+            
         },
 
         onNameChange: function () {
