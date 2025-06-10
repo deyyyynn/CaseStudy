@@ -118,6 +118,7 @@ sap.ui.define([
                 }));
             }
         },
+        
         //Delete
         onDelete: function(){
             
@@ -129,10 +130,7 @@ sap.ui.define([
                 return;
             }
 
-            const oResourceBundle = this.getOwnerComponent().getModel("i18n").getResourceBundle();
-            const sConfirmText = oResourceBundle.getText("msg_confirmDelete");
-
-            MessageBox.confirm(sConfirmText, {
+            MessageBox.confirm("Are you sure you want to delete the selected employee(s)?", {
                 onClose: function (oAction) {
                     if (oAction === sap.m.MessageBox.Action.OK) {
                         let oModel = this.getOwnerComponent().getModel();
@@ -146,12 +144,12 @@ sap.ui.define([
                                 success: function () {
                                     iPending--;
                                     if (iPending === 0 && !bErrorOccurred) {
-                                        this.showMessageBox("success", "msg_deleteEmp");
+                                        MessageBox.success("Selected employee(s) deleted successfully.");
                                     }
                                 },
                                 error: function () {
                                     bErrorOccurred = true;
-                                    this.showMessageBox("error", "msg_deleteError");
+                                    MessageBox.error("Failed to delete one or more employees.");
                                 }
                             });
                         });
