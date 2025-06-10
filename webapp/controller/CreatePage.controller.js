@@ -75,19 +75,19 @@ sap.ui.define([
         onClickSave: function(){
             var oView = this.getView();
 
-            // Validations for first name, last name, age
-            var oFname = oView.byId("i_fname");
-            var oLname = oView.byId("i_lname");
-            var oAge = oView.byId("i_age");
-
             var sNewFname = oFname.getValue().trim();
             var sNewLname = oLname.getValue().trim();
             var sNewAge = oAge.getValue().trim();
 
-            var bValid = true;
+            // Validations for first name, last name, age
+            let oFname = oView.byId("i_fname");
+            let oLname = oView.byId("i_lname");
+            let oAge = oView.byId("i_age");
 
-            var nameRegex = /^[A-Za-z\s\-]+$/;
-            var ageRegex = /^[0-9]+$/;
+            let bValid = true;
+
+            let nameRegex = /^[A-Za-z\s\-]+$/;
+            let ageRegex = /^[0-9]+$/;
 
             if (!sNewFname || !nameRegex.test(sNewFname)) {
                 oFname.setValueState("Error");
@@ -105,10 +105,10 @@ sap.ui.define([
                 oLname.setValueState("None");
             }
 
-            var iAge = parseInt(sNewAge);
+            let iAge = parseInt(sNewAge);
             if (!sNewAge || !ageRegex.test(sNewAge) || iAge <= 0 || iAge > 90) {
                 oAge.setValueState("Error");
-                oAge.setValueStateText("This is a required field and must contain numbers.");
+                oAge.setValueStateText("Required field. Age must not be 0 or greater than 90.");
                 bValid = false;
             } else {
                 oAge.setValueState("None");
@@ -298,6 +298,25 @@ sap.ui.define([
                 // Clear ID if inputs are incomplete
                 oView.byId("i_eid").setValue("");
             }
-        }
+        },
+
+        // [START] Age field restrictions - numbers only
+        onAgeChange: function (oEvent) {
+                const oInput = oEvent.getSource();
+                let sValue = oInput.getValue();
+
+                // Allow only numbers
+                sValue = sValue.replace(/[^0-9]/g, "");
+
+                // Prevent values > 90
+                let iAge = parseInt(sValue, 10);
+                if (iAge > 90) {
+                    sValue = "90";
+                }
+
+                // Set the cleaned value back
+                oInput.setValue(sValue);
+            }       
+        // [END] Age field restrictions - numbers only
     });
 });
