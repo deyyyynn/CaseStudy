@@ -53,11 +53,7 @@
             </sap.ui.layout.form:SimpleForm>
 
             <!-- Skills Table  -->
-<<<<<<< Updated upstream
-            <Table id="skillsTable1" items="{skills>/}">
-=======
             <!-- <Table id="skillsTable1" items="{skills>/}" inset="false" >
->>>>>>> Stashed changes
                 <columns>
                     <Column id="_IDGenColumn1">
                         <header>
@@ -71,21 +67,6 @@
                     </Column>
                 </columns>
 
-<<<<<<< Updated upstream
-                <items>
-                    <ColumnListItem id="_IDGenColumnListItem">
-                        <cells>
-                            <!-- Skill Select Dropdown -->
-                            <Select id="_IDGenSelect2"
-                                width="100%"
-                                selectedKey="{skills>SkillID}"
-                                items="{/SKILL}">
-                                <core:Item id="_IDGenItem2" key="{SkillID}" text="{SkillName}" />
-                            </Select>
-
-                            <!-- Proficiency Select Dropdown -->
-                           <Select id="proficiencyselect" width="100%" selectedKey="{proficiency>ProficiencyID}" items="{proficiencyList>/}">
-=======
                 <items> -->
                     <!-- <ColumnListItem id="_IDGenColumnListItem">
                         <cells> -->
@@ -97,7 +78,6 @@
 
                             <!-- Proficiency Select Dropdown -->
                            <!-- <Select id="proficiencyselect" width="100%" selectedKey="{skills>ProficiencyID}" items="{proficiencyList>/}">
->>>>>>> Stashed changes
                                 <core:Item id="proficiencyItem" key="{proficiencyList>ProficiencyID}" text="{proficiencyList>ProficiencyID}" />
                             </Select>
                         </cells>
@@ -106,7 +86,7 @@
             </Table> -->
 
              <!-- Add Skill -->
-            <Table noDataText="{i18n>noskillTxt}" id="idSkillList1" mode="MultiSelect" items="{skills>/}">
+            <Table noDataText="{i18n>noskillTxt}" id="idSkillList1" mode="MultiSelect" items="{skills>/SKILL}">
                 <headerToolbar>
                     <Toolbar width="100%" id="toolbar1">
                         <content>
