@@ -243,7 +243,7 @@ sap.ui.define([
             
             // Avoid duplication of selected Skill
             let oTable = oView.byId("idSkillList"); 
-            let aItems = oTable.getItems(); // CMERCADO
+            let aItems = oTable.getItems(); 
             let bDuplicate = aItems.some(function (oItem) { 
             let sExistingSkill = oItem.getBindingContext().getProperty("SkillName");
             
