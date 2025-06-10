@@ -10,7 +10,7 @@ sap.ui.define([
 	Filter,
 	FilterOperator,
     formatter,
-    MessageBox) => {
+    MessageBox,) => {
     "use strict";
 
     return Controller.extend("sapips.training.employeeapp.controller.EmployeeList", {
