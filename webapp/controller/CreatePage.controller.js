@@ -108,7 +108,7 @@ sap.ui.define([
             let oTable = oView.byId("idSkillList");
             let dTableData = oTable.getItems(); 
             if(!dTableData || dTableData.length === 0){
-                MessageToast.show("Please add atleast 1 skill!");
+                this.showMessageBox("warning", "msg_noSelected");
             }
 
             // Format DDMM for EmployeeID
@@ -159,7 +159,6 @@ sap.ui.define([
                     this.showMessageBox("error", "msg_failedCreate");
                 }
             })
-
         
             let mParameters = {};
 
@@ -180,10 +179,10 @@ sap.ui.define([
             oModel.submitChanges({
                 groupId: "batchSkill",
                 success: function () {
-                    MessageToast.show("All skills added successfully!");
+                    this.showMessageBox("success", "msg_addSkillSuccess");
                 },
                 error: function () {
-                    MessageToast.show("Error adding skills.");
+                    this.showMessageBox("error", "msg_addSkillFail");
                 }
             });
         },
@@ -205,26 +204,26 @@ sap.ui.define([
         },
 
         onPressDelete: function(){
-            var oView = this.getView();
-            var oModel = oView.getModel("skillsModel");
-            var oTable = oView.byId("idSkillList");
+            let oView = this.getView();
+            let oModel = oView.getModel("skillsModel");
+            let oTable = oView.byId("idSkillList");
             // Get all selected items
-            var aSelectedItems = oTable.getSelectedItems();
+            let aSelectedItems = oTable.getSelectedItems();
             if (aSelectedItems.length === 0) {
-                MessageToast.show("Please select at least one skill to delete!");
+                this.showMessageBox("warning", "msg_noSelected");
                 return;
             }
             // Get all SkillIDs to be deleted
-            var aSelectedSkillIDs = aSelectedItems.map(item => item.getBindingContext("skillsModel").getProperty("SkillID"));
+            let aSelectedSkillIDs = aSelectedItems.map(item => item.getBindingContext("skillsModel").getProperty("SkillID"));
             // Filter out selected skills from SkillsData
-            var aSkillsData = oModel.getProperty("/SkillsData");
-            var aUpdatedSkills = aSkillsData.filter(skill => !aSelectedSkillIDs.includes(skill.SkillID));
+            let aSkillsData = oModel.getProperty("/SkillsData");
+            let aUpdatedSkills = aSkillsData.filter(skill => !aSelectedSkillIDs.includes(skill.SkillID));
             // Update Model
             oModel.setProperty("/SkillsData", aUpdatedSkills);
             // Clear Table Selection
             oTable.removeSelections();
             oModel.refresh(true);
-            MessageToast.show(aSelectedItems.length + " skill(s) deleted!");
+            this.showMessageBox("success", "msg_deleteSuccess");
         },
 
         onPressAdd: function (){
@@ -288,6 +287,5 @@ sap.ui.define([
                 oView.byId("i_eid").setValue("");
             }
         }
-
     });
 });
