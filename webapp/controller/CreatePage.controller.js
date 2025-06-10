@@ -3,8 +3,9 @@ sap.ui.define([
     "sap/ui/model/json/JSONModel",
 	"sap/m/MessageBox",
     "sap/ui/core/routing/History",
-    "sap/m/library"
-], (Controller, JSONModel, MessageBox, History, mobileLibrary) => {
+    "sap/m/library",
+    "sap/ui/core/BusyIndicator"
+], (Controller, JSONModel, MessageBox, History, BusyIndicator,mobileLibrary) => {
     "use strict";
 
     return Controller.extend("sapips.training.employeeapp.controller.CreatePage", {
@@ -100,8 +101,15 @@ sap.ui.define([
             let sNewFname = oView.byId("i_fname").getValue();
             let sNewLname = oView.byId("i_lname").getValue();
             let sNewAge = oView.byId("i_age").getValue();
+            let sNewEmployeeID = oView.byId("i_eid").getValue();
 
             let oDate = oView.byId("datePicker").getDateValue();
+
+            let oTable = oView.byId("idSkillList");
+            let dTableData = oTable.getItems(); 
+            if(!dTableData || dTableData.length === 0){
+                MessageToast.show("Please add atleast 1 skill!");
+            }
 
             // Format DDMM for EmployeeID
             let sDateForEid = 
@@ -151,6 +159,33 @@ sap.ui.define([
                     this.showMessageBox("error", "msg_failedCreate");
                 }
             })
+
+        
+            let mParameters = {};
+
+            // Enable batch processing
+            oModel.setDeferredGroups(["batchSkill"]);
+            mParameters.groupId = "batchSkill";
+
+            dTableData.forEach(function (oItem) {
+                let oContext = oItem.getBindingContext("skillsModel"); // Get row binding context
+                let oData = oContext.getObject(); // Extract row data
+                
+                oData.EmployeeID = sNewEmployeeID;
+                // Add each skill to the batch request
+                oModel.create("/SKILL", oData, mParameters);
+            });
+
+            // Submit batch request
+            oModel.submitChanges({
+                groupId: "batchSkill",
+                success: function () {
+                    MessageToast.show("All skills added successfully!");
+                },
+                error: function () {
+                    MessageToast.show("Error adding skills.");
+                }
+            });
         },
 
         onAddSkill: function (){
@@ -170,45 +205,26 @@ sap.ui.define([
         },
 
         onPressDelete: function(){
-            let oTable = this.byId("idSkillList");
-            let aSelectedItems = oTable.getSelectedItems();
-
+            var oView = this.getView();
+            var oModel = oView.getModel("skillsModel");
+            var oTable = oView.byId("idSkillList");
+            // Get all selected items
+            var aSelectedItems = oTable.getSelectedItems();
             if (aSelectedItems.length === 0) {
-                this.showMessageBox("warning", "msg_noSelected");
+                MessageToast.show("Please select at least one skill to delete!");
                 return;
             }
-
-            const oResourceBundle = this.getOwnerComponent().getModel("i18n").getResourceBundle();
-            const sConfirmText = oResourceBundle.getText("msg_deleteConfirm");
-
-            MessageBox.confirm(sConfirmText, {
-                onClose:(oAction) => {
-                    if (oAction === sap.m.MessageBox.Action.OK) {
-                        let oModel = this.getOwnerComponent().getModel();
-                        let iPending = aSelectedItems.length;
-                        let bErrorOccurred = false;
-                        
-                        aSelectedItems.forEach(function (oItem) {
-                            let sPath = oItem.getBindingContext().getPath();
-
-                            oModel.remove(sPath, {
-                                success:() => {
-                                    iPending--;
-                                    if (iPending === 0 && !bErrorOccurred) {
-                                        this.showMessageBox("success", "msg_deleteSuccess");
-                                    }
-                                },
-                                error:() => {
-                                    bErrorOccurred = true;
-                                    this.showMessageBox("error", "msg_deleteFail");
-                                }
-                            });
-                        });
-
-                        oTable.removeSelections();
-                    }
-                }
-            });
+            // Get all SkillIDs to be deleted
+            var aSelectedSkillIDs = aSelectedItems.map(item => item.getBindingContext("skillsModel").getProperty("SkillID"));
+            // Filter out selected skills from SkillsData
+            var aSkillsData = oModel.getProperty("/SkillsData");
+            var aUpdatedSkills = aSkillsData.filter(skill => !aSelectedSkillIDs.includes(skill.SkillID));
+            // Update Model
+            oModel.setProperty("/SkillsData", aUpdatedSkills);
+            // Clear Table Selection
+            oTable.removeSelections();
+            oModel.refresh(true);
+            MessageToast.show(aSelectedItems.length + " skill(s) deleted!");
         },
 
         onPressAdd: function (){
