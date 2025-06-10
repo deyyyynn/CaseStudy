@@ -20,19 +20,19 @@
 
                     <!-- First Name -->
                     <Label id="_IDGenLabel1" text="{i18n>fnameTxt}" />
-                    <Input id="id_fname" value="{employeedetails>/FirstName}" width="100%" required="true" />
+                    <Input id="id_fname" value="{employeedetails>/FirstName}" width="100%" required="true" maxLength="32" liveChange="onNameChange"/>
 
                     <!-- Last Name -->
                     <Label id="_IDGenLabel2" text="{i18n>lnameTxt}" />
-                    <Input id="id_lname" value="{employeedetails>/LastName}" width="100%" required="true" />
+                    <Input id="id_lname" value="{employeedetails>/LastName}" width="100%" required="true" maxLength="32" liveChange="onNameChange"/>
 
                     <!-- Age -->
                     <Label id="_IDGenLabel3" text="{i18n>ageTxt}" />
-                    <Input id="id_age" value="{employeedetails>/Age}" width="100%" required="true" />
+                    <Input id="id_age" value="{employeedetails>/Age}" width="100%" required="true" maxLength="2"  liveChange="onAgeChange"/>
 
                     <!-- Hire Date -->
                     <Label id="_IDGenLabel4" text="{i18n>hdateTxt}" />
-                    <DatePicker id="id_date" value="{employeedetails>/DateHire}" displayFormat="yyyy-MM-dd" />
+                    <DatePicker id="id_date" value="{employeedetails>/DateHire}" displayFormat="yyyy-MM-dd"/>
 
                     <!-- Career Level -->
                     <Label id="_IDGenLabel5" text="{i18n>clvlTxt}" />
