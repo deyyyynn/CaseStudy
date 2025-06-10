@@ -198,7 +198,21 @@ sap.ui.define([
                 MessageBox.information("Please select both Skill and Proficiency.");
                 return;
             }
-        
+            
+            // Avoid duplication of selected Skill
+            let oTable = oView.byId("idSkillList"); 
+            let aItems = oTable.getItems(); 
+            let bDuplicate = aItems.some(function (oItem) { 
+            let sExistingSkill = oItem.getBindingContext().getProperty("SkillName");
+            
+            return sExistingSkill === sNewSkill;
+            });
+
+            if (bDuplicate) {
+                MessageBox.warning(`${sNewSkill} has already been added.`);
+                return; 
+            }
+
             let oData = {
                 SkillName: sNewSkill,
                 ProficiencyID: sNewProf
@@ -259,7 +273,49 @@ sap.ui.define([
               CurrentProject: oView.byId("id_project").getSelectedKey()
             };
           
-            // Retrieve SkillID based on EmployeeID
+            // Retrieve Skill ID based on EmployeeID
+            let sNewFname = oView.byId("id_fname").getValue();
+            let sNewLname = oView.byId("id_lname").getValue();
+            let sNewAge = oView.byId("id_age").getValue();
+        
+            let oFname = oView.byId("id_fname");
+            let oLname = oView.byId("id_lname");
+            let oAge   = oView.byId("id_age");
+            
+            let bValid = true;
+            
+            let nameRegex = /^[A-Za-z\s\-]+$/;
+            let ageRegex = /^[0-9]+$/;
+            
+            if (!sNewFname || !nameRegex.test(sNewFname)) {
+                oFname.setValueState("Error");
+                oFname.setValueStateText("This field is required and must contain valid name.");
+                bValid = false;
+            } else {
+                oFname.setValueState("None");
+            }
+            
+            if (!sNewLname || !nameRegex.test(sNewLname)) {
+                oLname.setValueState("Error");
+                oLname.setValueStateText("This field is required and must contain valid name.");
+                bValid = false;
+            } else {
+                oLname.setValueState("None");
+            }
+            
+            let iAge = parseInt(sNewAge);
+            if (!sNewAge || !ageRegex.test(sNewAge) || iAge <= 0 || iAge > 90) {
+                oAge.setValueState("Error");
+                oAge.setValueStateText("Required field. Enter age between 1 and 90");
+                bValid = false;
+            } else {
+                oAge.setValueState("None");
+            }
+            
+            if (!bValid) {
+                return; 
+            }
+           
             let oSkillModel = this.getView().getModel("skills");
             let aSkillData = oSkillModel.getData();
             let aEmployeeSkills = aSkillData.filter(function (skill) {
@@ -313,7 +369,67 @@ sap.ui.define([
                 sap.m.MessageToast.show("Error updating employee");
               }
             });
-          }          
+          },
+        
+        onNameChange: function () {
+            // First Name and Last Name validation
+            const oView = this.getView();
+            const oFnameInput = oView.byId("id_fname");
+            const oLnameInput = oView.byId("id_lname"); 
+
+            // FIRST NAME - Can only accept hyphen symbol
+            let sFirstName = oFnameInput.getValue();
+                sFirstName = sFirstName.replace(/[^A-Za-z\s\-]/g, ""); 
+                    if (sFirstName.startsWith("-")) 
+                    { 
+                    sFirstName = sFirstName.slice(1);
+                    }
+                    oFnameInput.setValue(sFirstName);
+
+            // LAST NAME - Can only accept hyphen symbol
+            let sLastName = oLnameInput.getValue();
+                sLastName = sLastName.replace(/[^A-Za-z\s\-]/g, ""); 
+                    if (sLastName.startsWith("-")) 
+                    {
+                    sLastName = sLastName.slice(1); 
+                    }
+                    oLnameInput.setValue(sLastName); 
+
+            const oDatePicker = oView.byId("id_date");
+        
+            if (sFirstName && sLastName && oDatePicker) {                
+                const oDate = oDatePicker.getDateValue() || new Date();
+        
+                // Format date as DDMM with leading zeroes
+                const sFormattedDate = 
+                    String(oDate.getDate()).padStart(2, '0') +
+                    String(oDate.getMonth() + 1).padStart(2, '0');
+        
+                // Generate Employee ID
+                const sGeneratedId = `EmployeeID${sLastName}${sFirstName}${sFormattedDate}`;
+                oView.byId("id_empid").setValue(sGeneratedId);
+            } else {
+                // Clear ID if inputs are incomplete
+                oView.byId("id_empid").setValue("");
+            }
+        },
+  
+        onAgeChange: function (oEvent) {
+            // Age field validation
+            const oInput = oEvent.getSource();
+            let sValue = oInput.getValue();
+
+            // Allow only numbers
+            sValue = sValue.replace(/[^0-9]/g, "");
+
+            // Prevent values > 90
+            let iAge = parseInt(sValue, 10);
+            if (iAge > 90) {
+                sValue = "90";
+            }
+            // Set the cleaned value back
+            oInput.setValue(sValue);
+        } 
     //     onClickSave: function(oEvent){
     //       let oView = this.getView();
     //       let oModel = this.getOwnerComponent().getModel();
