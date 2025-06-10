@@ -66,7 +66,9 @@ sap.ui.define([
 
                 }.bind(this),
                 error: function () {
-                    MessageBox.error("Failed to load skills.");
+                    const oResourceBundle = this.getOwnerComponent().getModel("i18n").getResourceBundle();
+                    const sConfirmText = oResourceBundle.getText("msg_skillsFailed");
+                    MessageBox.error(sConfirmText);
                 }
             });
         },
