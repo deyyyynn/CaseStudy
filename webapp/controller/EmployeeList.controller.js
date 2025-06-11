@@ -10,28 +10,52 @@ sap.ui.define([
 	Filter,
 	FilterOperator,
     formatter,
-    MessageBox) => {
+    MessageBox,) => {
     "use strict";
 
     return Controller.extend("sapips.training.employeeapp.controller.EmployeeList", {
         formatter: formatter,
         onInit() {
-            var oRouter = this.getOwnerComponent().getRouter();
+            let oRouter = this.getOwnerComponent().getRouter();
             oRouter.getRoute("RouteEmployeeList").attachPatternMatched(this._onRouteMatched, this);
         },
+        showMessageBox: function (sType, sKey, aParams = []) {
+            const oResourceBundle = this.getOwnerComponent().getModel("i18n").getResourceBundle();
+            const sMessage = oResourceBundle.getText(sKey, aParams);
+        
+            switch (sType) {
+                case "success":
+                    MessageBox.success(sMessage);
+                    break;
+                case "error":
+                    MessageBox.error(sMessage);
+                    break;
+                case "warning":
+                    MessageBox.warning(sMessage);
+                    break;
+                case "information":
+                    MessageBox.information(sMessage);
+                    break;
+                case "confirm":
+                    MessageBox.confirm(sMessage);
+                    break;
+                default:
+                    MessageBox.show(sMessage);
+            }
+        },
         _fetchEmployeeCount: function () {
-            var oModel = this.getOwnerComponent().getModel();
+            let oModel = this.getOwnerComponent().getModel();
 
             oModel.refresh(true);
             // Read the total count from the /EMPLOYEE endpoint using $count
             oModel.read("/EMPLOYEE/$count", {
                 success: function (oData) {
                     // Set the total count of employees in the model
-                    var oCountModel = new JSONModel({ employeeCount: oData });
+                    let oCountModel = new JSONModel({ employeeCount: oData });
                     this.getView().setModel(oCountModel, "employeeCountModel");
                 }.bind(this),
                 error: function () {
-                    MessageBox.error("Error fetching employee count.");
+                    this.showMessageBox("error", "msg_fetchError");
                 }
             });
         },
@@ -43,9 +67,9 @@ sap.ui.define([
         },
         
         onSearch: function (oEvent) {
-            var sQuery = oEvent.getSource().getValue();
-            var oTable = this.byId("employeeTable");
-            var oBinding = oTable.getBinding("items");
+            let sQuery = oEvent.getSource().getValue();
+            let oTable = this.byId("employeeTable");
+            let oBinding = oTable.getBinding("items");
             
             if (!sQuery) {
                 if (oBinding) {
@@ -54,10 +78,10 @@ sap.ui.define([
                 return;
             }
 
-            var aFilters = [];
+            let aFilters = [];
           
             // Capitalized query (used for fields like CurrentProject)
-            var sCapitalizedQuery = sQuery.charAt(0).toUpperCase() + sQuery.slice(1).toLowerCase();
+            let sCapitalizedQuery = sQuery.charAt(0).toUpperCase() + sQuery.slice(1).toLowerCase();
 
              // FILTERS----------------------------------------------------------------------------
             if (!isNaN(Number(sQuery)) && sQuery.length === 2) {
@@ -94,26 +118,27 @@ sap.ui.define([
                 }));
             }
         },
+        
         //Delete
         onDelete: function(){
             
-            var oTable = this.byId("employeeTable");
-            var aSelectedItems = oTable.getSelectedItems();
+            let oTable = this.byId("employeeTable");
+            let aSelectedItems = oTable.getSelectedItems();
 
             if (aSelectedItems.length === 0) {
-                MessageBox.warning("Must select at least 1 employee.");
+                this.showMessageBox("warning", "msg_noSelection");
                 return;
             }
 
-            MessageBox.confirm("Are you sure you want to delete the selected employee/s?", {
+            MessageBox.confirm("Are you sure you want to delete the selected employee(s)?", {
                 onClose: function (oAction) {
                     if (oAction === sap.m.MessageBox.Action.OK) {
-                        var oModel = this.getOwnerComponent().getModel();
-                        var iPending = aSelectedItems.length;
-                        var bErrorOccurred = false;
+                        let oModel = this.getOwnerComponent().getModel();
+                        let iPending = aSelectedItems.length;
+                        let bErrorOccurred = false;
                         
                         aSelectedItems.forEach(function (oItem) {
-                            var sPath = oItem.getBindingContext().getPath();
+                            let sPath = oItem.getBindingContext().getPath();
 
                             oModel.remove(sPath, {
                                 success: function () {
@@ -137,7 +162,7 @@ sap.ui.define([
 
         //Nav to Employee View Page
         onEmployeePress: function(oEvent) {
-            var sEmployeeID = oEvent.getSource().getBindingContext().getProperty("EmployeeID");
+            let sEmployeeID = oEvent.getSource().getBindingContext().getProperty("EmployeeID");
             this.getOwnerComponent().getRouter().navTo("RouteViewPage", {
                 EmployeeID: sEmployeeID
             });

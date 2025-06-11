@@ -19,7 +19,7 @@
 
                     <!-- Age -->
                     <Label text="{i18n>ageTxt}" id="ageLbl"/>
-                    <Input width="100%" id="i_age" placeholder="{i18n>plchldrTxt}" required="true"/>
+                    <Input width="100%" id="i_age" placeholder="{i18n>plchldrTxt}"   required="true" maxLength="2"  liveChange="onAgeChange"/>
                     
                     <!-- Date of Hire -->
                     <Label text="{i18n>hdateTxt}" id="hdateLbl"/>
@@ -44,7 +44,7 @@
             </sap.ui.layout.form:SimpleForm>
 
             <!-- Add Skill -->
-            <Table noDataText="{i18n>noskillTxt}" id="idSkillList" mode="MultiSelect" items="{/SKILL}">
+            <Table noDataText="{i18n>noskillTxt}" id="idSkillList" mode="MultiSelect" items="{skillsModel>/SkillsData}">
                 <headerToolbar>
                     <Toolbar width="100%" id="toolbar1">
                         <content>
@@ -58,8 +58,8 @@
                 <items>
                     <ColumnListItem type="Active" id="item1">
                         <cells>
-                            <Text id="_IDGenText1" text="{SkillName}"/>
-                            <Text id="_IDGenText2" text="{ProficiencyID}"/>
+                            <Text id="_IDGenText1" key="{skillsModel>SkillID}" text="{skillsModel>SkillName}"/>
+                            <Text id="_IDGenText2" key="{skillsModel>ProficiencyLevel}" text="{skillsModel>ProficiencyID}"/>
                         </cells>
                     </ColumnListItem>
                 </items>
