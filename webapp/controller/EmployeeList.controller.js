@@ -90,7 +90,7 @@ sap.ui.define([
                 if (iAge >= 0 && iAge <= 90) {
                     aFilters.push(new Filter("Age", FilterOperator.EQ, iAge));
                 }
-            } else if (sQuery.length === 8 && !isNaN(Number(sQuery))) {
+            } else if (sQuery.length >= 8 || !isNaN(Number(sQuery))) {
                 // Date
                 let sDate = formatter.toModelDateFormat(sQuery);
                 if (sDate) {
